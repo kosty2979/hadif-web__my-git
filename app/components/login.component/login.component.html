@@ -1,0 +1,51 @@
+
+<!-- LOGIN -->
+<!-- Next Login Step -->
+<div  class="steps ">
+    <div class="blurred-bg"></div>
+  <div class="container log-container">
+
+    <div class="row">
+      <div class="col-sm-12 text-center">
+        <h2>{{ 'Sign In' | translate }}</h2>
+      </div>
+    </div>
+
+    <div class="row">
+    <form  (ngSubmit) = "onSubmit()"  #loginForm="ngForm" >
+      <div class="middle-holder">
+
+        <div class="col-sm-4 col-sm-offset-4 text-center">
+            <div *ngIf="error" class="alert alert-danger">
+               {{ errortext | translate }}
+            </div>
+            <label>{{ 'loginname' | translate }}</label>
+            <input type="text" title="{{'name titel' | translate }}" name="name" [(ngModel)]="user.username" #name="ngModel" required pattern=".{4,}" >
+
+            <div [hidden]="name.valid || name.untouched" class="alert alert-danger">
+              {{'name not valid' | translate }}
+            </div>
+        </div>
+        <div class="col-sm-4 col-sm-offset-4 text-center">
+           <label>{{ 'Password' | translate }}</label>
+           <input type="password" title="{{'pass titel' | translate }}" name="password" [(ngModel)]="user.password" #pass="ngModel" required pattern=".{6,}">
+
+            <div [hidden]="pass.valid || pass.untouched" class="alert alert-danger">
+              {{'password not valid' | translate }}
+            </div>
+        </div>
+        <div class="col-sm-offset-4 col-sm-4 text-center">
+          <button type="submit"  [disabled] = "loginForm.form.invalid" class="btn btn-login">{{ 'LoginB' | translate }}</button>
+          <a routerLink="/lostpass" routerLinkActive="active" class="forgotten-pass">{{'Forget Password' | translate }}</a>
+        </div>
+      </div>
+      </form>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 text-center policy">
+        <a routerLink="/register" routerLinkActive="active" >{{ 'Registration' | translate}}</a>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Next Login Step END -->

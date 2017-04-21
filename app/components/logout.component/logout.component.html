@@ -1,0 +1,23 @@
+ <div class="">
+   <div class="steps ">
+  <div class="blurred-bg"></div>
+  <div class="container log-container">
+    <div class="row">
+      <div class="col-sm-12 text-center">
+        <h2>{{ 'Sign Out' | translate }}</h2>
+        <a *ngIf="!complite" routerLink="/live" routerLinkActive="active"  class="move-next backto-login"></a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 text-center middle-holder">
+        <img src="{{ getImageUrl() }}" alt="">
+        <span class="short-info">{{ 'Sign Out' | translate }}</span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-offset-4 col-sm-4 text-center">
+        <a  (click)="exit()" class="btn btn-login login-move">{{ 'Exit' | translate }}</a>
+      </div>
+    </div>
+  </div>
+</div>

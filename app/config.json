@@ -1,0 +1,12 @@
+{
+  "config": {
+    "apiUrl": "https://api.visionip.tv/api/",
+    "portalId": 246,
+		"channelId": 772,
+    "clientId": 24,
+    "token": "b86b8af876f11e69c99a92e2ac3e446a",
+    "apiVersion": 2,
+    "apiTemplate": "JSONMOBILE",
+    "hpay": "https://oppwa.com"
+  }
+}

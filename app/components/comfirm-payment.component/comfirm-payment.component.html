@@ -1,0 +1,22 @@
+<div class="steps">
+  <div class="blurred-bg"></div>
+    <div class="container log-container">
+      <div class="row">
+        <div class="col-sm-12 text-center">
+          <h2> {{ 'Comfirm Payment' | translate }}</h2>
+        </div>
+      </div>
+
+      <div  class="row">
+
+      <div class="col-md-12 alert alert-success" *ngIf="success">
+        {{'your payment was successful' | translate }}
+      </div>
+      <div class="col-md-12 alert alert-danger" *ngIf="error">
+        {{'sorry your payment is was not successful, please check your card and try later.' | translate }}
+        <a [routerLink]="['/price']">{{'Retry' | translate}}</a> 
+      </div>
+
+    </div>
+  </div>
+</div>

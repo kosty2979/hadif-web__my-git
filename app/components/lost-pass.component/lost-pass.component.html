@@ -1,0 +1,43 @@
+<!-- LOST PASS -->
+<div class="steps">
+  <div class="blurred-bg"></div>
+  <div class="container log-container">
+    <div class="row">
+      <div class="col-sm-12 text-center">
+        <h2> {{ 'Forget Password' | translate }}
+          <a routerLink="/login" routerLinkActive="active" class="move-next backto-login"></a>
+       
+        </h2>
+      </div>
+    </div>
+    <div *ngIf="!complite" class="row">
+     <form  (ngSubmit) = "onSubmit();"  #resetLoginForm="ngForm" >
+      <div class="middle-holder">
+        <div class="col-sm-4 col-sm-offset-4 text-center">
+          <div *ngIf="error" class="alert alert-warning">
+             {{ errortext | translate }}
+          </div>
+           <label>{{ 'loginname' | translate }}</label>
+           <input type="text" title="{{'name titel' | translate }}" name="name" [(ngModel)]="user.username" #name="ngModel" required pattern=".{4,}" >
+
+            <div [hidden]="name.valid || name.untouched" class="alert alert-danger">
+              {{'name not valid' | translate }}
+            </div>
+        </div>
+        <div class="col-sm-offset-4 col-sm-4 text-center">
+           <button type="submit"  [disabled] = "resetLoginForm.form.invalid" class="btn btn-login">{{ 'Reset Password' | translate }}</button>
+        </div>
+      </div>
+      </form>
+    </div>
+    <div *ngIf="complite" class="row">
+      <div class="col-sm-8 col-sm-offset-2 text-center">
+        <div  class="alert alert-success">
+           {{ 'password is reset' | translate }}
+        </div>
+      </div>
+    </div>    
+  </div>
+</div>
+
+<!-- LOST PASS END -->

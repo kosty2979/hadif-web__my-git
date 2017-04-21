@@ -1,0 +1,36 @@
+
+<div class="hadif-content row">
+	<div class="blurred-bg"></div>
+
+	 <section class="top-content-menu col-md-12">
+		<div class="hadif-menu-arrow">
+			<p>{{ 'EPG' | translate }}</p>
+			<a routerLink="/live" routerLinkActive="active" class="move-next backto-login"></a>
+			<label for="moveLeft" (click)="moveLeft()"><img src="img/arrow-left.png"></label>
+			<span>{{date}}</span>
+			<label for="moveRight" (click)="moveRight()"><img src="img/arrow-right.png"></label>
+		</div>
+	 </section>
+
+	 <section class="col-md-12 portalEpg">
+	 
+	 		<context-menu >
+				<template contextMenuItem let-item passive="true">
+				 	<img *ngIf="item?.thumbnail" class="contextImg" src={{item?.thumbnail}} alt="">
+				  	<span class="context__title">{{item?.title ? item.title : ''}}</span>
+				</template>
+				<template contextMenuItem divider="true"></template>
+				<template contextMenuItem let-item [enabled]="isActiveCatch" (execute)="openVideoId($event.item.itemId)" >
+						{{'Catchup' | translate}}
+						<span class="context__text">
+							<img class="context__img" src="img/catch-time.png" alt="">
+						</span>
+				</template>
+			</context-menu>
+
+	   <div  #visTimeline ></div>
+	   <div *ngIf="!load">loading...</div>
+	 </section>
+
+ </div>
+

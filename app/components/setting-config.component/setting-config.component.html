@@ -1,0 +1,65 @@
+
+    <div class="row">
+      <div class="col-md-12">
+        <h2 class="text-center hadif-purple">{{'Settings' | translate }}
+        </h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 settings-panel panel-left-content">
+        <div class="each-reminder hadif-drop">
+          <a class="user-option dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">{{'Enable' | translate }}</a>
+          <ul class="hadif-purple dropdown-menu" aria-labelledby="dropdownMenu1">
+            <li><input type="radio" id="notif-active" name="notif-active" value="VALUE"><label for="notif-active">{{'Enable' | translate }}</label></li>
+            <li><input type="radio" id="notif-inactive" name="notif-active" value="VALUE"><label for="notif-inactive">Disable</label></li>
+          </ul>
+          <span class="titled-remainder">{{'Notification Activation' | translate }}</span>
+          <div class="clearfix"></div>
+        </div>
+        <div class="each-reminder hadif-drop">
+          <a class="user-option dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">{{'Disable' | translate }}</a>
+          <ul class="hadif-purple dropdown-menu" aria-labelledby="dropdownMenu1">
+            <li><input type="radio" id="notif-active" name="notif-active" value="VALUE"><label for="notif-active">{{'Enable' | translate }}</label></li>
+            <li><input type="radio" id="notif-inactive" name="notif-active" value="VALUE"><label for="notif-inactive">{{'Disable' | translate }}</label></li>
+          </ul>
+          <span class="titled-remainder">{{'Autoplay Activation' | translate }}</span>
+          <div class="clearfix"></div>
+        </div>
+        <div class="each-reminder hadif-drop">
+          <a class="user-option dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">{{'Enable' | translate }}</a>
+          <ul class="hadif-purple dropdown-menu" aria-labelledby="dropdownMenu1">
+            <li><input type="radio" id="notif-active" name="notif-active" value="VALUE"><label for="notif-active">{{'Enable' | translate }}</label></li>
+            <li><input type="radio" id="notif-inactive" name="notif-active" value="VALUE"><label for="notif-inactive">{{'Disable' | translate }}</label></li>
+          </ul>
+          <span class="titled-remainder">{{'Navigation Pane Activation' | translate }}</span>
+          <div class="clearfix"></div>
+        </div>
+        <div class="each-reminder hadif-drop">
+          <a class="user-option dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">1080 HD</a>
+          <ul class="hadif-purple dropdown-menu" aria-labelledby="dropdownMenu1">
+            <li><input type="radio" id="notif-active" name="notif-active" value="VALUE"><label for="notif-active">1080 HD</label></li>
+            <li><input type="radio" id="notif-inactive" name="notif-active" value="VALUE"><label for="notif-inactive">720 HD</label></li>
+          </ul>
+          <span class="titled-remainder">{{'Video Quality' | translate }}</span>
+          <div class="clearfix"></div>
+        </div>
+        <div class="each-reminder hadif-drop">
+          <a class="user-option dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">{{'Ascending' | translate }}</a>
+          <ul class="hadif-purple dropdown-menu" aria-labelledby="dropdownMenu1">
+            <li><input type="radio" id="notif-active" name="notif-active" value="VALUE"><label for="notif-active">{{'Ascending' | translate }}</label></li>
+            <li><input type="radio" id="notif-inactive" name="notif-active" value="VALUE"><label for="notif-inactive">{{'Descending' | translate }}</label></li>
+          </ul>
+          <span class="titled-remainder">{{'Episode Sorting' | translate }}</span>
+          <div class="clearfix"></div>
+        </div>
+        <div class="each-reminder hadif-drop">
+          <a class="user-option dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">{{language | translate }}</a>
+          <ul class="hadif-purple dropdown-menu" aria-labelledby="dropdownMenu1">
+            <li><input type="radio" id="notif-active" name="notif-active" value="VALUE"><label for="notif-active" (click)="langChange('en')">{{'English' | translate }}</label></li>
+            <li><input type="radio" id="notif-inactive" name="notif-active" value="VALUE"><label for="notif-inactive" (click)="langChange('ar')">{{'Arabic' | translate }}</label></li>
+          </ul>
+          <span class="titled-remainder">{{'Application language' | translate }}</span>
+          <div class="clearfix"></div>
+        </div>
+      </div>
+    </div>

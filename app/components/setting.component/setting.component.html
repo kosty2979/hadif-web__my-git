@@ -1,0 +1,34 @@
+
+  <div class="hadif-content row">
+  <div class="blurred-bg"></div>
+<section class="profile-panel">
+  <div class="col-md-8 col-sm-8 col-xs-12 panel-left">
+
+      <router-outlet></router-outlet>
+  
+  </div>
+  <div class="col-md-4 col-sm-4 col-xs-12 panel-right">
+    <div class="row">
+      <div class="panel-right-content">
+        <div class="prof-avatar">
+          <div class="col-md-8 col-sm-8 col-xs-9 pr0 text-right">
+            <h3 class="hadif-purple"> {{ user.username }}</h3>
+            <a  routerLink="/setting/profile" routerLinkActive="active">{{'Personal Profile' | translate }}</a>
+          </div>
+          <div class="col-md-4 col-sm-4 col-xs-3">
+            <img class="img-responsive img-responsive__avatar" src="{{getImageUrl()}}" alt="">
+          </div>
+        </div>
+        <div class="col-md-12 prof-options">
+          <ul>
+            <li><a routerLink="/setting/history" routerLinkActive="active">{{'History' | translate}} <img src="/img/profile/ic_invoices.png" alt=""></a></li>
+            <li><a routerLink="/setting/remind" routerLinkActive="active">{{'Reminders' | translate}} <img src="/img/profile/ic_alarm.png" alt=""></a></li>
+            <li><a routerLink="/setting/notific" routerLinkActive="active">{{'Notifications' | translate}} <img src="/img/profile/ic_notifications.png" alt=""></a></li>
+            <li><a routerLink="/setting/config" routerLinkActive="active">{{'Settings' | translate}} <img src="/img/profile/ic_settings.png" alt=""></a></li>
+            <li><a routerLink="/setting/about" routerLinkActive="active">{{'About Hadif' |  translate}} <img src="/img/profile/ic_hadiv_logo.png" alt=""></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

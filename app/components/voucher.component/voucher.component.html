@@ -1,0 +1,55 @@
+<!-- VOUCHER -->
+<div class="steps">
+  <div class="blurred-bg"></div>
+  <div class="container log-container">
+    <div class="row">
+      <div class="col-sm-12 text-center">
+        <h2> {{ 'voucher  head' | translate }}
+        </h2>
+        <a *ngIf="!complite" routerLink="/live" routerLinkActive="active"  class="move-next backto-login"></a>
+      </div>
+    </div>
+    <div *ngIf="complite && !errorVoucher" class="row">
+      <div class="col-sm-8 col-sm-offset-2 text-center">
+        <div  class="alert alert-success">
+           {{ 'voucher is present' | translate }}
+        </div>
+      </div>
+    </div>
+    <div *ngIf="errorVoucher" class="row">
+      <div class="col-sm-8 col-sm-offset-2 text-center">
+        <div  class="alert alert-warning">
+           {{ errortextVoucher | translate }}
+        </div>
+      </div>
+    </div>
+    <!-- CHECK VOUCHER  -->
+    <div *ngIf="!complite" class="row">
+     <form  (ngSubmit) = "onSubmit();"  #voucherForm="ngForm" >
+      <div class="middle-holder">
+        <div class="col-sm-4 col-sm-offset-4 text-center">
+          <div *ngIf="error" class="alert alert-warning">
+             {{ errortext | translate }}
+          </div>
+           <label>{{ 'voucher line' | translate }}</label>
+           <input type="text" title="{{'voucher titel' | translate }}" name="name" [(ngModel)]="vouchNumber" #number="ngModel" placeholder="AlMajd-03-02-201701188STME" >
+
+            <div [hidden]="number.valid || number.untouched" class="alert alert-danger">
+              {{'voucher not valid' | translate }}
+            </div>
+        </div>
+        <div class="col-sm-offset-4 col-sm-4 text-center">
+           <button type="submit"  [disabled] = "voucherForm.form.invalid" class="btn btn-login">{{ 'check voucher' | translate }}</button>
+        </div>
+      </div>
+      </form>
+      <div class="col-sm-4 col-sm-offset-4 text-center">
+        <button routerLink="/price" routerLinkActive="active" class="btn btn-login">{{ 'next' | translate }}</button>
+      </div>
+    </div>
+    <!-- CHECK VOUCHER END -->
+       
+  </div>
+</div>
+
+<!-- VOUCHER END -->

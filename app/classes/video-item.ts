@@ -1,0 +1,34 @@
+export class VideoItem {
+  itemId: number;
+  errorcode: number;
+  contentTitle: string;
+  titleOL: string;
+  linktoLive: string;
+  thumbnail: string;
+  thumbHD: string;
+  thumbSD: string;
+  thumbSDh: string;
+  thumbSDq: string;
+  duration: string;
+  synopsis: string;
+  shortSynopsis: string;
+  longsynopsisOL: string;
+  shortsynopsisOL: string;
+  distributor: string;
+  genre: string;
+  genreOL: string;
+  year: string;
+  actors: string;
+  rating: string;
+  director: string;
+  countryoforigin: string;
+  recommendedTitles: string;
+  guidance: string;
+  category: string;
+  added: string;
+  price: string;
+  availableBitrates: string;
+  availableProtocols: string;
+  subscription: string;
+  liveChannelNumber: string;
+}

@@ -1,0 +1,115 @@
+<div *ngIf="sesons.length>0" class="hadif-content row">
+<div class="blurred-bg"></div>
+<section class="top-content-menu col-md-12">
+<div class="hadif-drop left">
+ <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><img class="ic_more" src="img/ic_more.png"></a>
+ <ul class="dropdown-menu vod-more" aria-labelledby="dropdownMenu1">
+  <li class="save-option"><a > bookmark</a></li>
+  <li class="order-option" [ngClass]="{'desc': (sort==-1)}" ><a (click)="sotring()" >{{'Sorting' | translate}}</a></li>
+  <li class="evaluate-option"><a href="#evaluate-stars">{{'Rating' | translate}}
+    <rating [(ngModel)]="ratingSeries"
+        [max]="5"
+        iconClass="fa-star"
+        fullIcon="★"
+        emptyIcon="☆"
+        [readonly]="true"
+        [disabled]="false"
+        [required]="true"
+        [float]="false"
+        [titles]="['one', 'two', 'three', 'four', 'five']">
+   </rating>
+  </a>
+      </li>
+  <li class="share-option" (click)="download()"><a href="#">{{'Share' | translate}}</a></li>
+ </ul>
+</div>
+<div class="stars-holder text-center" id="evaluate-stars">
+  <p>{{'Rate this serial' | translate}}</p>
+  <input type="hidden" class="rating" data-filled="symbol symbol-filled" data-empty="symbol symbol-empty"/>
+  <rating [(ngModel)]="rating"
+        [max]="5"
+        iconClass="fa-star"
+        fullIcon="★"
+        emptyIcon="☆"
+        [readonly]="false"
+        [disabled]="false"
+        [required]="true"
+        [float]="false"
+        [titles]="['one', 'two', 'three', 'four', 'five']">
+</rating>
+  <div class="proceed-next">
+    <a href="#" onClick="window['$'].fancybox.close();" >{{'Cancel' | translate}}</a>
+    <a href="#" (click)="rate()">{{'Rate' | translate}}</a>
+  </div>
+</div>
+<p class="titled-vod"><span >{{getField('seriesTitle', seriesData)}}</span></p>
+<a class="getting-back" [routerLink]="['/vod']" ><img src="img/ic_back.png"></a>
+</section>
+<section class="col-xs-12 col-md-9 forVideo">
+<div class="alert-warning" *ngIf="episodes && !hasAccess(episodes[itemNumber])">  {{'You don`t have access' | translate}} </div>
+<div class="alert-warning" *ngIf="urlError">{{urlError | translate}}</div>
+<video-player url="{{video.url}}" preRoll="{{video.preRoll}}" download="{{video}}"></video-player>
+<section *ngIf="episodes && episodes.length>0" class="bottom-player-menu">
+ <a class="pick-playlist" href="#"><img src="img/ic_play_list.png"></a>
+ <a class="vod-feelings" href="#"></a>
+ <div class="choose-feeling">
+   <ul>
+     <li><input type="radio" id="feeling-option-1" name="feeling-option" value="VALUE"><label for="feeling-option-1" class="hadif-heart"><span>1.5k</span></label></li>
+     <li><input type="radio" id="feeling-option-2" name="feeling-option" value="VALUE"><label for="feeling-option-2" class="hadif-laughing"><span>500</span></label></li>
+     <li><input type="radio" id="feeling-option-3" name="feeling-option" value="VALUE"><label for="feeling-option-3" class="hadif-wow"><span>244</span></label></li>
+     <li><input type="radio" id="feeling-option-4" name="feeling-option" value="VALUE"><label for="feeling-option-4" class="hadif-mad"><span>12</span></label></li>
+     <li><input type="radio" id="feeling-option-5" name="feeling-option" value="VALUE"><label for="feeling-option-5" class="hadif-crying"><span>0</span></label></li>
+   </ul>
+ </div>
+<p>
+ {{ getField('contentTitle', episodes[itemNumber]) }}
+ </p>
+</section>
+<section *ngIf="episodes && episodes.length>0" class="description">
+ {{ getField('synopsis', episodes[itemNumber]) }}
+</section>
+<section class="timeline">
+</section>
+</section>
+<section class="hadif-sidebar hadif-episodes col-md-3">
+<div class="hadif-drop">
+ <button data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+  <span class="custom-caret"></span>{{getField('title', sesons[selected])}}
+ </button>
+ <ul class="dropdown-menu choose-episode" aria-labelledby="dropdownMenu1">
+  <li>
+   <p> {{'Select Season' | translate}} </p>
+  </li>
+  <li *ngFor="let item of sesons; let i = index;" ><a (click)="select(i)">{{getField('title', item)}} </a></li>
+ </ul>
+</div>
+<div class="episode-details">
+ {{getField('synopsis', sesons[selected])}}
+</div>
+<ul class="nav nav-tabs">
+<li><a href="#">Trailer</a></li>
+<li class="active"><a data-toggle="tab" href="#home">Menu 1</a></li>
+</ul>
+<div class="tab-content">
+<div id="home"  class="tab-pane fade in active" data-simplebar-direction="vertical">
+  <div *ngFor="let episod of episodes; let i = index;" class="channel-holder" [ngClass]="{'no-access': !hasAccess(episod)}" >
+    <div class="tv-thumb" ngClass="">
+      <a (click)="hasAccess(episod) ? selectEpisod(i): goToVoucher() ">
+        <img class="img-responsive" [src]="episod.thumbnail" alt="">
+        <span class="play-overlay"></span>
+      </a>
+    </div>
+    <div class="progress">
+      <div class="progress-bar" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="80" style="width:70%">
+        <span class="sr-only">70% Complete</span>
+      </div>
+    </div>
+    <div class="channel-info">
+      <span class="time-watched">{{formatedDuration(episod.duration)}}</span>
+      <span class="channels-name">{{ getField('contentTitle', episodes[i]) }}</span>
+    </div>
+  </div>
+
+</div>
+</div>
+</section>

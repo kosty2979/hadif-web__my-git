@@ -1,0 +1,108 @@
+
+  <div class="hadif-content row">
+  <div class="blurred-bg"></div>
+ <section *ngIf="!search" class="top-content-menu col-md-12">
+  <a  (click)="search =!search" class="open-vodsearch"><img src="img/ic_search.png"></a>
+  <p class="titled-vod">{{ 'VOD' | translate }}</p>
+
+  <div class="hadif-drop right">
+   <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><img src="img/ic_filter.png"></a>
+   <ul class="dropdown-menu vod-filter" aria-labelledby="dropdownMenu1">
+    <li class="filter-title">{{ 'Filter' | translate }}</li>
+    <li><input type="checkbox" id="default-value" name="default-value" value="VALUE"><label for="default-value">{{ 'Default' | translate }} <span class="checked-filter"></span></label></li>
+    <li>
+      <ul>
+        <li class="sort-options">{{ 'Sorting' | translate }}</li>
+        <li><input type="checkbox" [checked]="sorting==1" (click)="sorting=1;applyFilter()" id="sort-option-1" name="sort-option-1" value="VALUE"><label for="sort-option-1">{{'Name' | translate}} <span class="checked-filter"></span></label></li>
+        <li><input type="checkbox" [checked]="sorting==2" (click)="sorting=2;applyFilter()" id="sort-option-2" name="sort-option-2" value="VALUE"><label for="sort-option-2">{{'Most Recent' | translate}} <span class="checked-filter"></span></label></li>
+        <li><input type="checkbox" [checked]="sorting==3" (click)="sorting=3;applyFilter()" id="sort-option-3" name="sort-option-3" value="VALUE"><label for="sort-option-3">{{'Top Rated' | translate}} <span class="checked-filter"></span></label></li>
+      </ul>
+    </li>
+    <li>
+      <ul>
+        <li class="sort-types">{{'Type' | translate}}</li>
+        <li *ngFor='let type of types' ><input type="checkbox" (change)="applyFilter()" [(ngModel)]="type.enable" id="sort-type-{{type.genreId}}" name="sort-type-{{type.genreId}}" value="VALUE"><label for="sort-type-{{type.genreId}}">{{getField('genre', type)}} <span class="checked-filter"></span></label></li>
+      </ul>
+    </li>
+    <!-- <li>
+      <ul>
+        <li class="sort-channel">تعديلها</li>
+        <li><input type="checkbox" id="sort-channel-1" name="sort-channel-1" value="VALUE"><label for="sort-channel-1">تعديلها <span class="checked-filter"></span></label></li>
+        <li><input type="checkbox" id="sort-channel-2" name="sort-channel-2" value="VALUE"><label for="sort-channel-2">تعديلها <span class="checked-filter"></span></label></li>
+      </ul>
+    </li> -->
+   </ul>
+  </div>
+ </section>
+
+ <section *ngIf="search" class="top-content-menu col-md-12">
+
+    <div class="remote-search">
+      <form action="" autocomplete="on">
+
+      <input class="search-input" 
+      id="search" 
+      #searchinput="ngModel" 
+      name="search" 
+      [(ngModel)]="searchInput" 
+      (ngModelChange)="getSearch()"  
+      type="text"
+      [focus]="inFocus" 
+      >
+      </form>
+      <div *ngIf="searchinput.pristine" class="search-title">
+        <span>{{ 'what lokiing' | translate }}</span>
+      </div>
+
+      
+    </div>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="exitSearch()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+
+ </section>
+
+  <div *ngIf="error" class="row">
+    <div class="col-sm-6 col-sm-offset-3 text-center">
+      <div class="alert alert-danger">
+               {{ errortext | translate }}
+      </div>
+    </div>
+  </div>
+
+ <div class="hadif-play-container">
+
+  <section *ngIf="!search" class="hadif-play">
+   <div *ngFor='let value of seriesList' class="col-md-4 hadif-thumb">
+    <a [routerLink]="['/vod-episodes', value.seriesId]">
+     <div class="wraper-picture">
+        <div [ngStyle]="{'background-image': 'url('+value.thumbnail+')'}" class="picture"></div>
+        <div class="proportions"></div>
+      </div>
+     <p>{{ getField('title',value) }}</p>
+    </a>
+   </div>
+  </section>
+
+  <section *ngIf="search" class="hadif-play">
+   <div *ngFor='let value of searchSeriesList' class="col-md-4 hadif-thumb" [ngClass]="{'no-access': !hasAccess(value)}">
+    <a  *ngIf="hasAccess(value)" [routerLink]="['/vod-episodes', value.seriesId, value.seasonId, value.itemid]">
+     <div class="wraper-picture">
+        <span class="play-overlay"></span>
+        <div [ngStyle]="{'background-image': 'url('+value.thumbnail+')'}" class="picture"></div> 
+        <div class="proportions"></div>
+     </div>
+     <p>{{ getField('contentTitle',value) }}</p>
+    </a>
+    <a *ngIf="!hasAccess(value)" [routerLink]="['/voucher']">
+     <div class="wraper-picture">
+      <span class="play-overlay"></span>
+       <div [ngStyle]="{'background-image': 'url('+value.thumbnail+')'}" class="picture"></div>
+        <div class="proportions"></div>
+     </div>
+     <p>{{ getField('contentTitle',value) }}</p>
+   </a>
+   </div>
+  </section>
+
+ </div>

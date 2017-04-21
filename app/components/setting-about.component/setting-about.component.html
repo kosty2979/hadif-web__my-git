@@ -1,0 +1,41 @@
+    <div *ngIf="!support" class="">
+    <div class="row">
+      <div class="col-md-12">
+        <h2 class="text-center hadif-purple">{{'About' | translate }}</h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 panel-left-content">
+        <div class="pr3 mb2">
+          <h4 class="about-hadif hadif-purple">{{'About Hadif' | translate }}</h4>
+          <span><a href="#">{{'Tell your friend' | translate }}</a></span>
+          <span><a (click)=" support =!support ">{{'Help & Support' | translate }}</a></span>
+        </div>
+        <div class="pr3 mb2">
+          <h4 class="hadif-socials hadif-purple">{{'Social Media' | translate }}</h4>
+          <span><a href="#">{{'Youtube' | translate }}</a></span>
+          <span><a href="#">{{'Facebook' | translate }}</a></span>
+          <span><a href="#">{{'Twitter' | translate }}</a></span>
+          <span><a href="#">{{'Instagram' | translate }}</a></span>
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <div *ngIf="support" class="">
+    <div class="row">
+      <div class="col-md-12">
+        <h2 class="text-center hadif-purple">{{'Help & Support' | translate }}</h2>
+         <a (click)=" support =!support " class="move-next backto-edit mobile-response"></a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 support-panel panel-left-content text-right">
+      <h4>{{"Please explain your problem" | translate }}</h4>
+      <div class="scroll-wrapper textarea-scrollbar scrollbar-outer scroll-textarea" style="position: relative;"><div class="scroll-content" style="height: 234px; margin-bottom: 0px; margin-right: 0px; max-height: none;"><textarea class="textarea-scrollbar scrollbar-outer" name="problem-support" id="problem-support" rows="10" placeholder="{{'Details' | translate }}"></textarea></div><div class="scroll-element scroll-x"><div class="scroll-element_outer"><div class="scroll-element_size"></div><div class="scroll-element_track"></div><div class="scroll-bar" style="width: 100px;"></div></div></div><div class="scroll-element scroll-y"><div class="scroll-element_outer"><div class="scroll-element_size"></div><div class="scroll-element_track"></div><div class="scroll-bar" style="height: 100px;"></div></div></div></div>
+      </div>
+      <div class="col-sm-offset-4 col-sm-4 text-center">
+        <a href="#" class="btn btn-login">{{'Send' | translate}}</a>
+      </div>
+    </div>
+  </div>

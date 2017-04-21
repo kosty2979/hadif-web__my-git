@@ -1,0 +1,121 @@
+<!-- REGISTER -->
+<div class="steps ">
+    <div class="blurred-bg"></div>
+  <div class="container log-container">
+    <div class="row">
+      <div class="col-sm-12 text-center">
+        <h2>{{ 'Registration' |translate }}
+          <a *ngIf="!complite" routerLink="/login" routerLinkActive="active"  class="move-next backto-login"></a>
+        </h2>
+      </div>
+    </div>
+    <div *ngIf="!complite" class="row">
+      <div class="middle-holder">
+       <form  (ngSubmit) = "onSubmit()"  #registerForm="ngForm" >
+          <div class="col-sm-4 col-sm-offset-4 text-center">
+          <div *ngIf="error" class="alert alert-warning">
+           {{errortext | translate }}
+          </div>
+             <label>{{ 'loginname' | translate }}</label>
+             <input type="text" 
+               title="{{'name titel' | translate }}" 
+               name="name" 
+               [(ngModel)]="user.username" 
+               #name="ngModel" 
+               required pattern=".{4,}" >
+
+              <div [hidden]="name.valid || name.untouched" class="alert alert-danger">
+              {{'name not valid' | translate}}
+              </div>
+          </div>
+          <div class="col-sm-4 col-sm-offset-4 text-center">
+             <label> {{'First Name' | translate}}</label>
+             <input type="text" 
+             title="{{'firstName titel' | translate }}"  
+             name="firstName" 
+             [(ngModel)]="user.firstName" 
+             placeholder="John" 
+             #firstName="ngModel"  />
+
+          </div>
+          <div class="col-sm-4 col-sm-offset-4 text-center">
+             <label> {{'Last Name' | translate}}</label>
+             <input type="text" 
+             title="{{'lastName titel' | translate }}"  
+             name="lastName" 
+             [(ngModel)]="user.lastName" 
+             placeholder="Smith" 
+             #lastName="ngModel"  />
+
+          </div>
+           <div class="col-sm-4 col-sm-offset-4 text-center">
+             <label>{{'Email' | translate}}</label>
+             <input type="email" 
+             title="{{'email titel' | translate }}" 
+             name="email" 
+             [(ngModel)]="user.email" 
+             placeholder="email@example.com"  
+             pattern="[a-zA-Z0-9_.]+@[a-zA-Z0-9_.]+?\.[a-zA-Z]{2,3}" 
+             #email="ngModel" 
+             required >
+
+              <div [hidden]="email.valid || email.untouched" class="alert alert-danger">
+              {{'email not valid' | translate}}
+              </div>
+          </div>
+          <div class="col-sm-4 col-sm-offset-4 text-center">
+             <label> {{'Mobile Number' | translate}}</label>
+             <input type="tel" 
+             title="{{'phone titel' | translate }}"  
+             name="phone" 
+             [(ngModel)]="user.phone" 
+             placeholder="+966501234567" 
+             #phone="ngModel"  />
+
+          </div>
+          <div class="col-sm-4 col-sm-offset-4 text-center">
+             <label>{{ 'Password' | translate }}</label>
+             <input type="password" 
+             title="{{'pass titel' | translate }}" 
+             name="password" 
+             [(ngModel)]="user.password" 
+             #pass="ngModel" 
+             required 
+             pattern=".{6,}">
+
+              <div [hidden]="pass.valid || pass.untouched" class="alert alert-danger">
+              {{'password not valid' | translate }}
+              </div>
+          </div>
+          <div class="col-sm-4 col-sm-offset-4 text-center">
+             <label>{{ 'conf password' | translate }}</label>
+             <input type="password" 
+             title="{{'conf password titel' | translate }}" 
+             name="password2" 
+             [(ngModel)]="confirmPass" 
+             #passConf="ngModel" 
+             required >
+
+              <div [hidden]="passConf.value === pass.value" class="alert alert-danger">
+              {{'conf password not valid' | translate }}
+              </div>
+          </div>
+          <div class="col-sm-offset-4 col-sm-4 text-center">
+             <button type="submit"  
+             [disabled] = "registerForm.form.invalid || !(passConf.value === pass.value)" 
+             class="btn btn-login">{{'Register' | translate}}
+             </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div *ngIf="complite" class="row">
+      <div class="col-sm-8 col-sm-offset-2 text-center">
+        <div  class="alert alert-success">
+            {{'registration is true' | translate }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- REGISTER END -->

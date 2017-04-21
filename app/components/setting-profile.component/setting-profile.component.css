@@ -1,0 +1,8 @@
+.btn-login{
+	width: auto;
+	padding:10px;
+}
+input:disabled{
+	background-color: inherit;
+	cursor: not-allowed;
+}
