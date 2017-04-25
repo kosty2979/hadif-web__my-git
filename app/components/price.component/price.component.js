@@ -76,7 +76,12 @@ var PriceComponent = (function () {
             .then(function (d) {
             sessionStorage.setItem('hpayDetails', JSON.stringify(d.hpayDetails));
             sessionStorage.setItem('price', price);
-            _this.router.navigate(['/payment']);
+            if (parseInt(price) != 0) {
+                _this.router.navigate(['/payment']);
+            }
+            else {
+                _this.router.navigate(['/comfirm-payment']);
+            }
         })
             .catch(function (error) {
         });
@@ -125,6 +130,8 @@ var PriceComponent = (function () {
     ;
     PriceComponent.prototype.getActiveDay = function (price) {
         var text;
+        if (localStorage.getItem('voucherPrice'))
+            return text;
         if (this.tarifForFree.indexOf(period[price.name]) != -1 && this.freePeriod.active == "1") {
             var days = this.freePeriod.days;
             text = '(including ' + days + ' days free trial)';

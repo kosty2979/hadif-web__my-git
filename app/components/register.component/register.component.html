@@ -34,7 +34,6 @@
              title="{{'firstName titel' | translate }}"  
              name="firstName" 
              [(ngModel)]="user.firstName" 
-             placeholder="John" 
              #firstName="ngModel"  />
 
           </div>
@@ -44,7 +43,6 @@
              title="{{'lastName titel' | translate }}"  
              name="lastName" 
              [(ngModel)]="user.lastName" 
-             placeholder="Smith" 
              #lastName="ngModel"  />
 
           </div>
@@ -54,7 +52,6 @@
              title="{{'email titel' | translate }}" 
              name="email" 
              [(ngModel)]="user.email" 
-             placeholder="email@example.com"  
              pattern="[a-zA-Z0-9_.]+@[a-zA-Z0-9_.]+?\.[a-zA-Z]{2,3}" 
              #email="ngModel" 
              required >
@@ -69,7 +66,6 @@
              title="{{'phone titel' | translate }}"  
              name="phone" 
              [(ngModel)]="user.phone" 
-             placeholder="+966501234567" 
              #phone="ngModel"  />
 
           </div>

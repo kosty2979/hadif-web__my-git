@@ -102,7 +102,7 @@ export class VideoItemsService {
       localStorage.removeItem('authDate');
       window.location.href = '/login';
     }
-    toster.pop('error', 'Oops', 'Something went wrong!');
+    toster.pop('error', 'Sorry', 'Some Error has Occured!');
     return Promise.reject(error.message || error);
   }
 }

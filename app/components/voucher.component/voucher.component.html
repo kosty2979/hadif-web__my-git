@@ -32,7 +32,7 @@
              {{ errortext | translate }}
           </div>
            <label>{{ 'voucher line' | translate }}</label>
-           <input type="text" title="{{'voucher titel' | translate }}" name="name" [(ngModel)]="vouchNumber" #number="ngModel" placeholder="AlMajd-03-02-201701188STME" >
+           <input type="text" title="{{'voucher titel' | translate }}" name="name" [(ngModel)]="vouchNumber" #number="ngModel" placeholder="XXXX-XXXX" >
 
             <div [hidden]="number.valid || number.untouched" class="alert alert-danger">
               {{'voucher not valid' | translate }}

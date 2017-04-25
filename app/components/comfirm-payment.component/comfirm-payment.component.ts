@@ -26,9 +26,22 @@ constructor(
 
 	ngOnInit(){
 		let hpay = JSON.parse(sessionStorage.getItem('hpayDetails'));
+		let price = sessionStorage.getItem('price');
 
-		this.paymentService.hpayMakePayment(hpay.checkoutId)
-		.then(()=>{
+	 if(parseInt(price) != 0){
+			this.paymentService.hpayMakePayment(hpay.checkoutId)
+			.then(()=>{
+					this.endPayment();
+			})
+			.catch(()=>{
+				this.error = true;
+			})
+		} else {
+			this.endPayment();
+		}
+
+	};
+	private endPayment(){
 				sessionStorage.removeItem('hpayDetails');
 				sessionStorage.removeItem('price');
 				this.success = true;
@@ -38,11 +51,6 @@ constructor(
 				setTimeout(()=>{
 					this.router.navigate(['/live']);
 				}, 3000)
-		})
-		.catch(()=>{
-			this.error = true;
-		})
-
 	};
 
 };

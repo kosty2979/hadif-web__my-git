@@ -66,7 +66,7 @@
  </p>
 </section>
 <section *ngIf="episodes && episodes.length>0" class="description">
- {{ getField('synopsis', episodes[itemNumber]) }}
+ <p>{{ getField('synopsis', episodes[itemNumber])}}</p>
 </section>
 <section class="timeline">
 </section>
@@ -84,11 +84,11 @@
  </ul>
 </div>
 <div class="episode-details">
- {{getField('synopsis', sesons[selected])}}
+ {{ getField('synopsis', sesons[selected]) }}
 </div>
 <ul class="nav nav-tabs">
-<li><a href="#">Trailer</a></li>
-<li class="active"><a data-toggle="tab" href="#home">Menu 1</a></li>
+  <li><a data-toggle="tab" href="#trailer">Trailer</a></li>
+  <li class="active"><a data-toggle="tab" href="#home">Menu 1</a></li>
 </ul>
 <div class="tab-content">
 <div id="home"  class="tab-pane fade in active" data-simplebar-direction="vertical">
@@ -109,6 +109,12 @@
       <span class="channels-name">{{ getField('contentTitle', episodes[i]) }}</span>
     </div>
   </div>
+
+</div>
+
+<div id="trailer"  class="tab-pane fade in active" data-simplebar-direction="vertical">
+  
+
 
 </div>
 </div>

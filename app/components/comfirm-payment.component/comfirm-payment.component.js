@@ -24,21 +24,32 @@ var ComfirmPaymentComponent = (function () {
     ComfirmPaymentComponent.prototype.ngOnInit = function () {
         var _this = this;
         var hpay = JSON.parse(sessionStorage.getItem('hpayDetails'));
-        this.paymentService.hpayMakePayment(hpay.checkoutId)
-            .then(function () {
-            sessionStorage.removeItem('hpayDetails');
-            sessionStorage.removeItem('price');
-            _this.success = true;
-            localStorage.removeItem('voucherCode');
-            localStorage.removeItem('voucherPrice');
-            _this.authService.refreshSubscriptions();
-            setTimeout(function () {
-                _this.router.navigate(['/live']);
-            }, 3000);
-        })
-            .catch(function () {
-            _this.error = true;
-        });
+        var price = sessionStorage.getItem('price');
+        if (parseInt(price) != 0) {
+            this.paymentService.hpayMakePayment(hpay.checkoutId)
+                .then(function () {
+                _this.endPayment();
+            })
+                .catch(function () {
+                _this.error = true;
+            });
+        }
+        else {
+            this.endPayment();
+        }
+    };
+    ;
+    ComfirmPaymentComponent.prototype.endPayment = function () {
+        var _this = this;
+        sessionStorage.removeItem('hpayDetails');
+        sessionStorage.removeItem('price');
+        this.success = true;
+        localStorage.removeItem('voucherCode');
+        localStorage.removeItem('voucherPrice');
+        this.authService.refreshSubscriptions();
+        setTimeout(function () {
+            _this.router.navigate(['/live']);
+        }, 3000);
     };
     ;
     return ComfirmPaymentComponent;

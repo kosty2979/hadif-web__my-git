@@ -72,13 +72,18 @@ export class PriceComponent {
         price = el.value;
       }
     })
+
     let vaucher = localStorage.getItem('voucherCode');
 
     this.paymentService.getHpayDetails(type, period[this.selectedPrice], vaucher)
       .then((d:any)=>{
         sessionStorage.setItem('hpayDetails', JSON.stringify(d.hpayDetails));
         sessionStorage.setItem('price', price);
-        this.router.navigate(['/payment']);
+        if(parseInt(price) != 0){
+        	this.router.navigate(['/payment']);
+        } else {
+        	this.router.navigate(['/comfirm-payment']);
+        }
       })
       .catch((error)=>{
       })
@@ -125,6 +130,7 @@ export class PriceComponent {
 
 	 private getActiveDay(price:Price){
 	 	let text;
+	 	if( localStorage.getItem('voucherPrice') ) return text
 	 	if(this.tarifForFree.indexOf(period[price.name])!=-1 && this.freePeriod.active == "1" ){
 	 		let days = this.freePeriod.days 
 		 	text = '(including '+days+' days free trial)'

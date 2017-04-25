@@ -15,7 +15,7 @@
         <h3 *ngIf="!firstStep"> {{ 'select plan' | translate }}</h3>
         <h3 *ngIf="firstStep"> {{ 'User Agreement' | translate }}</h3>
         <div class="col-sm-6 col-sm-offset-3 text-center">
-          <div *ngIf="voucherCode" class="alert alert-success">
+          <div *ngIf="voucherCode && !firstStep" class="alert alert-success">
                 <p> {{ 'you have vouher' | translate  }} </p>
                 <p> {{ voucherCode  }} </p>
           </div>

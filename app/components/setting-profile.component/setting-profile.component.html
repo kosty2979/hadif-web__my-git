@@ -214,7 +214,7 @@
 
         </div>
       </div>
-      <div class="col-md-offset-4 col-md-4 col-xs-12 text-center">
+      <div *ngIf="subscriptionInfo.last4Digit" class="col-md-offset-4 col-md-4 col-xs-12 text-center">
         <button (click)='updateCard()' class="btn btn-login">{{'Update Your Card' | translate }}</button>
       </div>
     </div>

@@ -1071,6 +1071,7 @@ a:hover .play-overlay {
 
 .search-input {
   font-size: 25px;
+  height: 35px;
   display: inline-block;
   border: none;
   outline: none;
@@ -2021,7 +2022,7 @@ footer {
   }
 
   .vis-panel.vis-center {
-    width: 100%!important;
+   /*  width: 100%!important; */
     left: 0;
     border: none;
   }
