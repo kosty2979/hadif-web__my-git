@@ -334,6 +334,9 @@
   "cancel subscription": "Cancel subscription",
   "popUp_subscript_yes":"Yes",
   "popUp_subscript_no":"No",
-  "popUp_subscript_text":"This will terminate your Free access to Hadif. Are you sure you wish to go ahead?"
+  "popUp_subscript_text":"This will terminate your Free access to Hadif. Are you sure you wish to go ahead?",
+
+  "Something went wrong":"Something went wrong",
+  "Sorry":"Sorry"
 
 }

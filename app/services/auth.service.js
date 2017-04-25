@@ -13,6 +13,7 @@ var http_1 = require("@angular/http");
 var http_2 = require("@angular/http");
 var angular2_toaster_1 = require("angular2-toaster");
 var router_1 = require("@angular/router");
+var core_2 = require("@ngx-translate/core");
 require("rxjs/add/operator/toPromise");
 require("rxjs/add/operator/map");
 require("rxjs/add/observable/of");
@@ -22,12 +23,13 @@ var user_data_service_1 = require("../services/user-data.service");
 var api_errors_1 = require("../classes/api-errors");
 var toster;
 var AuthService = (function () {
-    function AuthService(http, config, router, toasterService, userDataService) {
+    function AuthService(http, config, router, toasterService, userDataService, translate) {
         this.http = http;
         this.config = config;
         this.router = router;
         this.toasterService = toasterService;
         this.userDataService = userDataService;
+        this.translate = translate;
         this.authDate = {
             session: '',
             hash: '',
@@ -103,7 +105,7 @@ var AuthService = (function () {
                 resolve(res.json().subscriptions);
             });
         })
-            .catch(this.handleError);
+            .catch(function (e) { return _this.handleError(e); });
     };
     ;
     AuthService.prototype.getVoucher = function (voucher, price) {
@@ -147,7 +149,7 @@ var AuthService = (function () {
                 }
             });
         })
-            .catch(this.handleError);
+            .catch(function (e) { return _this.handleError(e); });
     };
     ;
     AuthService.prototype.getUserRatingSeries = function (seriesId) {
@@ -185,7 +187,7 @@ var AuthService = (function () {
                 }
             });
         })
-            .catch(this.handleError);
+            .catch(function (e) { return _this.handleError(e); });
     };
     ;
     AuthService.prototype.getPrice = function () {
@@ -220,7 +222,7 @@ var AuthService = (function () {
                 }
             });
         })
-            .catch(this.handleError);
+            .catch(function (e) { return _this.handleError(e); });
     };
     ;
     AuthService.prototype.getConfig = function () {
@@ -249,7 +251,7 @@ var AuthService = (function () {
                 resolve(true);
             });
         })
-            .catch(this.handleError);
+            .catch(function (e) { return _this.handleError(e); });
     };
     ;
     AuthService.prototype.login = function (user, password) {
@@ -287,7 +289,7 @@ var AuthService = (function () {
                 }
             });
         })
-            .catch(this.handleError);
+            .catch(function (e) { return _this.handleError(e); });
     };
     ;
     AuthService.prototype.register = function (user) {
@@ -317,10 +319,11 @@ var AuthService = (function () {
                 }
             });
         })
-            .catch(this.handleError);
+            .catch(function (e) { return _this.handleError(e); });
     };
     ;
     AuthService.prototype.getUrl = function (name, digest) {
+        var _this = this;
         var url;
         var self = this;
         return new Promise(function (resolve, reject) {
@@ -332,7 +335,7 @@ var AuthService = (function () {
                 resolve(url + token);
             });
         })
-            .catch(this.handleError);
+            .catch(function (e) { return _this.handleError(e); });
     };
     AuthService.prototype.handleError = function (error) {
         console.error('An error occurred', api_errors_1.default[error] || error); // for demo purposes only
@@ -340,7 +343,11 @@ var AuthService = (function () {
             localStorage.removeItem('authDate');
             window.location.href = '/login';
         }
-        toster.pop('error', 'Sorry', 'Some Error has Occured!');
+        var errorText = error || 'Something went wrong';
+        var errorTitel = 'Sorry';
+        this.translate.get([errorTitel, errorText]).subscribe(function (translations) {
+            toster.pop('error', translations[errorTitel], translations[errorText]);
+        });
         return Promise.reject(error.message || error);
     };
     return AuthService;
@@ -351,7 +358,8 @@ AuthService = __decorate([
         config_service_1.ConfigService,
         router_1.Router,
         angular2_toaster_1.ToasterService,
-        user_data_service_1.UserDataService])
+        user_data_service_1.UserDataService,
+        core_2.TranslateService])
 ], AuthService);
 exports.AuthService = AuthService;
 //# sourceMappingURL=auth.service.js.map

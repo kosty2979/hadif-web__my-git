@@ -18,12 +18,14 @@ var md5_1 = require("ts-md5/dist/md5");
 var api_errors_1 = require("../classes/api-errors");
 var config_service_1 = require("./config.service");
 var angular2_toaster_1 = require("angular2-toaster");
+var core_2 = require("@ngx-translate/core");
 var toster;
 var UserDataService = (function () {
-    function UserDataService(http, config, toasterService) {
+    function UserDataService(http, config, toasterService, translate) {
         this.http = http;
         this.config = config;
         this.toasterService = toasterService;
+        this.translate = translate;
         this.avatar = new avatar_pics_1.AvatarPics();
         this.userData = new Subject_1.Subject();
         this.authDate = {
@@ -88,7 +90,7 @@ var UserDataService = (function () {
                 }
             });
         })
-            .catch(this.handleError);
+            .catch(function (e) { return _this.handleError(e); });
     };
     ;
     UserDataService.prototype.getUserImageUrl = function (user) {
@@ -143,7 +145,7 @@ var UserDataService = (function () {
                 }
             });
         })
-            .catch(this.handleError);
+            .catch(function (e) { return _this.handleError(e); });
     };
     ;
     UserDataService.prototype.resetPass = function (username) {
@@ -173,7 +175,7 @@ var UserDataService = (function () {
                 }
             });
         })
-            .catch(this.handleError);
+            .catch(function (e) { return _this.handleError(e); });
     };
     ;
     UserDataService.prototype.editUserDetails = function (user) {
@@ -217,7 +219,7 @@ var UserDataService = (function () {
                 }
             });
         })
-            .catch(this.handleError);
+            .catch(function (e) { return _this.handleError(e); });
     };
     ;
     UserDataService.prototype.hpayGetSubscriptions = function (clear) {
@@ -264,7 +266,7 @@ var UserDataService = (function () {
                 }
             });
         })
-            .catch(this.handleError);
+            .catch(function (e) { return _this.handleError(e); });
     };
     ;
     UserDataService.prototype.hpayGetPastTransactions = function () {
@@ -307,7 +309,7 @@ var UserDataService = (function () {
                 }
             });
         })
-            .catch(this.handleError);
+            .catch(function (e) { return _this.handleError(e); });
     };
     ;
     UserDataService.prototype.hpayUpdateCard = function () {
@@ -345,7 +347,7 @@ var UserDataService = (function () {
                 }
             });
         })
-            .catch(this.handleError);
+            .catch(function (e) { return _this.handleError(e); });
     };
     ;
     UserDataService.prototype.hpayUpdateCardPayment = function (cId) {
@@ -384,7 +386,7 @@ var UserDataService = (function () {
                 }
             });
         })
-            .catch(this.handleError);
+            .catch(function (e) { return _this.handleError(e); });
     };
     ;
     UserDataService.prototype.hpayUpdateAutoRenew = function (code) {
@@ -423,7 +425,7 @@ var UserDataService = (function () {
                 }
             });
         })
-            .catch(this.handleError);
+            .catch(function (e) { return _this.handleError(e); });
     };
     ;
     UserDataService.prototype.hpayCancelRecurringPayment = function () {
@@ -461,7 +463,7 @@ var UserDataService = (function () {
                 }
             });
         })
-            .catch(this.handleError);
+            .catch(function (e) { return _this.handleError(e); });
     };
     ;
     UserDataService.prototype.resetUserInfo = function () {
@@ -475,6 +477,7 @@ var UserDataService = (function () {
     };
     ;
     UserDataService.prototype.getUrl = function (name, digest) {
+        var _this = this;
         var url;
         var self = this;
         return new Promise(function (resolve, reject) {
@@ -485,7 +488,7 @@ var UserDataService = (function () {
                 resolve(url + token);
             });
         })
-            .catch(this.handleError);
+            .catch(function (e) { return _this.handleError(e); });
     };
     ;
     UserDataService.prototype.handleError = function (error) {
@@ -494,7 +497,11 @@ var UserDataService = (function () {
             localStorage.removeItem('authDate');
             window.location.href = '/login';
         }
-        toster.pop('error', 'Sorry', 'Some Error has Occured!');
+        var errorText = error || 'Something went wrong';
+        var errorTitel = 'Sorry';
+        this.translate.get([errorTitel, errorText]).subscribe(function (translations) {
+            toster.pop('error', translations[errorTitel], translations[errorText]);
+        });
         return Promise.reject(error.message || error);
     };
     ;
@@ -504,7 +511,8 @@ UserDataService = __decorate([
     core_1.Injectable(),
     __metadata("design:paramtypes", [http_1.Http,
         config_service_1.ConfigService,
-        angular2_toaster_1.ToasterService])
+        angular2_toaster_1.ToasterService,
+        core_2.TranslateService])
 ], UserDataService);
 exports.UserDataService = UserDataService;
 ;

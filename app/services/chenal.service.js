@@ -12,6 +12,7 @@ var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 var http_2 = require("@angular/http");
 var angular2_toaster_1 = require("angular2-toaster");
+var core_2 = require("@ngx-translate/core");
 require("rxjs/add/operator/toPromise");
 require("rxjs/add/operator/map");
 require("rxjs/add/observable/of");
@@ -19,11 +20,12 @@ var config_service_1 = require("../services/config.service");
 var auth_service_1 = require("./auth.service");
 var toster;
 var ChenalService = (function () {
-    function ChenalService(toasterService, http, config, authService) {
+    function ChenalService(toasterService, http, config, authService, translate) {
         this.toasterService = toasterService;
         this.http = http;
         this.config = config;
         this.authService = authService;
+        this.translate = translate;
         this.headers = new http_1.Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
         toster = toasterService;
     }
@@ -53,7 +55,7 @@ var ChenalService = (function () {
                 resolve(res.json().getChannelList);
             });
         })
-            .catch(this.handleError);
+            .catch(function (e) { return _this.handleError(e); });
     };
     ChenalService.prototype.getsearchItems = function (searchString, itemType, channelNumber) {
         var _this = this;
@@ -85,7 +87,7 @@ var ChenalService = (function () {
                 resolve(res.json().searchItems[0].items);
             });
         })
-            .catch(this.handleError);
+            .catch(function (e) { return _this.handleError(e); });
     };
     ChenalService.prototype.getGenre = function (filter, channelId) {
         var _this = this;
@@ -109,7 +111,7 @@ var ChenalService = (function () {
                 resolve(res.json().getGenre);
             });
         })
-            .catch(this.handleError);
+            .catch(function (e) { return _this.handleError(e); });
     };
     ChenalService.prototype.getSeries = function (filter, channelId) {
         var _this = this;
@@ -133,7 +135,7 @@ var ChenalService = (function () {
                 resolve(res.json().getSeries);
             });
         })
-            .catch(this.handleError);
+            .catch(function (e) { return _this.handleError(e); });
     };
     ;
     ChenalService.prototype.getSeriesItems = function (Id) {
@@ -160,7 +162,7 @@ var ChenalService = (function () {
                 resolve(res.json().getSeriesItems);
             });
         })
-            .catch(this.handleError);
+            .catch(function (e) { return _this.handleError(e); });
     };
     ;
     ChenalService.prototype.getSeason = function (seriesId, channelId) {
@@ -185,7 +187,7 @@ var ChenalService = (function () {
                 resolve(res.json().getSeason);
             });
         })
-            .catch(this.handleError);
+            .catch(function (e) { return _this.handleError(e); });
     };
     /**
     *extsessionid string Required
@@ -219,8 +221,10 @@ var ChenalService = (function () {
                 resolve(res.json().rateSeries);
             });
         })
-            .catch(this.handleError);
+            .catch(function (e) { return _this.handleError(e); });
+        ;
     };
+    ;
     ChenalService.prototype.getSeasonItems = function (seasonId, seriesId, channelId) {
         var _this = this;
         var config;
@@ -243,22 +247,32 @@ var ChenalService = (function () {
                 resolve(res.json().getSeasonItems.items);
             });
         })
-            .catch(this.handleError);
+            .catch(function (e) { return _this.handleError(e); });
     };
+    ;
     ChenalService.prototype.handleError = function (error) {
         console.error('An error occurred', error); // for demo purposes only
         if (error == 105) {
             localStorage.removeItem('authDate');
             window.location.href = '/login';
         }
-        toster.pop('error', 'Sorry', 'Some Error has Occured!');
+        ;
+        var errorText = error || 'Something went wrong';
+        var errorTitel = 'Sorry';
+        this.translate.get([errorTitel, errorText]).subscribe(function (translations) {
+            toster.pop('error', translations[errorTitel], translations[errorText]);
+        });
         return Promise.reject(error.message || error);
     };
     return ChenalService;
 }());
 ChenalService = __decorate([
     core_1.Injectable(),
-    __metadata("design:paramtypes", [angular2_toaster_1.ToasterService, http_1.Http, config_service_1.ConfigService, auth_service_1.AuthService])
+    __metadata("design:paramtypes", [angular2_toaster_1.ToasterService,
+        http_1.Http,
+        config_service_1.ConfigService,
+        auth_service_1.AuthService,
+        core_2.TranslateService])
 ], ChenalService);
 exports.ChenalService = ChenalService;
 //# sourceMappingURL=chenal.service.js.map

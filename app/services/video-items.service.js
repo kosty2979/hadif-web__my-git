@@ -17,13 +17,15 @@ require("rxjs/add/observable/of");
 var config_service_1 = require("../services/config.service");
 var auth_service_1 = require("./auth.service");
 var angular2_toaster_1 = require("angular2-toaster");
+var core_2 = require("@ngx-translate/core");
 var toster;
 var VideoItemsService = (function () {
-    function VideoItemsService(http, config, auth, toasterService) {
+    function VideoItemsService(http, config, auth, toasterService, translate) {
         this.http = http;
         this.config = config;
         this.auth = auth;
         this.toasterService = toasterService;
+        this.translate = translate;
         this.headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         toster = toasterService;
         this.getConfig().then(function (config) {
@@ -59,7 +61,7 @@ var VideoItemsService = (function () {
                 resolve(res.json().getUrl[0]);
             });
         })
-            .catch(this.handleError);
+            .catch(function (e) { return _this.handleError(e); });
     };
     VideoItemsService.prototype.getItemList = function (itemType) {
         var _this = this;
@@ -86,14 +88,14 @@ var VideoItemsService = (function () {
                 resolve(res.json().getItemList);
             });
         })
-            .catch(this.handleError);
+            .catch(function (e) { return _this.handleError(e); });
     };
     // private getItemListUrl = 'http://api.visionip.tv/api/JSONMOBILE/getItemList?version=2&clientId=24&digest=ece8c6bb327b053498a788fd7f55d1b0&channelid=772&';  // URL to web api
     // getItemList(): Promise<any> {
     //   return this.http.get(this.getItemListUrl as any)
     //     .toPromise()
     //     .then(response => response.json().data)
-    //     .catch(this.handleError);
+    //     ..catch(e => this.handleError(e));
     // }
     VideoItemsService.prototype.handleError = function (error) {
         console.error('An error occurred', error); // for demo purposes only
@@ -101,14 +103,22 @@ var VideoItemsService = (function () {
             localStorage.removeItem('authDate');
             window.location.href = '/login';
         }
-        toster.pop('error', 'Sorry', 'Some Error has Occured!');
+        var errorText = error || 'Something went wrong';
+        var errorTitel = 'Sorry';
+        this.translate.get([errorTitel, errorText]).subscribe(function (translations) {
+            toster.pop('error', translations[errorTitel], translations[errorText]);
+        });
         return Promise.reject(error.message || error);
     };
     return VideoItemsService;
 }());
 VideoItemsService = __decorate([
     core_1.Injectable(),
-    __metadata("design:paramtypes", [http_1.Http, config_service_1.ConfigService, auth_service_1.AuthService, angular2_toaster_1.ToasterService])
+    __metadata("design:paramtypes", [http_1.Http,
+        config_service_1.ConfigService,
+        auth_service_1.AuthService,
+        angular2_toaster_1.ToasterService,
+        core_2.TranslateService])
 ], VideoItemsService);
 exports.VideoItemsService = VideoItemsService;
 //# sourceMappingURL=video-items.service.js.map

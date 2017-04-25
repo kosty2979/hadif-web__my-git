@@ -336,5 +336,8 @@
   "cancel subscription": "إلغاء الاشتراك",
   "popUp_subscript_yes":"نعم",
   "popUp_subscript_no":"لا",
-  "popUp_subscript_text":"هذا سيقوم بقطع الدخول المجاني لمنصة هادف . هل أنت متأكد بأنك تريد الاستمرار ؟"
+  "popUp_subscript_text":"هذا سيقوم بقطع الدخول المجاني لمنصة هادف . هل أنت متأكد بأنك تريد الاستمرار ؟",
+
+  "Something went wrong":" حدث خطأ ما",
+  "Sorry":" عفواً"
 }

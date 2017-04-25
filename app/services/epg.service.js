@@ -17,12 +17,14 @@ require("rxjs/add/operator/map");
 require("rxjs/add/observable/of");
 var config_service_1 = require("./config.service");
 var angular2_toaster_1 = require("angular2-toaster");
+var core_2 = require("@ngx-translate/core");
 var toster;
 var EpgService = (function () {
-    function EpgService(http, config, toasterService) {
+    function EpgService(http, config, toasterService, translate) {
         this.http = http;
         this.config = config;
         this.toasterService = toasterService;
+        this.translate = translate;
         this.headers = new http_1.Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
         toster = toasterService;
     }
@@ -58,7 +60,7 @@ var EpgService = (function () {
                 resolve(res.json().getPortalTimeline[0].items);
             });
         })
-            .catch(this.handleError);
+            .catch(function (e) { return _this.handleError(e); });
     };
     ;
     EpgService.prototype.getTimeline = function (itemid) {
@@ -105,7 +107,11 @@ var EpgService = (function () {
             localStorage.removeItem('authDate');
             window.location.href = '/login';
         }
-        toster.pop('error', 'Sorry', 'Some Error has Occured!');
+        var errorText = error || 'Something went wrong';
+        var errorTitel = 'Sorry';
+        this.translate.get([errorTitel, errorText]).subscribe(function (translations) {
+            toster.pop('error', translations[errorTitel], translations[errorText]);
+        });
         return Promise.reject(error.message || error);
     };
     ;
@@ -115,7 +121,8 @@ EpgService = __decorate([
     core_1.Injectable(),
     __metadata("design:paramtypes", [http_1.Http,
         config_service_1.ConfigService,
-        angular2_toaster_1.ToasterService])
+        angular2_toaster_1.ToasterService,
+        core_2.TranslateService])
 ], EpgService);
 exports.EpgService = EpgService;
 ;

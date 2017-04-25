@@ -1,22 +1,22 @@
 import { Injectable }    from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import { BaseRequestOptions, RequestOptions } from '@angular/http';
-import {ToasterModule, ToasterService} from 'angular2-toaster';
-import { Router } from '@angular/router';
-import {Observable} from 'rxjs/Rx';
+import { ToasterModule, ToasterService } from 'angular2-toaster';
+import { Router }         from '@angular/router';
+import { Observable }     from 'rxjs/Rx';
+import { TranslateService } from '@ngx-translate/core';
 
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map';
-
 import 'rxjs/add/observable/of';
 
-import { Md5 } from 'ts-md5/dist/md5';
-import { ConfigService }          from '../services/config.service';
-import { UserDataService }          from '../services/user-data.service';
-import { AuthData } from '../classes/auth-data';
-import { User } from '../classes/user';
-import { PasswordObj } from '../classes/passwordObj';
-import errors from '../classes/api-errors';
+import { Md5 }               from 'ts-md5/dist/md5';
+import { ConfigService }     from '../services/config.service';
+import { UserDataService }   from '../services/user-data.service';
+import { AuthData }          from '../classes/auth-data';
+import { User }              from '../classes/user';
+import { PasswordObj }       from '../classes/passwordObj';
+import errors                from '../classes/api-errors';
 let toster:ToasterService;
 @Injectable()
 export class AuthService {
@@ -27,6 +27,7 @@ export class AuthService {
     private router: Router,
     private toasterService: ToasterService,
     private userDataService: UserDataService,
+    private translate: TranslateService
     ) {
     toster = toasterService;
     if(localStorage.getItem('authDate')){
@@ -105,7 +106,7 @@ public getSubscriptions(): Promise<any> {
         resolve(res.json().subscriptions);
       });
     })
-    .catch(this.handleError);
+    .catch(e => this.handleError(e));
 };
 
   public getVoucher( voucher:string, price:boolean ): Promise<any> {
@@ -145,7 +146,7 @@ public getSubscriptions(): Promise<any> {
           }
         });
       })
-      .catch(this.handleError);
+      .catch(e => this.handleError(e));
   };
 
 
@@ -181,7 +182,7 @@ public getSubscriptions(): Promise<any> {
           }
         });
       })
-      .catch(this.handleError);
+      .catch(e => this.handleError(e));
   };
 
 
@@ -216,7 +217,7 @@ public getSubscriptions(): Promise<any> {
           }
         });
       })
-      .catch(this.handleError);
+      .catch(e => this.handleError(e));
   };
 
 
@@ -247,7 +248,7 @@ public getSubscriptions(): Promise<any> {
           resolve( true );
         });
       })
-      .catch(this.handleError);
+      .catch(e => this.handleError(e));
   };
 
   public login(user: string, password: string): Promise<any> {
@@ -285,7 +286,7 @@ public getSubscriptions(): Promise<any> {
           }
         });
       })
-      .catch(this.handleError);
+      .catch(e => this.handleError(e));
   };
 
   public register(user: any): Promise<any> {
@@ -314,7 +315,7 @@ public getSubscriptions(): Promise<any> {
           }
         });
       })
-      .catch(this.handleError);
+      .catch(e => this.handleError(e));
   };
 
   private headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
@@ -333,7 +334,7 @@ public getSubscriptions(): Promise<any> {
         resolve(url+token);
       });
     })
-    .catch(this.handleError);
+    .catch(e => this.handleError(e));
   }
 
   private handleError(error: any):Promise<any>{
@@ -342,7 +343,13 @@ public getSubscriptions(): Promise<any> {
       localStorage.removeItem('authDate');
       window.location.href = '/login';
     }
-    toster.pop('error', 'Sorry', 'Some Error has Occured!');
+
+    let errorText =  error || 'Something went wrong';
+    let errorTitel = 'Sorry' 
+    this.translate.get([ errorTitel, errorText ]).subscribe((translations: any) => {
+      toster.pop('error', translations[errorTitel], translations[errorText]);
+    });
+
     return Promise.reject(error.message || error);
   }
 }

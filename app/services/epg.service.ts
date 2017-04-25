@@ -11,7 +11,8 @@ import 'rxjs/add/observable/of';
 
 import { ConfigService }          from './config.service';
 import { AuthService } from './auth.service';
-import {ToasterModule, ToasterService} from 'angular2-toaster';
+import { ToasterModule, ToasterService } from 'angular2-toaster';
+import { TranslateService } from '@ngx-translate/core';
 let toster:ToasterService;
 
 @Injectable()
@@ -20,7 +21,9 @@ export class EpgService {
 	constructor(
 	 	private http: Http,
 	 	private config: ConfigService,
-		private toasterService: ToasterService) {
+		private toasterService: ToasterService,
+    private translate: TranslateService
+    ) {
 	    toster = toasterService;
 		};
 
@@ -56,7 +59,7 @@ export class EpgService {
           resolve(res.json().getPortalTimeline[0].items);
         });
     })
-		.catch(this.handleError);
+		.catch(e => this.handleError(e));
 	};
 
 	public getTimeline ( itemid  :string){
@@ -108,7 +111,11 @@ export class EpgService {
 			localStorage.removeItem('authDate');
 			window.location.href = '/login';
 		}
-    toster.pop('error', 'Sorry', 'Some Error has Occured!');
+    let errorText =  error || 'Something went wrong';
+    let errorTitel = 'Sorry'; 
+    this.translate.get([ errorTitel, errorText ]).subscribe((translations: any) => {
+      toster.pop('error', translations[errorTitel], translations[errorText]);
+    })
 		return Promise.reject(error.message || error);
 	};
 

@@ -17,6 +17,7 @@ require("rxjs/add/observable/of");
 var config_service_1 = require("./config.service");
 var auth_service_1 = require("./auth.service");
 var angular2_toaster_1 = require("angular2-toaster");
+var core_2 = require("@ngx-translate/core");
 var toster;
 var Types;
 (function (Types) {
@@ -25,11 +26,12 @@ var Types;
     Types[Types["OneOffPayment"] = 3] = "OneOffPayment";
 })(Types = exports.Types || (exports.Types = {}));
 var PaymentService = (function () {
-    function PaymentService(http, config, authService, toasterService) {
+    function PaymentService(http, config, authService, toasterService, translate) {
         this.http = http;
         this.config = config;
         this.authService = authService;
         this.toasterService = toasterService;
+        this.translate = translate;
         this.headers = new http_1.Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
         toster = toasterService;
     }
@@ -60,7 +62,7 @@ var PaymentService = (function () {
                 resolve(res.json());
             });
         })
-            .catch(this.handleError);
+            .catch(function (e) { return _this.handleError(e); });
     };
     ;
     /**
@@ -110,7 +112,7 @@ var PaymentService = (function () {
                 resolve(res.json().hpayPrepareCheckout);
             });
         })
-            .catch(this.handleError);
+            .catch(function (e) { return _this.handleError(e); });
     };
     ;
     PaymentService.prototype.hpayMakePayment = function (cId) {
@@ -142,7 +144,7 @@ var PaymentService = (function () {
                 resolve(res.json());
             });
         })
-            .catch(this.handleError);
+            .catch(function (e) { return _this.handleError(e); });
     };
     ;
     PaymentService.prototype.getConfig = function () {
@@ -155,7 +157,11 @@ var PaymentService = (function () {
             localStorage.removeItem('authDate');
             window.location.href = '/login';
         }
-        toster.pop('error', 'Sorry', 'Some Error has Occured!');
+        var errorText = error || 'Something went wrong';
+        var errorTitel = 'Sorry';
+        this.translate.get([errorTitel, errorText]).subscribe(function (translations) {
+            toster.pop('error', translations[errorTitel], translations[errorText]);
+        });
         return Promise.reject(error.message || error);
     };
     return PaymentService;
@@ -165,7 +171,8 @@ PaymentService = __decorate([
     __metadata("design:paramtypes", [http_1.Http,
         config_service_1.ConfigService,
         auth_service_1.AuthService,
-        angular2_toaster_1.ToasterService])
+        angular2_toaster_1.ToasterService,
+        core_2.TranslateService])
 ], PaymentService);
 exports.PaymentService = PaymentService;
 ;

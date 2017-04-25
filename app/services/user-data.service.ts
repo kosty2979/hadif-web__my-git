@@ -17,6 +17,7 @@ import errors           from '../classes/api-errors';
 
 import { ConfigService }                 from './config.service';
 import { ToasterModule, ToasterService } from 'angular2-toaster';
+import { TranslateService } from '@ngx-translate/core';
 let toster:ToasterService;
 
 @Injectable()
@@ -30,7 +31,9 @@ export class UserDataService {
 	constructor(
 	 	private http: Http,
 	 	private config: ConfigService,
-		private toasterService: ToasterService) {
+		private toasterService: ToasterService,
+    private translate: TranslateService
+    ) {
 	    toster = toasterService;
 	};
 
@@ -90,7 +93,7 @@ export class UserDataService {
           }
         });
       })
-      .catch(this.handleError);
+      .catch(e => this.handleError(e));
   };
 
   public  getUserImageUrl(user:User){
@@ -140,7 +143,7 @@ export class UserDataService {
           }
         })
       })
-      .catch(this.handleError);
+      .catch(e => this.handleError(e));
   };
 
   public resetPass(username: string): Promise<any> {
@@ -169,7 +172,7 @@ export class UserDataService {
           }
         });
       })
-      .catch(this.handleError);
+      .catch(e => this.handleError(e));
   };
 
    public editUserDetails(user:User): Promise<any>{
@@ -212,7 +215,7 @@ export class UserDataService {
           }
         });
       })
-      .catch(this.handleError);
+      .catch(e => this.handleError(e));
   };
 
   public hpayGetSubscriptions(clear?:boolean): Promise<any>{ 
@@ -254,7 +257,7 @@ export class UserDataService {
           } 
         }); 
       }) 
-    .catch(this.handleError); 
+    .catch(e => this.handleError(e)); 
   };
 
   public hpayGetPastTransactions(): Promise<any> {
@@ -293,7 +296,7 @@ export class UserDataService {
           }
         });
       })
-      .catch(this.handleError);
+      .catch(e => this.handleError(e));
   };   
  
  public hpayUpdateCard(): Promise<any>{
@@ -329,7 +332,7 @@ export class UserDataService {
           }
         });
       })
-      .catch(this.handleError);
+      .catch(e => this.handleError(e));
  };
 
  public hpayUpdateCardPayment(cId:string): Promise<any>{
@@ -366,7 +369,7 @@ export class UserDataService {
           }
         });
       })
-      .catch(this.handleError);
+      .catch(e => this.handleError(e));
  };
 
   public hpayUpdateAutoRenew(code:number): Promise<any>{
@@ -403,7 +406,7 @@ export class UserDataService {
           }
         });
       })
-      .catch(this.handleError);
+      .catch(e => this.handleError(e));
  };
 
   public hpayCancelRecurringPayment(): Promise<any>{
@@ -439,7 +442,7 @@ export class UserDataService {
           }
         });
       })
-      .catch(this.handleError);
+      .catch(e => this.handleError(e));
  };
 
   public resetUserInfo(){
@@ -466,7 +469,7 @@ export class UserDataService {
         resolve(url+token);
       });
     })
-    .catch(this.handleError);
+    .catch(e => this.handleError(e));
   };
 
   private handleError(error: any):Promise<any>{
@@ -475,7 +478,11 @@ export class UserDataService {
       localStorage.removeItem('authDate');
       window.location.href = '/login';
     }
-    toster.pop('error', 'Sorry', 'Some Error has Occured!');
+    let errorText =  error || 'Something went wrong';
+    let errorTitel = 'Sorry' 
+    this.translate.get([ errorTitel, errorText ]).subscribe((translations: any) => {
+      toster.pop('error', translations[errorTitel], translations[errorText]);
+    });
     return Promise.reject(error.message || error);
   };
   

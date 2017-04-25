@@ -11,6 +11,7 @@ import 'rxjs/add/observable/of';
 import { ConfigService }          from './config.service';
 import { AuthService } from './auth.service';
 import {ToasterModule, ToasterService} from 'angular2-toaster';
+import { TranslateService } from '@ngx-translate/core';
 let toster:ToasterService;
 
 export enum Types {
@@ -26,7 +27,9 @@ export class PaymentService {
 	 	private http: Http,
 	 	private config: ConfigService,
 	 	private authService: AuthService,
-    private toasterService: ToasterService) {
+    private toasterService: ToasterService,
+    private translate: TranslateService
+    ) {
       toster = toasterService;
     };
 
@@ -57,7 +60,7 @@ export class PaymentService {
           resolve(res.json());
         });
     })
-    .catch(this.handleError);
+    .catch(e => this.handleError(e));
   };
 /**
 *  period:
@@ -108,7 +111,7 @@ export class PaymentService {
          resolve(res.json().hpayPrepareCheckout);
        })
    })
-   .catch(this.handleError);
+   .catch(e => this.handleError(e));
  };
 
  public hpayMakePayment(cId: string): Promise<any> {
@@ -140,7 +143,7 @@ export class PaymentService {
          resolve(res.json());
        });
    })
-   .catch(this.handleError);
+   .catch(e => this.handleError(e));
  };
 
 
@@ -156,7 +159,11 @@ export class PaymentService {
       localStorage.removeItem('authDate');
       window.location.href = '/login';
     }
-    toster.pop('error', 'Sorry', 'Some Error has Occured!');
+    let errorText =  error || 'Something went wrong';
+    let errorTitel = 'Sorry' 
+    this.translate.get([ errorTitel, errorText ]).subscribe((translations: any) => {
+      toster.pop('error', translations[errorTitel], translations[errorText]);
+    });
     return Promise.reject(error.message || error);
   }
 };

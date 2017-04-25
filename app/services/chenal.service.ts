@@ -1,29 +1,36 @@
 import { Injectable }    from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import { BaseRequestOptions, RequestOptions } from '@angular/http';
-import {ToasterModule, ToasterService} from 'angular2-toaster';
+import { ToasterModule, ToasterService } from 'angular2-toaster';
+import { TranslateService } from '@ngx-translate/core';
 
-import {Observable} from 'rxjs/Rx';
+import { Observable } from 'rxjs/Rx';
 
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map';
 
 import 'rxjs/add/observable/of';
 
-import {Md5} from 'ts-md5/dist/md5';
+import { Md5} from 'ts-md5/dist/md5';
 import { ConfigService }          from '../services/config.service';
 import errors from '../classes/api-errors';
-import {AuthService} from './auth.service';
-import {Series} from '../classes/series';
-import {Genre} from '../classes/genre';
-import {Season} from '../classes/season';
-import {VideoItem} from '../classes/video-item';
+import { AuthService } from './auth.service';
+import { Series } from '../classes/series';
+import { Genre } from '../classes/genre';
+import { Season } from '../classes/season';
+import { VideoItem } from '../classes/video-item';
 let toster:ToasterService;
 
 @Injectable()
 export class ChenalService {
 
-  constructor( private toasterService: ToasterService, private http: Http, private config: ConfigService, private authService: AuthService) {
+  constructor( 
+    private toasterService: ToasterService,
+     private http: Http, 
+     private config: ConfigService, 
+     private authService: AuthService,
+     private translate: TranslateService
+     ) {
       toster = toasterService;
   }
 
@@ -53,7 +60,7 @@ export class ChenalService {
           resolve(res.json().getChannelList);
         });
       })
-      .catch(this.handleError);
+      .catch(e => this.handleError(e));
   }
 
   public getsearchItems(searchString: string, itemType:number, channelNumber?: boolean): Promise<any> {
@@ -84,7 +91,7 @@ export class ChenalService {
           resolve(res.json().searchItems[0].items);
         });
       })
-      .catch(this.handleError);
+      .catch(e => this.handleError(e));
 
   }
 
@@ -109,7 +116,7 @@ export class ChenalService {
           resolve(res.json().getGenre);
         });
       })
-      .catch(this.handleError);
+      .catch(e => this.handleError(e));
   }
 
   public getSeries(filter	: any, channelId?: number	): Promise<Series[]> {
@@ -133,7 +140,7 @@ export class ChenalService {
           resolve(res.json().getSeries);
         });
       })
-      .catch(this.handleError);
+      .catch(e => this.handleError(e));
   };
 
   public getSeriesItems  (Id:number): Promise<Series> {
@@ -160,7 +167,7 @@ export class ChenalService {
           resolve(res.json().getSeriesItems);
         });
       })
-      .catch(this.handleError);
+      .catch(e => this.handleError(e));
   };
 
 
@@ -185,7 +192,7 @@ export class ChenalService {
           resolve(res.json().getSeason);
         });
       })
-      .catch(this.handleError);
+      .catch(e => this.handleError(e));
     }
 
 /**
@@ -220,31 +227,32 @@ public rateSeries(seriesId	: number, rating:number, channelId?: number	): Promis
         resolve(res.json().rateSeries);
       });
     })
-    .catch(this.handleError);
-  }
-    public getSeasonItems(seasonId	: number, seriesId	: number, channelId?: number	): Promise<VideoItem[]> {
-      let config:any;
-      let options = new RequestOptions({ headers: this.headers});
-      return new Promise((resolve, reject) => {
-        this.getConfig()
-          .then(c=>{
-            config = c;
-            channelId = channelId || config.channelId;
-            return this.config.getUrl('getSeasonItems', seasonId.toString())
-          })
-          .then((url)=>{
-            let data = {seasonId:seasonId, seriesId:seriesId, channelId:channelId};
-            return this.http.post(url, this.config.toQuery(data), options).toPromise();
-          })
-          .then(res=>{
-            if (res.json().errorcode !== "0"){
-              return reject(res.json().errorcode);
-            }
-            resolve(res.json().getSeasonItems.items);
-          });
+    .catch(e => this.handleError(e));;
+  };
+
+  public getSeasonItems(seasonId	: number, seriesId	: number, channelId?: number	): Promise<VideoItem[]> {
+    let config:any;
+    let options = new RequestOptions({ headers: this.headers});
+    return new Promise((resolve, reject) => {
+      this.getConfig()
+        .then(c=>{
+          config = c;
+          channelId = channelId || config.channelId;
+          return this.config.getUrl('getSeasonItems', seasonId.toString())
         })
-        .catch(this.handleError);
-      }
+        .then((url)=>{
+          let data = {seasonId:seasonId, seriesId:seriesId, channelId:channelId};
+          return this.http.post(url, this.config.toQuery(data), options).toPromise();
+        })
+        .then(res=>{
+          if (res.json().errorcode !== "0"){
+            return reject(res.json().errorcode);
+          }
+          resolve(res.json().getSeasonItems.items);
+        });
+      })
+      .catch(e => this.handleError(e));
+    };
 
 
   private headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
@@ -254,8 +262,13 @@ public rateSeries(seriesId	: number, rating:number, channelId?: number	): Promis
     if (error == 105){
       localStorage.removeItem('authDate');
       window.location.href = '/login';
-    }
-    toster.pop('error', 'Sorry', 'Some Error has Occured!');
+    };
+
+    let errorText =  error || 'Something went wrong';
+    let errorTitel = 'Sorry' 
+    this.translate.get([ errorTitel, errorText ]).subscribe((translations: any) => {
+      toster.pop('error', translations[errorTitel], translations[errorText]);
+    });
     return Promise.reject(error.message || error);
   }
 }
