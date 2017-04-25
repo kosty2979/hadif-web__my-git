@@ -56,9 +56,9 @@
 	}
 	.navbar-collapse ul li {
 		margin: 15px 0;
-		float: none;
+		/* float: none; */
 		margin:0;
-		width: auto;
+		width: 20%;
 		display: block;
 	    -webkit-margin-before: 20px;
 	    -webkit-margin-after: 20px;
@@ -75,9 +75,9 @@
 	.prof-avatar img {
 		margin:0;
 	}
-	.border-abs {
+	/* .border-abs {
 		display: none;
-	}
+	} */
 	.switcher {
 		float: none;
 		margin:0;
