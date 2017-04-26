@@ -2171,3 +2171,12 @@ margin-top: 56px;
   padding-left:15px;
 }
 /*end  style for terms and cond */
+
+.aboutWrapper{
+  height: 600px;
+  overflow: auto;
+  margin-top:25px;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+
+}

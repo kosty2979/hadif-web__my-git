@@ -339,5 +339,8 @@
   "popUp_subscript_text":"هذا سيقوم بقطع الدخول المجاني لمنصة هادف . هل أنت متأكد بأنك تريد الاستمرار ؟",
 
   "Something went wrong":" حدث خطأ ما",
-  "Sorry":" عفواً"
+  "Sorry":" عفواً",
+  "currency": " دولار",
+  "including":" مع",
+  "days free trial":" أيام مجانية"
 }

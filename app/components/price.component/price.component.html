@@ -29,10 +29,16 @@
         <div *ngIf="error" class="alert alert-danger">
                {{ errortext | translate }}
         </div>
-         <div class="radio text-left" *ngFor="let price of prices let i = index" >
+         <div class="radio text-left" *ngFor="let price of prices; let i = index" >
            <label *ngIf = "showItem(price)">
-           <input type="radio"  name="price" [(ngModel)]="selectedPrice" value="{{price.name}}">
-           {{ price.name | translate }} {{ getActiveDay(price) }} &mdash; {{ price.value }}
+           <input type="radio"  
+           name="price" 
+           [(ngModel)]="selectedPrice" 
+           value="{{price.name}}"
+           >
+           {{ price.name | translate }}
+           {{ getActiveDay(price)? ('(' +('including' | translate) + getActiveDay(price) + ('days free trial' | translate) +')'):''}} 
+           &mdash; {{ price.value + ('currency' | translate) }}
             </label>
          </div>
 

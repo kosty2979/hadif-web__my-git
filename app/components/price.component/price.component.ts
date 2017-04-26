@@ -61,7 +61,8 @@ export class PriceComponent {
 
   showItem(price:Price){
     return parseInt(price.value) != 99999;
-  }
+  };
+
 
 	onSubmit(){
     let type:number = Types.OneOffPayment;
@@ -119,21 +120,29 @@ export class PriceComponent {
 
 	private setPrice( obj:Object){
  		let array = [];
+ 		let needSubmit:boolean= false
  		for ( let key in obj ){
  			let tmp:Price = new Price;
  			tmp["name"] = key;
- 			tmp["value"] = obj[key];
+ 			tmp["value"] = obj[key].replace(/USD/g, '');
+ 			if ( parseInt(obj[key]) == 0 ){//   for
+	    	this.selectedPrice = tmp.name;//  0 price
+	   		needSubmit = true;						//  not select tarrif plan
+	    }
  			array.push(tmp);
  		}
  		this.prices = array;
+ 		if ( needSubmit){
+	   		this.firstStep =!this.firstStep
+	    }
 	};
 
 	 private getActiveDay(price:Price){
 	 	let text;
 	 	if( localStorage.getItem('voucherPrice') ) return text
 	 	if(this.tarifForFree.indexOf(period[price.name])!=-1 && this.freePeriod.active == "1" ){
-	 		let days = this.freePeriod.days 
-		 	text = '(including '+days+' days free trial)'
+	 		text = this.freePeriod.days 
+		 	//text = '(including '+days+' days free trial)'
 		 }
 		 return text
 	 };

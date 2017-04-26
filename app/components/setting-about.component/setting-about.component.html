@@ -4,8 +4,8 @@
         <h2 class="text-center hadif-purple">{{'About' | translate }}</h2>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-12 panel-left-content">
+    <div class="">
+      <div class="col-xs-4 panel-left-content">
         <div class="pr3 mb2">
           <h4 class="about-hadif hadif-purple">{{'About Hadif' | translate }}</h4>
           <span><a href="#">{{'Tell your friend' | translate }}</a></span>
@@ -18,6 +18,8 @@
           <span><a href="#">{{'Twitter' | translate }}</a></span>
           <span><a href="#">{{'Instagram' | translate }}</a></span>
         </div>
+      </div>
+      <div class="col-xs-8 aboutWrapper" [innerHTML]="getAboutText()">
       </div>
     </div>
     </div>

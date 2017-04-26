@@ -9,9 +9,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
+var about_1 = require("../../classes/about");
 var SettingAboutComponent = (function () {
     function SettingAboutComponent() {
+        this.lang = true;
+        this.about = new about_1.About();
     }
+    ;
+    SettingAboutComponent.prototype.getAboutText = function () {
+        var text = this.isEnglish() ? this.about.en : this.about.ar;
+        return text;
+    };
+    SettingAboutComponent.prototype.isEnglish = function () {
+        var lang = localStorage.getItem('lang');
+        this.lang = lang == 'en';
+        return (lang == 'en');
+    };
     ;
     return SettingAboutComponent;
 }());

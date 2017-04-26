@@ -2167,3 +2167,20 @@ footer {
   right:12px;
 }
 /* END style for toaster popup */
+.aboutWrapper{
+  height: 600px;
+  overflow: auto;
+  margin-top:25px;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+  direction: rtl;
+}
+.priceWrapper{
+  direction: rtl;
+}
+.priceWrapper .text-left{
+  text-align: right
+}
+.priceWrapper  .radio input[type="radio"]{
+  margin-right: -20px;
+}

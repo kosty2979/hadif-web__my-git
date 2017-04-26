@@ -337,6 +337,10 @@
   "popUp_subscript_text":"This will terminate your Free access to Hadif. Are you sure you wish to go ahead?",
 
   "Something went wrong":"Something went wrong",
-  "Sorry":"Sorry"
+  "Sorry":"Sorry",
+  "currency": " USD",
+  "including":" including",
+  "days free trial":" days free trial"
+
 
 }

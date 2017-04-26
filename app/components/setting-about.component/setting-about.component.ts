@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { About } from '../../classes/about';
 
 
 
@@ -10,10 +11,21 @@ import { Component } from '@angular/core';
 })
 
 export class SettingAboutComponent {
+lang: boolean= true;
+about:About = new About();
 
 
+constructor(){};
 
+ private getAboutText(){
+	 	let text = this.isEnglish()? this.about.en : this.about.ar;
+	 	return text
+	 }
 
-	constructor(){};
+	 private isEnglish():boolean{
+			let lang = localStorage.getItem('lang');
+			this.lang = lang == 'en';
+		     return ( lang == 'en' ) ;
+		};
 
 }

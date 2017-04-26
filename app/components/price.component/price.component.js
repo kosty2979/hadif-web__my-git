@@ -60,6 +60,7 @@ var PriceComponent = (function () {
     PriceComponent.prototype.showItem = function (price) {
         return parseInt(price.value) != 99999;
     };
+    ;
     PriceComponent.prototype.onSubmit = function () {
         var _this = this;
         var type = payment_service_1.Types.OneOffPayment;
@@ -119,13 +120,21 @@ var PriceComponent = (function () {
     ;
     PriceComponent.prototype.setPrice = function (obj) {
         var array = [];
+        var needSubmit = false;
         for (var key in obj) {
             var tmp = new price_1.Price;
             tmp["name"] = key;
-            tmp["value"] = obj[key];
+            tmp["value"] = obj[key].replace(/USD/g, '');
+            if (parseInt(obj[key]) == 0) {
+                this.selectedPrice = tmp.name; //  0 price
+                needSubmit = true; //  not select tarrif plan
+            }
             array.push(tmp);
         }
         this.prices = array;
+        if (needSubmit) {
+            this.firstStep = !this.firstStep;
+        }
     };
     ;
     PriceComponent.prototype.getActiveDay = function (price) {
@@ -133,8 +142,7 @@ var PriceComponent = (function () {
         if (localStorage.getItem('voucherPrice'))
             return text;
         if (this.tarifForFree.indexOf(period[price.name]) != -1 && this.freePeriod.active == "1") {
-            var days = this.freePeriod.days;
-            text = '(including ' + days + ' days free trial)';
+            text = this.freePeriod.days;
         }
         return text;
     };
