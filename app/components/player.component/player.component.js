@@ -145,7 +145,7 @@ __decorate([
 VideoPlayer = __decorate([
     core_1.Component({
         selector: 'video-player',
-        template: "\n    <div *ngIf=\"!remove\">\n      <video id=\"my_video\" class=\"video-js vjs-default-skin\" controls preload=\"auto\"\n      data-setup='{}'>\n      </video>\n    </div>\n  <div class=\"control\">\n    <!--<button title=\"{{'Share' | translate}}\" *ngIf=\"download\" class=\"download\" (click)=\"downloadVideo()\"></button>-->\n    <button title=\"{{'Fullscreen' | translate}}\" class=\"fullscreen\" (click)=\"fullscreen()\"></button>\n  </div>\n    <p  *ngIf='live == true && catch == false' class=\"liveOverlay\">LIVE</p>\n    <p  *ngIf='catch == true' class=\"liveOverlay\">catch</p>  \n",
+        template: "\n    <div *ngIf=\"!remove\">\n      <video id=\"my_video\" class=\"video-js vjs-default-skin\" controls preload=\"auto\"\n      data-setup='{}'>\n      </video>\n    </div>\n  <div class=\"control\">\n    <!--<button title=\"{{'Share' | translate}}\" *ngIf=\"download\" class=\"download\" (click)=\"downloadVideo()\"></button>-->\n    <button title=\"{{'Fullscreen' | translate}}\" class=\"fullscreen\" (click)=\"fullscreen()\"></button>\n  </div>\n    <p  *ngIf='live == true && catch == false' class=\"liveOverlay\">{{'LIVE' | translate}}</p>\n    <p  *ngIf='catch == true' class=\"liveOverlay\">{{'catch' | translate}}</p>  \n",
     }),
     __metadata("design:paramtypes", [core_1.ElementRef])
 ], VideoPlayer);

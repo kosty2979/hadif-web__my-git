@@ -14,8 +14,8 @@ let videojs:any= window['videojs'];
     <!--<button title="{{'Share' | translate}}" *ngIf="download" class="download" (click)="downloadVideo()"></button>-->
     <button title="{{'Fullscreen' | translate}}" class="fullscreen" (click)="fullscreen()"></button>
   </div>
-    <p  *ngIf='live == true && catch == false' class="liveOverlay">LIVE</p>
-    <p  *ngIf='catch == true' class="liveOverlay">catch</p>  
+    <p  *ngIf='live == true && catch == false' class="liveOverlay">{{'LIVE' | translate}}</p>
+    <p  *ngIf='catch == true' class="liveOverlay">{{'catch' | translate}}</p>  
 `,
 })
 

@@ -219,5 +219,9 @@ export class LiveComponent implements OnInit {
     private goToVoucher(){
       this.router.navigate(['/voucher'])
     };
+
+    private getImageUrl(item:any){
+        return ( item.thumbSDh || item.thumbSDq || item.thumbnail )
+    };
 };
 

@@ -71,7 +71,7 @@
 <section class="timeline">
 </section>
 </section>
-<section class="hadif-sidebar hadif-episodes col-md-3">
+<section class="hadif-sidebar hadif-episodes col-md-3 col-xs-12">
 <div class="hadif-drop">
  <button data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
   <span class="custom-caret"></span>{{getField('title', sesons[selected])}}
@@ -95,7 +95,7 @@
   <div *ngFor="let episod of episodes; let i = index;" class="channel-holder" [ngClass]="{'no-access': !hasAccess(episod)}" >
     <div class="tv-thumb" ngClass="">
       <a (click)="hasAccess(episod) ? selectEpisod(i): goToVoucher() ">
-        <img class="img-responsive" [src]="episod.thumbnail" alt="">
+        <img class="img-responsive" [src]="getImageUrl(episod)" alt="">
         <span class="play-overlay"></span>
       </a>
     </div>

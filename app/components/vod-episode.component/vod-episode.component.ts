@@ -195,6 +195,10 @@ initAverage(){
       this.router.navigate(['/voucher'])
     };
 
+  private getImageUrl(item:any){
+        return ( item.thumbSD || item.thumbSDh || item.thumbSDq || item.thumbnail )
+    };
+    
 	ngOnDestroy() {
 		if(this.sub) this.sub.unsubscribe();
 	};

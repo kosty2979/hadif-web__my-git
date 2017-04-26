@@ -73,7 +73,7 @@
       <div class="hadif-thumb" *ngIf="!item.end" [ngClass]="{'no-access': !hasAccess(item)}">
        <a (click)="hasAccess(item) ? select(i): goToVoucher() " href="#">
        <span class="play-overlay"></span>
-        <img [src]="item.thumbnail" class="img-responsive">
+        <img [src]="getImageUrl(item)" class="img-responsive">
         <p>{{getField('contentTitle', item)}}</p>
         <p>{{item.liveChannelNumber}}</p>
        </a>

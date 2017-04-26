@@ -190,6 +190,10 @@ var VodEpisodeComponent = (function () {
         this.router.navigate(['/voucher']);
     };
     ;
+    VodEpisodeComponent.prototype.getImageUrl = function (item) {
+        return (item.thumbSD || item.thumbSDh || item.thumbSDq || item.thumbnail);
+    };
+    ;
     VodEpisodeComponent.prototype.ngOnDestroy = function () {
         if (this.sub)
             this.sub.unsubscribe();

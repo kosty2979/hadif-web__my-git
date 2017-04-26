@@ -219,6 +219,10 @@ var LiveComponent = (function () {
         this.router.navigate(['/voucher']);
     };
     ;
+    LiveComponent.prototype.getImageUrl = function (item) {
+        return (item.thumbSDh || item.thumbSDq || item.thumbnail);
+    };
+    ;
     return LiveComponent;
 }());
 LiveComponent = __decorate([
