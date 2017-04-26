@@ -37,7 +37,7 @@
            value="{{price.name}}"
            >
            {{ price.name | translate }}
-           {{ getActiveDay(price)? ('(' +('including' | translate) + getActiveDay(price) + ('days free trial' | translate) +')'):''}} 
+           {{ getActiveDay(price)? ('(' +('including' | translate) +' '+ getActiveDay(price) + ('days free trial' | translate) +')'):''}} 
            &mdash; {{ price.value + ('currency' | translate) }}
             </label>
          </div>

@@ -422,7 +422,7 @@ body {
       float: left;
       margin: 0 40px;
        }
-      .hadif-menu ul li:first-child img {
+      .hadif-menu ul li.iconSetting img {
         height: 10px;
         margin: 10px 0; }
       .hadif-menu ul li a {
@@ -2183,4 +2183,8 @@ footer {
 }
 .priceWrapper  .radio input[type="radio"]{
   margin-right: -20px;
+}
+.priceWrapper .radio label{
+  padding-left:0;
+  padding-right:20px;
 }

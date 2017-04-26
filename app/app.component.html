@@ -20,26 +20,26 @@
       </a>
     
       <ul class="hidden-xs">
-     <li routerLinkActive="active">
-      <a *ngIf="isAuthorized()" routerLink="/setting" ><img src="img/ic_menu_1.png">
-      <span class="border-abs"></span>
-      </a>
-     </li>
-     <li routerLinkActive="active">
-      <a routerLink="/follow" ><img src="img/ic_menu_2.png">
-      <span class="border-abs"></span>
-      </a>
-     </li>
-     <li routerLinkActive="active">
-      <a routerLink="/vod" ><img src="img/ic_menu_3.png">
-      <span class="border-abs"></span>
-      </a>
-     </li>
-     <li routerLinkActive="active">
-      <a routerLink="/live" ><img src="img/ic_menu_4.png">
-      <span class="border-abs"></span>
-      </a>
-     </li>
+         <li routerLinkActive="active" class="iconSetting">
+          <a *ngIf="isAuthorized()" routerLink="/setting" ><img src="img/ic_menu_1.png">
+          <span class="border-abs"></span>
+          </a>
+         </li>
+         <li routerLinkActive="active">
+          <a routerLink="/follow" ><img src="img/ic_menu_2.png">
+          <span class="border-abs"></span>
+          </a>
+         </li>
+         <li routerLinkActive="active">
+          <a routerLink="/vod" ><img src="img/ic_menu_3.png">
+          <span class="border-abs"></span>
+          </a>
+         </li>
+         <li routerLinkActive="active">
+          <a routerLink="/live" ><img src="img/ic_menu_4.png">
+          <span class="border-abs"></span>
+          </a>
+         </li>
     </ul>
     <div class="logo logo-ab">
      <!--class logo-en for left-align logo-->
@@ -48,38 +48,40 @@
     </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul>
-     <li routerLinkActive="active">
-      <a *ngIf="isAuthorized()" routerLink="/setting" ><img src="img/ic_menu_1.png">
-        <span class="border-abs"></span>
-      </a>
-     </li>
-     <li routerLinkActive="active">
-      <a routerLink="/follow" ><img src="img/ic_menu_2.png">
-      <span class="border-abs"></span>
-      </a>
-     </li>
-     <li routerLinkActive="active">
-      <a routerLink="/vod" ><img src="img/ic_menu_3.png">
-      <span class="border-abs"></span>
-      </a>
-     </li>
-     
-    <li *ngIf="isAuthorized()" routerLinkActive="active" class="visible-xs">
-      <a routerLink="/logout" ><img src="img/turn-on.png" alt="">
-      <span class="border-abs"></span>
-      </a>
-     </li>
-     <li *ngIf="!isAuthorized()" routerLinkActive="active">
-      <a routerLink="/login" ><img src="img/turn-on.png" alt="">
-      <span class="border-abs"></span>
-      </a>
-     </li>
 
-     <li routerLinkActive="active">
-      <a routerLink="/live" ><img src="img/ic_menu_4.png">
-      <span class="border-abs"></span>
-      </a>
-     </li>
+        <li *ngIf="isAuthorized()" routerLinkActive="active" class="visible-xs">
+          <a routerLink="/logout" ><img src="img/turn-on.png" alt="">
+          <span class="border-abs"></span>
+          </a>
+        </li>
+        <li *ngIf="!isAuthorized()" routerLinkActive="active">
+          <a routerLink="/login" ><img src="img/turn-on.png" alt="">
+          <span class="border-abs"></span>
+          </a>
+        </li>
+
+        <li routerLinkActive="active" class="iconSetting">
+          <a *ngIf="isAuthorized()" routerLink="/setting" ><img src="img/ic_menu_1.png">
+          <span class="border-abs"></span>
+          </a>
+        </li>
+        <li routerLinkActive="active">
+          <a routerLink="/follow" ><img src="img/ic_menu_2.png">
+          <span class="border-abs"></span>
+          </a>
+        </li>
+        <li routerLinkActive="active">
+          <a routerLink="/vod" ><img src="img/ic_menu_3.png">
+          <span class="border-abs"></span>
+          </a>
+        </li>
+     
+
+        <li routerLinkActive="active">
+          <a routerLink="/live" ><img src="img/ic_menu_4.png">
+          <span class="border-abs"></span>
+          </a>
+        </li>
     </ul>
     </div>
    </div>

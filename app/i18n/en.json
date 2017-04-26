@@ -339,8 +339,10 @@
   "Something went wrong":"Something went wrong",
   "Sorry":"Sorry",
   "currency": " USD",
-  "including":" including",
-  "days free trial":" days free trial"
+  "including":"including",
+  "days free trial":" days free trial",
+
+  "Subscription Info":"Subscription Info"
 
 
 }
