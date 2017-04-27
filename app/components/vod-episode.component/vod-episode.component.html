@@ -48,7 +48,14 @@
 <section class="col-xs-12 col-md-9 forVideo">
 <div class="alert-warning" *ngIf="episodes && !hasAccess(episodes[itemNumber])">  {{'You don`t have access' | translate}} </div>
 <div class="alert-warning" *ngIf="urlError">{{urlError | translate}}</div>
-<video-player url="{{video.url}}" preRoll="{{video.preRoll}}" download="{{video}}"></video-player>
+<video-player 
+    *ngIf ="video.url"
+    url="{{video.url}}" 
+    preRoll="{{video.preRoll}}" 
+    download="{{video}}"
+    (endVideo)="nextVideo()"
+    >
+</video-player>
 <section *ngIf="episodes && episodes.length>0" class="bottom-player-menu">
  <a class="pick-playlist" href="#"><img src="img/ic_play_list.png"></a>
  <a class="vod-feelings" href="#"></a>

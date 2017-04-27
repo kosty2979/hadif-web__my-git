@@ -20,6 +20,7 @@ var VideoPlayer = (function (_super) {
     function VideoPlayer(elem) {
         var _this = _super.call(this) || this;
         _this.elem = elem;
+        _this.endVideo = new core_1.EventEmitter();
         _this.remove = false;
         _this.id = 'player-';
         return _this;
@@ -63,9 +64,7 @@ var VideoPlayer = (function (_super) {
         //srcPre ="http://almajd.api.visionip.tv/vod/ASHTTP/almajd/almajd/Hothiyon5_mpg_vod-25f-16x9-MB/playlist.m3u8?extsessionid=58b43118be1dc-a5f0a70928929e33938c792789e04ebe"
         setTimeout(function () { _this.remove = false; }, 0);
         setTimeout(function () {
-            if (!_this.player) {
-                _this.player = videojs('my_video');
-            }
+            _this.player = videojs('my_video');
             _this.player.src({
                 src: src,
                 type: 'application/x-mpegURL'
@@ -96,6 +95,10 @@ var VideoPlayer = (function (_super) {
             else {
                 _this.player.play();
             }
+            var self = _this;
+            _this.player.one('ended', function () {
+                self.endVideo.emit();
+            });
             if (src == "") {
                 _this.player.bigPlayButton.hide();
                 _this.player.pause();
@@ -142,6 +145,10 @@ __decorate([
     core_1.Input(),
     __metadata("design:type", String)
 ], VideoPlayer.prototype, "catch", void 0);
+__decorate([
+    core_1.Output(),
+    __metadata("design:type", Object)
+], VideoPlayer.prototype, "endVideo", void 0);
 VideoPlayer = __decorate([
     core_1.Component({
         selector: 'video-player',

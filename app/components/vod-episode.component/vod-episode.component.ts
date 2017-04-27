@@ -198,6 +198,13 @@ initAverage(){
   private getImageUrl(item:any){
         return ( item.thumbSD || item.thumbSDh || item.thumbSDq || item.thumbnail )
     };
+
+  private nextVideo(){
+    let nextNumber = this.itemNumber + 1;
+    if(this.episodes[nextNumber]){
+      this.selectEpisod( nextNumber )
+    };
+  };
     
 	ngOnDestroy() {
 		if(this.sub) this.sub.unsubscribe();

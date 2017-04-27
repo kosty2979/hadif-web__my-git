@@ -14,7 +14,7 @@
  <section class="col-xs-12 col-md-9 forVideo">
   <section id="player-holder">
     <div class="alert-warning" *ngIf="urlError">{{urlError | translate}}</div>
-    <video-player *ngIf="!searchMode" url="{{video.url}}" preRoll="{{video.preRoll}}"  [live]="true" [catch]="catchUp"></video-player>
+    <video-player *ngIf="!searchMode && video.url " url="{{video.url}}" preRoll="{{video.preRoll}}"  [live]="true" [catch]="catchUp"></video-player>
     <div class="feelings-holder">
       <ul>
         <li><img src="/img/likes/ic_feeling__joy.png" alt=""></li>
@@ -115,7 +115,7 @@
  </div>
 
  <section *ngIf="searchItem" class="col-md-9 forVideo">
-  <video-player *ngIf="searchVideo" url="{{searchVideo.url}}" preRoll="{{searchVideo.preRoll}}"   [live]="true" [catch]="catchUp" ></video-player>
+  <video-player *ngIf="searchVideo.url" url="{{searchVideo.url}}" preRoll="{{searchVideo.preRoll}}"   [live]="true" [catch]="catchUp" ></video-player>
 
   <section class="bottom-player-menu">
    <a href="#"><img src="img/ic_feeling_heart_eyes.png"></a>

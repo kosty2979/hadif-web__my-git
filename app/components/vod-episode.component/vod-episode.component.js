@@ -194,6 +194,14 @@ var VodEpisodeComponent = (function () {
         return (item.thumbSD || item.thumbSDh || item.thumbSDq || item.thumbnail);
     };
     ;
+    VodEpisodeComponent.prototype.nextVideo = function () {
+        var nextNumber = this.itemNumber + 1;
+        if (this.episodes[nextNumber]) {
+            this.selectEpisod(nextNumber);
+        }
+        ;
+    };
+    ;
     VodEpisodeComponent.prototype.ngOnDestroy = function () {
         if (this.sub)
             this.sub.unsubscribe();

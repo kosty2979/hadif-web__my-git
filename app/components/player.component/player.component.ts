@@ -1,4 +1,4 @@
-import {Component, OnChanges, Input, SimpleChange, ElementRef} from '@angular/core';
+import {Component, OnChanges, Input, Output, EventEmitter, SimpleChange, ElementRef} from '@angular/core';
 
 let videojs:any= window['videojs'];
 
@@ -26,6 +26,9 @@ export class VideoPlayer extends OnChanges {
     @Input() download: string;
     @Input() live: string;
     @Input() catch: string;
+
+    @Output() endVideo =new EventEmitter();
+
 
     remove: boolean = false;
     id = 'player-';
@@ -67,9 +70,9 @@ export class VideoPlayer extends OnChanges {
       //srcPre ="http://almajd.api.visionip.tv/vod/ASHTTP/almajd/almajd/Hothiyon5_mpg_vod-25f-16x9-MB/playlist.m3u8?extsessionid=58b43118be1dc-a5f0a70928929e33938c792789e04ebe"
       setTimeout(()=>{this.remove = false}, 0);
       setTimeout(()=>{
-        if(!this.player){
+
           this.player =  videojs('my_video');
-        }
+
 
         this.player.src({
             src: src,
@@ -100,6 +103,11 @@ export class VideoPlayer extends OnChanges {
           this.player.play();
         }
 
+       var self=this
+       this.player.one('ended', function() {
+              self.endVideo.emit()
+        });
+    
 
         if (src == ""){
           this.player.bigPlayButton.hide()
