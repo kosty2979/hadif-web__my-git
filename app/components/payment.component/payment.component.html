@@ -9,14 +9,14 @@
       </div>
 
       <div  class="row">
-      <div class="col-sm-6 col-sm-offset-3 text-center">
-        <p> {{ 'to Pay' | translate }} {{price}} </p>
+      <div class="col-sm-6 col-sm-offset-3 text-center paymentWrapper">
+        <p> {{ ('to Pay' | translate)  + ' ' + price + ' ' + ('currency' | translate) }} </p>
       </div>
     </div>
     <div  class="row">
 
 
-      <div class="col-md-12" *ngIf="hpay">
+      <div class="col-md-12 paymentWrapper" *ngIf="hpay">
         <form action="{{url}}" class="paymentWidgets">VISA MASTER AMEX</form>
       </div>
 

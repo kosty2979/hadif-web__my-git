@@ -2188,3 +2188,6 @@ footer {
   padding-left:0;
   padding-right:20px;
 }
+.paymentWrapper *{
+  direction: rtl !important
+}

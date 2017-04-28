@@ -344,7 +344,9 @@
 
   "Subscription Info":"Subscription Info",
   "LIVE":"LIVE",
-  "catch":"catchup"
+  "catch":"catchup",
+
+  "to Pay":"to Pay"
 
 
 }

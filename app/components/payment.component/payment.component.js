@@ -49,6 +49,14 @@ var PaymentComponent = (function () {
     ;
     PaymentComponent.prototype.loadScript = function (url) {
         console.log('preparing to load...');
+        if (!this.isEnglish()) {
+            var node2 = document.createElement('script');
+            node2.type = 'text/javascript';
+            node2.charset = 'utf-8';
+            node2.text = 'var wpwlOptions = { locale:"ar", paymentTarget:"_top"}; console.log("set AR locale")';
+            document.getElementsByTagName('head')[0].appendChild(node2);
+        }
+        ;
         var node = document.createElement('script');
         node.src = url;
         node.type = 'text/javascript';
@@ -56,6 +64,12 @@ var PaymentComponent = (function () {
         node.charset = 'utf-8';
         document.getElementsByTagName('head')[0].appendChild(node);
     };
+    ;
+    PaymentComponent.prototype.isEnglish = function () {
+        var lang = localStorage.getItem('lang');
+        return (lang == 'en');
+    };
+    ;
     return PaymentComponent;
 }());
 PaymentComponent = __decorate([
