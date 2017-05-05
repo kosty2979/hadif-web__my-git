@@ -5,6 +5,7 @@ import { Subscription }   from 'rxjs/Subscription';
 
 import { AuthService } from '../../services/auth.service';
 import { UserDataService } from '../../services/user-data.service';
+import { TransmiteService } from '../../services/transmite.service';
 
 import { User } from '../../classes/user';
 
@@ -21,6 +22,7 @@ export class LogoutComponent {
 	constructor( 
 		private authService: AuthService,
 		private userDataService: UserDataService,
+		private transmiteService: TransmiteService,
 		private router: Router
 	 ){};
 
@@ -29,6 +31,7 @@ export class LogoutComponent {
 	};
 
 	public exit(){
+		this.transmiteService.getUrl()
 		if ( this.authService.isAuthorized()){
 		 		return	this.authService.logout().then(()=>{
 				this.router.navigate(['/login']);

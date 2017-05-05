@@ -90,6 +90,7 @@ export class LiveComponent implements OnInit {
     ngOnInit(): void {
     
       if (!this.authService.isAuthorized()){
+       this.transmiteService.setUrl(this.router.url)
        this.router.navigate(['/login']);
        return;
       }
@@ -129,7 +130,8 @@ export class LiveComponent implements OnInit {
 
     loadLive() {
       this.videoItemsService.getItemList(1)
-        .then(videoItems => this.videoItems = videoItems)
+        .then(videoItems =>{ 
+          this.videoItems = videoItems})
         .then(()=>{
           if(this.itemId){
             this.selectChanel = this.videoItems.findIndex((el:any) => {
@@ -139,6 +141,7 @@ export class LiveComponent implements OnInit {
               this.selectChanel = 0;
             }
           }
+
           if (this.hasAccess(this.videoItems[this.selectChanel])){
             this.itemId = this.videoItems[this.selectChanel].itemid;
             return this.videoItemsService.getUrl(this.videoItems[this.selectChanel].itemid)
@@ -148,7 +151,12 @@ export class LiveComponent implements OnInit {
           }
         })
         .then(item=>{
-          this.video=item})
+          if(item){
+             this.video=item 
+            } else (
+              this.urlError="130"
+            );
+          })
     }
 
     private select(select:number){
@@ -216,7 +224,9 @@ export class LiveComponent implements OnInit {
        }
     };
     
-    private goToVoucher(){
+    private goToVoucher(id:any){
+      let url = this.router.url+'/'+id
+      this.transmiteService.setUrl(url)
       this.router.navigate(['/voucher'])
     };
 

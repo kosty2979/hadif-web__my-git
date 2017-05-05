@@ -94,7 +94,7 @@
      </div>
      <p>{{ getField('contentTitle',value) }}</p>
     </a>
-    <a *ngIf="!hasAccess(value)" [routerLink]="['/voucher']">
+    <a *ngIf="!hasAccess(value)" (click)="goToVoucher( value.seriesId, value.seasonId, value.itemid )">
      <div class="wraper-picture">
       <span class="play-overlay"></span>
        <div [ngStyle]="{'background-image': 'url('+value.thumbnail+')'}" class="picture"></div>

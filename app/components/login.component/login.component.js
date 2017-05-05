@@ -11,11 +11,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var auth_service_1 = require("../../services/auth.service");
+var transmite_service_1 = require("../../services/transmite.service");
 var user_1 = require("../../classes/user");
 var LoginComponent = (function () {
-    function LoginComponent(authService, router) {
+    function LoginComponent(authService, router, transmiteService) {
         this.authService = authService;
         this.router = router;
+        this.transmiteService = transmiteService;
         this.user = new user_1.User();
         this.error = false;
         this.errortext = '';
@@ -32,7 +34,13 @@ var LoginComponent = (function () {
         this.authService.login(this.user.username, this.user.password)
             .then(function () {
             _this.error = false;
-            _this.router.navigate(['/live']);
+            var url = _this.transmiteService.getUrl();
+            if (url) {
+                _this.router.navigate([url]);
+            }
+            else {
+                _this.router.navigate(['/live']);
+            }
         })
             .catch(function (error) {
             _this.errortext = error;
@@ -49,7 +57,8 @@ LoginComponent = __decorate([
         templateUrl: 'login.component.html'
     }),
     __metadata("design:paramtypes", [auth_service_1.AuthService,
-        router_1.Router])
+        router_1.Router,
+        transmite_service_1.TransmiteService])
 ], LoginComponent);
 exports.LoginComponent = LoginComponent;
 //# sourceMappingURL=login.component.js.map

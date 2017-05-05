@@ -11,10 +11,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var auth_service_1 = require("../../services/auth.service");
+var transmite_service_1 = require("../../services/transmite.service");
 var VoucherComponent = (function () {
-    function VoucherComponent(authService, router) {
+    function VoucherComponent(authService, router, transmiteService) {
         this.authService = authService;
         this.router = router;
+        this.transmiteService = transmiteService;
         this.error = false;
         this.errorVoucher = false;
         this.complite = false;
@@ -24,7 +26,9 @@ var VoucherComponent = (function () {
     ;
     VoucherComponent.prototype.ngOnInit = function () {
         if (!this.authService.isAuthorized()) {
-            this.router.navigate(['/register']);
+            var url = this.router.url;
+            this.transmiteService.setUrl(url);
+            this.router.navigate(['/login']);
         }
         ;
     };
@@ -54,7 +58,8 @@ VoucherComponent = __decorate([
         templateUrl: 'voucher.component.html'
     }),
     __metadata("design:paramtypes", [auth_service_1.AuthService,
-        router_1.Router])
+        router_1.Router,
+        transmite_service_1.TransmiteService])
 ], VoucherComponent);
 exports.VoucherComponent = VoucherComponent;
 //# sourceMappingURL=voucher.component.js.map

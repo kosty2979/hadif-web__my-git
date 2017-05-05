@@ -300,11 +300,11 @@ export class UserDataService {
   };   
  
  public hpayUpdateCard(): Promise<any>{
+   this.getAuthDate()
     let url:string = 'hpayUpdateCard';
     let config:any;
     let options = new RequestOptions({ headers: this.headers});
     let extsessionid = (this.authDate)?this.authDate.session:null;
-
     return new Promise((resolve, reject) => {
       if (!extsessionid) return reject(105);
 

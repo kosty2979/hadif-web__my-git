@@ -12,11 +12,13 @@ var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var auth_service_1 = require("../../services/auth.service");
 var user_data_service_1 = require("../../services/user-data.service");
+var transmite_service_1 = require("../../services/transmite.service");
 var user_1 = require("../../classes/user");
 var LogoutComponent = (function () {
-    function LogoutComponent(authService, userDataService, router) {
+    function LogoutComponent(authService, userDataService, transmiteService, router) {
         this.authService = authService;
         this.userDataService = userDataService;
+        this.transmiteService = transmiteService;
         this.router = router;
         this.user = new user_1.User();
     }
@@ -27,6 +29,7 @@ var LogoutComponent = (function () {
     ;
     LogoutComponent.prototype.exit = function () {
         var _this = this;
+        this.transmiteService.getUrl();
         if (this.authService.isAuthorized()) {
             return this.authService.logout().then(function () {
                 _this.router.navigate(['/login']);
@@ -57,6 +60,7 @@ LogoutComponent = __decorate([
     }),
     __metadata("design:paramtypes", [auth_service_1.AuthService,
         user_data_service_1.UserDataService,
+        transmite_service_1.TransmiteService,
         router_1.Router])
 ], LogoutComponent);
 exports.LogoutComponent = LogoutComponent;

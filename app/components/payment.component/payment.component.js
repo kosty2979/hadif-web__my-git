@@ -32,6 +32,7 @@ var PaymentComponent = (function () {
         }
         ;
         this.price = sessionStorage.getItem("price");
+        this.freeDays = sessionStorage.getItem("freeDays");
         var site = new URL(window.location.href);
         this.url = site.origin + '/comfirm-payment';
         this.config.getConfig()

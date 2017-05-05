@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AuthService } from '../../services/auth.service';
+import { TransmiteService } from '../../services/transmite.service';
 
  
 @Component({
@@ -20,12 +21,15 @@ export class VoucherComponent {
 
 
 	constructor( private authService: AuthService,
-							private router: Router
+							private router: Router,
+							private transmiteService:TransmiteService
 	){};
 
 	ngOnInit(){
 		if ( !this.authService.isAuthorized() ){
-		this.router.navigate(['/register']);
+		let url = this.router.url
+    this.transmiteService.setUrl(url)
+		this.router.navigate(['/login']);
 		};
 	};
 

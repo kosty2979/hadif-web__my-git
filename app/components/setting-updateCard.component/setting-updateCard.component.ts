@@ -25,7 +25,7 @@ constructor(
 
 	ngOnInit(){
         if (!this.authService.isAuthorized()) {
-            this.router.navigate(['/register']);
+            this.router.navigate(['/login']);
             return;
         };
         
@@ -46,12 +46,25 @@ constructor(
 
   public loadScript(url:string) {
     console.log('preparing to load...')
+   if(!this.isEnglish()) {
+    let node2 = document.createElement('script');
+    node2.type = 'text/javascript';
+    node2.charset = 'utf-8';
+    node2.text='var wpwlOptions = { locale:"ar", paymentTarget:"_top"}; console.log("set AR locale")'
+    document.getElementsByTagName('head')[0].appendChild(node2);    
+   };
+
     let node = document.createElement('script');
     node.src = url;
     node.type = 'text/javascript';
     node.async = true;
     node.charset = 'utf-8';
     document.getElementsByTagName('head')[0].appendChild(node);
-  }
+  };
+     
+     private isEnglish():boolean{
+        let lang = localStorage.getItem('lang');
+         return ( lang == 'en' ) ;
+    };
  
 };

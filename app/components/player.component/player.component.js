@@ -1,4 +1,9 @@
 "use strict";
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -10,13 +15,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var videojs = window['videojs'];
-var VideoPlayer = (function () {
+var VideoPlayer = (function (_super) {
+    __extends(VideoPlayer, _super);
     function VideoPlayer(elem) {
-        this.elem = elem;
-        this.endVideo = new core_1.EventEmitter();
-        this.remove = false;
-        this.id = 'player-';
-        //super()
+        var _this = _super.call(this) || this;
+        _this.elem = elem;
+        _this.endVideo = new core_1.EventEmitter();
+        _this.remove = false;
+        _this.id = 'player-';
+        return _this;
     }
     VideoPlayer.prototype.fullscreen = function () {
         if (!document['fullscreenElement'] &&
@@ -117,7 +124,7 @@ var VideoPlayer = (function () {
         }
     };
     return VideoPlayer;
-}());
+}(core_1.OnChanges));
 __decorate([
     core_1.Input(),
     __metadata("design:type", String)

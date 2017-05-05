@@ -9,14 +9,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
+var router_1 = require("@angular/router");
 var chenal_service_1 = require("../../services/chenal.service");
 var Rx_1 = require("rxjs/Rx");
 var auth_service_1 = require("../../services/auth.service");
+var transmite_service_1 = require("../../services/transmite.service");
 var VodComponent = (function () {
-    function VodComponent(chenal, authService) {
+    function VodComponent(chenal, authService, transmiteService, router) {
         var _this = this;
         this.chenal = chenal;
         this.authService = authService;
+        this.transmiteService = transmiteService;
+        this.router = router;
         this.types = [];
         this.search = false;
         this.errortext = '';
@@ -118,6 +122,15 @@ var VodComponent = (function () {
         return array;
     };
     ;
+    VodComponent.prototype.goToVoucher = function (a, b, c) {
+        if (a === void 0) { a = ''; }
+        if (b === void 0) { b = ''; }
+        if (c === void 0) { c = ''; }
+        var url = '/vod-episodes/' + a + '/' + b + '/' + c;
+        this.transmiteService.setUrl(url);
+        this.router.navigate(['/voucher']);
+    };
+    ;
     return VodComponent;
 }());
 VodComponent = __decorate([
@@ -126,7 +139,10 @@ VodComponent = __decorate([
         selector: 'content',
         templateUrl: 'vod.component.html'
     }),
-    __metadata("design:paramtypes", [chenal_service_1.ChenalService, auth_service_1.AuthService])
+    __metadata("design:paramtypes", [chenal_service_1.ChenalService,
+        auth_service_1.AuthService,
+        transmite_service_1.TransmiteService,
+        router_1.Router])
 ], VodComponent);
 exports.VodComponent = VodComponent;
 //# sourceMappingURL=vod.component.js.map

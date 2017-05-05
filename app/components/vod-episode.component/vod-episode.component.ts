@@ -4,11 +4,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ChenalService } from '../../services/chenal.service';
 import { ConfigService } from '../../services/config.service';
 import { VideoItemsService } from '../../services/video-items.service';
-import {AuthService} from '../../services/auth.service';
+import { TransmiteService } from '../../services/transmite.service';
+import { AuthService } from '../../services/auth.service';
 
 import { Season } from '../../classes/season';
-import {VideoItem} from '../../classes/video-item';
-import {UrlItem} from '../../classes/url-item';
+import { VideoItem } from '../../classes/video-item';
+import { UrlItem } from '../../classes/url-item';
 
 @Component({
 	moduleId: module.id,
@@ -41,6 +42,7 @@ export class VodEpisodeComponent {
 			private videoitem:VideoItemsService,
 			private router: Router,
 			private authService: AuthService,
+      private transmiteService: TransmiteService,
 			private confService:ConfigService) {}
 
 
@@ -57,6 +59,7 @@ initAverage(){
 
 	ngOnInit() {
      if (!this.authService.isAuthorized()){
+      this.transmiteService.setUrl(this.router.url)
       return this.router.navigate(['/login']);
      }
     this.route.params.subscribe(params => {
@@ -192,6 +195,8 @@ initAverage(){
   };
 
   private goToVoucher(){
+      let url = this.router.url
+      this.transmiteService.setUrl(url)
       this.router.navigate(['/voucher'])
     };
 

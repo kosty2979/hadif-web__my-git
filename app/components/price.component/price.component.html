@@ -36,9 +36,11 @@
            [(ngModel)]="selectedPrice" 
            value="{{price.name}}"
            >
-           {{ price.name | translate }}
-           {{ getActiveDay(price)? ('(' +('including' | translate) +' '+ getActiveDay(price) + ('days free trial' | translate) +')'):''}} 
-           &mdash; {{ price.value + ('currency' | translate) }}
+               {{ 
+               getActiveDay(price)? 
+               (getActiveDay(price) + ('days free trial' | translate)):
+               ( (price.name | translate)+'&mdash;' + price.value + ('currency' | translate))  
+               }}
             </label>
          </div>
 
@@ -46,19 +48,18 @@
         <div class="col-sm-offset-4 col-sm-4 text-center">
            <button (click)="firstStep =!firstStep"  [disabled] = "!selectedPrice" class="btn btn-login">{{ 'next' | translate }}</button>
         </div>
-
       </div>
       <div *ngIf="firstStep" >
         <div class="col-sm-10 col-sm-offset-1 termsWrap">
           <div [innerHTML]="getTermsText()"></div>
+        </div>
+        <div class="col-sm-offset-4 col-sm-4 text-center">
           <div class="text-center">
             <label >
              <input type="checkbox" name="checkTs"  [(ngModel)]="checkTs" >
              {{ 'I agree' | translate }} 
             </label>
           </div>
-        </div>
-        <div class="col-sm-offset-4 col-sm-4 text-center">
              <button type="submit"  [disabled] = "!checkTs" class="btn btn-login">{{ 'next' | translate }}</button>
         </div>
       </div>

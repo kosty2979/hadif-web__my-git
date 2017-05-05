@@ -9,6 +9,7 @@ var core_1 = require("@angular/core");
 var TransmiteService = (function () {
     function TransmiteService() {
         this.context = {};
+        this.url = "";
     }
     TransmiteService.prototype.setContext = function (obj) {
         this.context = obj;
@@ -16,6 +17,16 @@ var TransmiteService = (function () {
     ;
     TransmiteService.prototype.getContext = function () {
         return this.context;
+    };
+    ;
+    TransmiteService.prototype.setUrl = function (url) {
+        this.url = url;
+    };
+    ;
+    TransmiteService.prototype.getUrl = function () {
+        var url = this.url;
+        this.url = '';
+        return url;
     };
     ;
     return TransmiteService;

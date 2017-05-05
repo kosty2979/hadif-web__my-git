@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 
 import { AuthService } from '../../services/auth.service';
 import { Types, PaymentService } from '../../services/payment.service';
+import { TransmiteService } from '../../services/transmite.service';
+import { UserDataService } from '../../services/user-data.service';
 import { Price } from '../../classes/price';
 import { Terms } from '../../classes/terms';
 
@@ -49,12 +51,16 @@ export class PriceComponent {
 
 	constructor( private authService: AuthService,
 							private router: Router,
-              private paymentService: PaymentService
+              private paymentService: PaymentService,
+              private transmiteService:TransmiteService,
+              private userDataService: UserDataService,
 	){};
 
 	ngOnInit(){
 		if ( !this.authService.isAuthorized() ){
-		this.router.navigate(['/register']);
+			let url = this.router.url
+	    this.transmiteService.setUrl(url)
+			this.router.navigate(['/login']);
 		};
 		this.getPrice()
 	};
@@ -63,6 +69,7 @@ export class PriceComponent {
     return parseInt(price.value) != 99999;
   };
 
+ 
 
 	onSubmit(){
     let type:number = Types.OneOffPayment;
@@ -75,19 +82,22 @@ export class PriceComponent {
     })
 
     let vaucher = localStorage.getItem('voucherCode');
-
-    this.paymentService.getHpayDetails(type, period[this.selectedPrice], vaucher)
-      .then((d:any)=>{
-        sessionStorage.setItem('hpayDetails', JSON.stringify(d.hpayDetails));
-        sessionStorage.setItem('price', price);
-        if(parseInt(price) != 0){
-        	this.router.navigate(['/payment']);
-        } else {
-        	this.router.navigate(['/comfirm-payment']);
-        }
-      })
-      .catch((error)=>{
-      })
+	 	this.paymentService.getHpayDetails(type, period[this.selectedPrice], vaucher)
+    .then((d:any)=>{
+      sessionStorage.setItem('hpayDetails', JSON.stringify(d.hpayDetails));
+      sessionStorage.setItem('price', price);
+      sessionStorage.removeItem('freeDays');
+      if (period[this.selectedPrice] =='r1m' && this.freePeriod.active == "1" ){
+      	sessionStorage.setItem('freeDays', 'true');
+      }
+      if(parseInt(price) != 0){
+      	this.router.navigate(['/payment']);
+      } else {
+      	this.router.navigate(['/comfirm-payment']);
+      }
+    })
+    .catch((error)=>{
+    })
 
 	};
 
@@ -142,7 +152,6 @@ export class PriceComponent {
 	 	if( localStorage.getItem('voucherPrice') ) return text
 	 	if(this.tarifForFree.indexOf(period[price.name])!=-1 && this.freePeriod.active == "1" ){
 	 		text = this.freePeriod.days 
-		 	//text = '(including '+days+' days free trial)'
 		 }
 		 return text
 	 };

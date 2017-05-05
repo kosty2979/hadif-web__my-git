@@ -82,6 +82,7 @@ var LiveComponent = (function () {
     LiveComponent.prototype.ngOnInit = function () {
         var _this = this;
         if (!this.authService.isAuthorized()) {
+            this.transmiteService.setUrl(this.router.url);
             this.router.navigate(['/login']);
             return;
         }
@@ -119,7 +120,9 @@ var LiveComponent = (function () {
     LiveComponent.prototype.loadLive = function () {
         var _this = this;
         this.videoItemsService.getItemList(1)
-            .then(function (videoItems) { return _this.videoItems = videoItems; })
+            .then(function (videoItems) {
+            _this.videoItems = videoItems;
+        })
             .then(function () {
             if (_this.itemId) {
                 _this.selectChanel = _this.videoItems.findIndex(function (el) {
@@ -139,7 +142,11 @@ var LiveComponent = (function () {
             }
         })
             .then(function (item) {
-            _this.video = item;
+            if (item) {
+                _this.video = item;
+            }
+            else
+                (_this.urlError = "130");
         });
     };
     LiveComponent.prototype.select = function (select) {
@@ -215,7 +222,9 @@ var LiveComponent = (function () {
         }
     };
     ;
-    LiveComponent.prototype.goToVoucher = function () {
+    LiveComponent.prototype.goToVoucher = function (id) {
+        var url = this.router.url + '/' + id;
+        this.transmiteService.setUrl(url);
         this.router.navigate(['/voucher']);
     };
     ;

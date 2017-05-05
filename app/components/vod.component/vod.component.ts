@@ -1,8 +1,11 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { ChenalService } from '../../services/chenal.service';
 import { Series } from '../../classes/series';
 import {Subject, Observable} from 'rxjs/Rx';
-import {AuthService} from '../../services/auth.service';
+import { AuthService } from '../../services/auth.service';
+import { TransmiteService } from '../../services/transmite.service';
 
 @Component({
   moduleId: module.id,
@@ -26,7 +29,12 @@ export class VodComponent implements OnInit {
   hasAccess(item:any){ return  this.authService.hasAccess(item);}
 
 
-  constructor(private chenal: ChenalService, private authService: AuthService) {
+  constructor(
+    private chenal: ChenalService, 
+    private authService: AuthService,
+    private transmiteService: TransmiteService,
+    private router: Router,
+    ) {
     this.chenal.getSeries({},null)
       .then(d=> this.seriesList = this.sotringArray( d, 'publishDatetime', true ));
     this.chenal.getGenre({},null)
@@ -116,4 +124,10 @@ export class VodComponent implements OnInit {
      };
      return array
   };
+
+    private goToVoucher(a:any='', b:any='', c:any=''){
+      let url = '/vod-episodes/'+a+'/'+b+'/'+c
+      this.transmiteService.setUrl(url)
+      this.router.navigate(['/voucher'])
+    };
 }

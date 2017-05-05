@@ -14,6 +14,7 @@ export class PaymentComponent {
     hpay:any;
     url:string;
     price:string
+    freeDays:string
 
 
     constructor(
@@ -33,7 +34,8 @@ export class PaymentComponent {
             return;
         };
 
-    	this.price = sessionStorage.getItem("price");
+        this.price = sessionStorage.getItem("price");
+    	this.freeDays = sessionStorage.getItem("freeDays");
     	let site = new URL(window.location.href);
         this.url = site.origin + '/comfirm-payment';
         

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AuthService } from '../../services/auth.service';
+import { TransmiteService } from '../../services/transmite.service';
 import { User } from '../../classes/user';
  
 @Component({
@@ -17,7 +18,8 @@ export class LoginComponent {
 	errortext:string = '';
 
 	constructor( private authService: AuthService,
-							private router: Router
+							private router: Router,
+							private transmiteService:TransmiteService
 	){};
 
 	ngOnInit() { 
@@ -30,7 +32,12 @@ export class LoginComponent {
 		this.authService.login( this.user.username, this.user.password )
 		.then(()=>{
 			this.error = false;
+			let url = this.transmiteService.getUrl()
+			if(url){
+				this.router.navigate([url]);
+			} else {
 			this.router.navigate(['/live']);
+			}
 		})
 		.catch( error  => {
 			this.errortext = error;

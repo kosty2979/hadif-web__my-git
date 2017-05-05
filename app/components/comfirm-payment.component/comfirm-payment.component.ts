@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { PaymentService } from '../../services/payment.service';
+import { TransmiteService } from '../../services/transmite.service';
 import { AuthService } from '../../services/auth.service';
 
 
@@ -19,6 +20,7 @@ export class ComfirmPaymentComponent {
 constructor(
 		private paymentService: PaymentService,
 		private authService: AuthService,
+		private transmiteService: TransmiteService,
 		private router: Router
 	){};
 
@@ -44,12 +46,18 @@ constructor(
 	private endPayment(){
 				sessionStorage.removeItem('hpayDetails');
 				sessionStorage.removeItem('price');
+				sessionStorage.removeItem('freeDays');
 				this.success = true;
 				localStorage.removeItem('voucherCode');
 				localStorage.removeItem('voucherPrice');
 				this.authService.refreshSubscriptions();
 				setTimeout(()=>{
+					let url = this.transmiteService.getUrl()
+					if(url){
+						this.router.navigate([url]);
+					} else {
 					this.router.navigate(['/live']);
+					}
 				}, 3000)
 	};
 

@@ -346,7 +346,9 @@
   "LIVE":"LIVE",
   "catch":"catchup",
 
-  "to Pay":"to Pay"
+  "to Pay":"to Pay",
+  "text1":"We inform you that the seven-day period is completely free. Due to bank procedures, credit card statements need to be confirmed with a 1 $ deduction from your account and returning it immediately. After the free period (7 days), the monthly subscription price will be charged at $",
+  "text2":"and will be withdrawn from your credit card at the beginning of each month. If you wish to cancel the automatic renewal, turn off the option from settings page."
 
 
 }

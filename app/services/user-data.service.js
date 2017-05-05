@@ -314,6 +314,7 @@ var UserDataService = (function () {
     ;
     UserDataService.prototype.hpayUpdateCard = function () {
         var _this = this;
+        this.getAuthDate();
         var url = 'hpayUpdateCard';
         var config;
         var options = new http_2.RequestOptions({ headers: this.headers });

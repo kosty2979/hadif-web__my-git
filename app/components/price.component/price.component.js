@@ -12,6 +12,8 @@ var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var auth_service_1 = require("../../services/auth.service");
 var payment_service_1 = require("../../services/payment.service");
+var transmite_service_1 = require("../../services/transmite.service");
+var user_data_service_1 = require("../../services/user-data.service");
 var price_1 = require("../../classes/price");
 var terms_1 = require("../../classes/terms");
 var period = {
@@ -37,10 +39,12 @@ var period = {
     "oneoffprice2Years": "o2y",
 };
 var PriceComponent = (function () {
-    function PriceComponent(authService, router, paymentService) {
+    function PriceComponent(authService, router, paymentService, transmiteService, userDataService) {
         this.authService = authService;
         this.router = router;
         this.paymentService = paymentService;
+        this.transmiteService = transmiteService;
+        this.userDataService = userDataService;
         this.terms = new terms_1.Terms();
         this.lang = true;
         this.error = false;
@@ -51,7 +55,9 @@ var PriceComponent = (function () {
     ;
     PriceComponent.prototype.ngOnInit = function () {
         if (!this.authService.isAuthorized()) {
-            this.router.navigate(['/register']);
+            var url = this.router.url;
+            this.transmiteService.setUrl(url);
+            this.router.navigate(['/login']);
         }
         ;
         this.getPrice();
@@ -77,6 +83,10 @@ var PriceComponent = (function () {
             .then(function (d) {
             sessionStorage.setItem('hpayDetails', JSON.stringify(d.hpayDetails));
             sessionStorage.setItem('price', price);
+            sessionStorage.removeItem('freeDays');
+            if (period[_this.selectedPrice] == 'r1m' && _this.freePeriod.active == "1") {
+                sessionStorage.setItem('freeDays', 'true');
+            }
             if (parseInt(price) != 0) {
                 _this.router.navigate(['/payment']);
             }
@@ -167,7 +177,9 @@ PriceComponent = __decorate([
     }),
     __metadata("design:paramtypes", [auth_service_1.AuthService,
         router_1.Router,
-        payment_service_1.PaymentService])
+        payment_service_1.PaymentService,
+        transmite_service_1.TransmiteService,
+        user_data_service_1.UserDataService])
 ], PriceComponent);
 exports.PriceComponent = PriceComponent;
 ;

@@ -11,11 +11,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var payment_service_1 = require("../../services/payment.service");
+var transmite_service_1 = require("../../services/transmite.service");
 var auth_service_1 = require("../../services/auth.service");
 var ComfirmPaymentComponent = (function () {
-    function ComfirmPaymentComponent(paymentService, authService, router) {
+    function ComfirmPaymentComponent(paymentService, authService, transmiteService, router) {
         this.paymentService = paymentService;
         this.authService = authService;
+        this.transmiteService = transmiteService;
         this.router = router;
         this.success = false;
         this.error = false;
@@ -43,12 +45,19 @@ var ComfirmPaymentComponent = (function () {
         var _this = this;
         sessionStorage.removeItem('hpayDetails');
         sessionStorage.removeItem('price');
+        sessionStorage.removeItem('freeDays');
         this.success = true;
         localStorage.removeItem('voucherCode');
         localStorage.removeItem('voucherPrice');
         this.authService.refreshSubscriptions();
         setTimeout(function () {
-            _this.router.navigate(['/live']);
+            var url = _this.transmiteService.getUrl();
+            if (url) {
+                _this.router.navigate([url]);
+            }
+            else {
+                _this.router.navigate(['/live']);
+            }
         }, 3000);
     };
     ;
@@ -62,6 +71,7 @@ ComfirmPaymentComponent = __decorate([
     }),
     __metadata("design:paramtypes", [payment_service_1.PaymentService,
         auth_service_1.AuthService,
+        transmite_service_1.TransmiteService,
         router_1.Router])
 ], ComfirmPaymentComponent);
 exports.ComfirmPaymentComponent = ComfirmPaymentComponent;

@@ -13,14 +13,16 @@ var router_1 = require("@angular/router");
 var chenal_service_1 = require("../../services/chenal.service");
 var config_service_1 = require("../../services/config.service");
 var video_items_service_1 = require("../../services/video-items.service");
+var transmite_service_1 = require("../../services/transmite.service");
 var auth_service_1 = require("../../services/auth.service");
 var VodEpisodeComponent = (function () {
-    function VodEpisodeComponent(route, chenal, videoitem, router, authService, confService) {
+    function VodEpisodeComponent(route, chenal, videoitem, router, authService, transmiteService, confService) {
         this.route = route;
         this.chenal = chenal;
         this.videoitem = videoitem;
         this.router = router;
         this.authService = authService;
+        this.transmiteService = transmiteService;
         this.confService = confService;
         this.seriesData = {};
         this.sesons = [];
@@ -49,6 +51,7 @@ var VodEpisodeComponent = (function () {
     VodEpisodeComponent.prototype.ngOnInit = function () {
         var _this = this;
         if (!this.authService.isAuthorized()) {
+            this.transmiteService.setUrl(this.router.url);
             return this.router.navigate(['/login']);
         }
         this.route.params.subscribe(function (params) {
@@ -187,6 +190,8 @@ var VodEpisodeComponent = (function () {
     };
     ;
     VodEpisodeComponent.prototype.goToVoucher = function () {
+        var url = this.router.url;
+        this.transmiteService.setUrl(url);
         this.router.navigate(['/voucher']);
     };
     ;
@@ -220,6 +225,7 @@ VodEpisodeComponent = __decorate([
         video_items_service_1.VideoItemsService,
         router_1.Router,
         auth_service_1.AuthService,
+        transmite_service_1.TransmiteService,
         config_service_1.ConfigService])
 ], VodEpisodeComponent);
 exports.VodEpisodeComponent = VodEpisodeComponent;
