@@ -2188,6 +2188,15 @@ footer {
   padding-left:0;
   padding-right:20px;
 }
-.paymentWrapper *{
-  direction: rtl !important
+.paymentWrapper form *{
+  direction: rtl 
+}
+.wpwl-control-cardNumber{
+direction:ltr !important;
+}
+.wpwl-button.wpwl-button-pay {
+  float:left;
+}
+.wpwl-control-expiry{
+  direction:ltr !important;
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AuthService } from '../../services/auth.service';
@@ -14,21 +14,24 @@ import { ConfigService } from '../../services/config.service';
 export class SettingUpdateCardComponent {
 	cId:string;
 	url:string;
+  lang: boolean= true;
 
 
 constructor(
     private authService: AuthService,
-	private userDataService: UserDataService,
-	private router: Router,
+	  private userDataService: UserDataService,
+	  private router: Router,
     private config: ConfigService
 	){};
+
+  @ViewChild('wrapForPayment') forScript:ElementRef;
 
 	ngOnInit(){
         if (!this.authService.isAuthorized()) {
             this.router.navigate(['/login']);
             return;
         };
-        
+        this.isEnglish()
         this.userDataService.hpayUpdateCard().then((answer:any)=>{
             sessionStorage.setItem('updateCardCid', answer.hpayDetails.cId)
         	let site = new URL(window.location.href);
@@ -44,26 +47,30 @@ constructor(
         });
 	};
 
+  ngDoCheck() {
+      if( (this.lang != this.isEnglish())  ){
+            this.router.navigate(['/setting/profile']); 
+          }
+      };
+
   public loadScript(url:string) {
     console.log('preparing to load...')
-   if(!this.isEnglish()) {
-    let node2 = document.createElement('script');
-    node2.type = 'text/javascript';
-    node2.charset = 'utf-8';
-    node2.text='var wpwlOptions = { locale:"ar", paymentTarget:"_top"}; console.log("set AR locale")'
-    document.getElementsByTagName('head')[0].appendChild(node2);    
-   };
+    let oldStyle =  document.getElementById('wpwl-style')
+    if( oldStyle ){
+          document.getElementsByTagName('head')[0].removeChild(oldStyle ); 
+    } 
 
     let node = document.createElement('script');
     node.src = url;
     node.type = 'text/javascript';
     node.async = true;
     node.charset = 'utf-8';
-    document.getElementsByTagName('head')[0].appendChild(node);
+    this.forScript.nativeElement.appendChild(node);
   };
      
      private isEnglish():boolean{
         let lang = localStorage.getItem('lang');
+        this.lang = lang == 'en';
          return ( lang == 'en' ) ;
     };
  

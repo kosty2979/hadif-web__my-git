@@ -17,6 +17,7 @@ var PaymentComponent = (function () {
         this.authService = authService;
         this.router = router;
         this.config = config;
+        this.lang = true;
     }
     ;
     PaymentComponent.prototype.ngOnInit = function () {
@@ -31,6 +32,7 @@ var PaymentComponent = (function () {
             return;
         }
         ;
+        this.isEnglish();
         this.price = sessionStorage.getItem("price");
         this.freeDays = sessionStorage.getItem("freeDays");
         var site = new URL(window.location.href);
@@ -48,31 +50,38 @@ var PaymentComponent = (function () {
         });
     };
     ;
+    PaymentComponent.prototype.ngDoCheck = function () {
+        if ((this.lang != this.isEnglish())) {
+            this.router.navigate(['/price']);
+        }
+    };
+    ;
     PaymentComponent.prototype.loadScript = function (url) {
         console.log('preparing to load...');
-        if (!this.isEnglish()) {
-            var node2 = document.createElement('script');
-            node2.type = 'text/javascript';
-            node2.charset = 'utf-8';
-            node2.text = 'var wpwlOptions = { locale:"ar", paymentTarget:"_top"}; console.log("set AR locale")';
-            document.getElementsByTagName('head')[0].appendChild(node2);
+        var oldStyle = document.getElementById('wpwl-style');
+        if (oldStyle) {
+            document.getElementsByTagName('head')[0].removeChild(oldStyle);
         }
-        ;
         var node = document.createElement('script');
         node.src = url;
         node.type = 'text/javascript';
         node.async = true;
         node.charset = 'utf-8';
-        document.getElementsByTagName('head')[0].appendChild(node);
+        this.forScript.nativeElement.appendChild(node);
     };
     ;
     PaymentComponent.prototype.isEnglish = function () {
         var lang = localStorage.getItem('lang');
+        this.lang = lang == 'en';
         return (lang == 'en');
     };
     ;
     return PaymentComponent;
 }());
+__decorate([
+    core_1.ViewChild('wrapForPayment'),
+    __metadata("design:type", core_1.ElementRef)
+], PaymentComponent.prototype, "forScript", void 0);
 PaymentComponent = __decorate([
     core_1.Component({
         moduleId: module.id,

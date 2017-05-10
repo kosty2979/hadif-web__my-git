@@ -11,13 +11,17 @@
       <div  class="row">
       <div class="col-sm-6 col-sm-offset-3 text-center paymentWrapper">
       <br>
-        <p *ngIf="freeDays"> {{ ( 'text1' | translate) +' '+ price +' '+ ( 'text2' | translate)}} </p>
+        <p *ngIf="!freeDays"> {{ ('to Pay' | translate)  + ' ' + price + ' ' + ('currency' | translate) }} 
+        </p> 
+        
+        <p *ngIf="freeDays"> {{ ( 'text1' | translate) +' '+ price +' '+ ( 'text2' | translate)}} 
+        </p>
       </div>
     </div>
-    <div  class="row">
+    <div  #wrapForPayment class="row">
 
 
-      <div class="col-md-12 " *ngIf="hpay">
+      <div  class="col-md-12 paymentWrapper" *ngIf="hpay">
         <form action="{{url}}" class="paymentWidgets">VISA MASTER</form>
       </div>
 

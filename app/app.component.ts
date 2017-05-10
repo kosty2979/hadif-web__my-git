@@ -55,8 +55,10 @@ export class AppComponent {
       localStorage.setItem('lang',lang);
       if (lang == 'en'){
         window['$']('#dinamic-css')[0].href = '/css/english-main.css';
+        window['wpwlOptions'] = { locale:"", paymentTarget:"_top"}; console.log("set EN locale")
       } else {
         window['$']('#dinamic-css')[0].href ='/css/main.css';
+        window['wpwlOptions'] = { locale:"ar", paymentTarget:"_top"}; console.log("set AR locale")
       }
     };
     
