@@ -6,7 +6,7 @@
 	  </div>
 </div>
 
-<div #wrapForPayment class="row">
+<div #wrapForPayment class="row" *ngIf="start">
       <div class="col-md-12 paymentWrapper" *ngIf="cId">
         <form action="{{url}}" class="paymentWidgets">VISA MASTER</form>
       </div>

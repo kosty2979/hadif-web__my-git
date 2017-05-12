@@ -15,6 +15,7 @@ export class SettingUpdateCardComponent {
 	cId:string;
 	url:string;
   lang: boolean= true;
+  start = false;
 
 
 constructor(
@@ -36,22 +37,28 @@ constructor(
             sessionStorage.setItem('updateCardCid', answer.hpayDetails.cId)
         	let site = new URL(window.location.href);
             this.url = site.origin + '/setting/confirmCard';
+            this.cId = answer.hpayDetails.cId;
+            this.preLoad()
             
-            this.config.getConfig()
-            .then(config=>{
-                setTimeout(()=>{
-                  this.cId = answer.hpayDetails.cId;
-                  this.loadScript( config.hpay +'/v1/paymentWidgets.js?checkoutId=' + this.cId);
-                },0);
-            })
         });
 	};
 
   ngDoCheck() {
       if( (this.lang != this.isEnglish())  ){
-            this.router.navigate(['/setting/profile']); 
+            this.start = false;
+            this.preLoad()
           }
       };
+
+  public preLoad(){
+    this.config.getConfig()
+            .then(config=>{
+              this.start = true;
+                setTimeout(()=>{
+                  this.loadScript( config.hpay +'/v1/paymentWidgets.js?checkoutId=' + this.cId);
+                },0);
+            })
+  };
 
   public loadScript(url:string) {
     console.log('preparing to load...')

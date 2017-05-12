@@ -134,7 +134,7 @@ export class PriceComponent {
  		for ( let key in obj ){
  			let tmp:Price = new Price;
  			tmp["name"] = key;
- 			tmp["value"] = obj[key].replace(/USD/g, '');
+ 			tmp["value"] = obj[key].replace(/SAR/g, '');
  			if ( parseInt(obj[key]) == 0 ){//   for
 	    	this.selectedPrice = tmp.name;//  0 price
 	   		needSubmit = true;						//  not select tarrif plan

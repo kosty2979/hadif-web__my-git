@@ -138,6 +138,7 @@
   "314": "Voucher claimed by  someone else",
   "315": "Voucher used  by  more  than  once",
   "316": "More  than  one voucher exist.",
+  "330": "Autorenew not available on this transaction type",
   "999": "No Search Results",
 
   "name titel" :"4 or more characters",
@@ -338,7 +339,7 @@
 
   "Something went wrong":"Something went wrong",
   "Sorry":"Sorry",
-  "currency": " USD",
+  "currency": " SAR",
   "including":"including",
   "days free trial":" days free trial",
 
@@ -347,8 +348,8 @@
   "catch":"catchup",
 
   "to Pay":"to Pay",
-  "text1":"We inform you that the seven-day period is completely free. Due to bank procedures, credit card statements need to be confirmed with a 1 $ deduction from your account and returning it immediately. After the free period (7 days), the monthly subscription price will be charged at $",
-  "text2":"and will be withdrawn from your credit card at the beginning of each month. If you wish to cancel the automatic renewal, turn off the option from settings page."
+  "text1":"Due to bank procedures, credit card need to be confirmed with 1 SAR deduction and returning it back within 24 hours. After free period (7 days), the monthly subscription price will be charged at",
+  "text2":"SAR at beginning of each month. If you wish to cancel automatic renewal option, turn it off from settings page."
 
 
 }

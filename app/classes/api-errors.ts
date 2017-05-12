@@ -137,5 +137,6 @@ export default {
   '313': 'Voucher	redeemed	by	someone	else',
   '314': 'Voucher	claimed	by	someone	else',
   '315': 'Voucher	used	by	more	than	once',
-  '316': 'More	than	one	voucher	exist.'
+  '316': 'More	than	one	voucher	exist.',
+  '330': 'Autorenew not available on this transaction type'
 };

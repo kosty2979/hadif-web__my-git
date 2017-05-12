@@ -20,6 +20,7 @@ var SettingUpdateCardComponent = (function () {
         this.router = router;
         this.config = config;
         this.lang = true;
+        this.start = false;
     }
     ;
     SettingUpdateCardComponent.prototype.ngOnInit = function () {
@@ -34,20 +35,27 @@ var SettingUpdateCardComponent = (function () {
             sessionStorage.setItem('updateCardCid', answer.hpayDetails.cId);
             var site = new URL(window.location.href);
             _this.url = site.origin + '/setting/confirmCard';
-            _this.config.getConfig()
-                .then(function (config) {
-                setTimeout(function () {
-                    _this.cId = answer.hpayDetails.cId;
-                    _this.loadScript(config.hpay + '/v1/paymentWidgets.js?checkoutId=' + _this.cId);
-                }, 0);
-            });
+            _this.cId = answer.hpayDetails.cId;
+            _this.preLoad();
         });
     };
     ;
     SettingUpdateCardComponent.prototype.ngDoCheck = function () {
         if ((this.lang != this.isEnglish())) {
-            this.router.navigate(['/setting/profile']);
+            this.start = false;
+            this.preLoad();
         }
+    };
+    ;
+    SettingUpdateCardComponent.prototype.preLoad = function () {
+        var _this = this;
+        this.config.getConfig()
+            .then(function (config) {
+            _this.start = true;
+            setTimeout(function () {
+                _this.loadScript(config.hpay + '/v1/paymentWidgets.js?checkoutId=' + _this.cId);
+            }, 0);
+        });
     };
     ;
     SettingUpdateCardComponent.prototype.loadScript = function (url) {

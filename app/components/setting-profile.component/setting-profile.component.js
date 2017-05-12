@@ -115,8 +115,14 @@ var SettingProfileComponent = (function () {
     };
     ;
     SettingProfileComponent.prototype.autoRenewUpdate = function (autoRenew) {
+        var _this = this;
         var code = autoRenew.srcElement.checked ? 1 : 0;
-        this.userDataService.hpayUpdateAutoRenew(code);
+        this.userDataService.hpayUpdateAutoRenew(code).then(function () {
+            _this.subscriptionInfo.autoRenew = code;
+        })
+            .catch(function () {
+            _this.subscript = !_this.subscript;
+        });
     };
     ;
     SettingProfileComponent.prototype.getFreePeriod = function () {

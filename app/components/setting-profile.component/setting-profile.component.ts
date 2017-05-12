@@ -120,7 +120,13 @@ export class SettingProfileComponent implements OnInit, OnDestroy {
 	private autoRenewUpdate(autoRenew:any){
 
 		let code = autoRenew.srcElement.checked? 1:0;
-		this.userDataService.hpayUpdateAutoRenew(code)
+		this.userDataService.hpayUpdateAutoRenew(code).then(()=>{
+			this.subscriptionInfo.autoRenew = code;
+				}
+			)
+		.catch(()=>{
+			this.subscript = !this.subscript
+		})
 	};
 
 	private getFreePeriod(){

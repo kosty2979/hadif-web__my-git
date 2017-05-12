@@ -18,10 +18,10 @@ var PaymentComponent = (function () {
         this.router = router;
         this.config = config;
         this.lang = true;
+        this.start = false;
     }
     ;
     PaymentComponent.prototype.ngOnInit = function () {
-        var _this = this;
         if (!this.authService.isAuthorized()) {
             this.router.navigate(['/register']);
             return;
@@ -37,6 +37,18 @@ var PaymentComponent = (function () {
         this.freeDays = sessionStorage.getItem("freeDays");
         var site = new URL(window.location.href);
         this.url = site.origin + '/comfirm-payment';
+        this.preLoad();
+    };
+    ;
+    PaymentComponent.prototype.ngDoCheck = function () {
+        if ((this.lang != this.isEnglish())) {
+            this.start = false;
+            this.preLoad();
+        }
+    };
+    ;
+    PaymentComponent.prototype.preLoad = function () {
+        var _this = this;
         this.config.getConfig()
             .then(function (config) {
             if (!_this.authService.isAuthorized()) {
@@ -44,16 +56,11 @@ var PaymentComponent = (function () {
             }
             ;
             _this.hpay = JSON.parse(sessionStorage.getItem('hpayDetails'));
+            _this.start = true;
             setTimeout(function () {
                 _this.loadScript(config.hpay + '/v1/paymentWidgets.js?checkoutId=' + _this.hpay.checkoutId);
             }, 0);
         });
-    };
-    ;
-    PaymentComponent.prototype.ngDoCheck = function () {
-        if ((this.lang != this.isEnglish())) {
-            this.router.navigate(['/price']);
-        }
     };
     ;
     PaymentComponent.prototype.loadScript = function (url) {

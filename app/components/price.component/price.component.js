@@ -134,7 +134,7 @@ var PriceComponent = (function () {
         for (var key in obj) {
             var tmp = new price_1.Price;
             tmp["name"] = key;
-            tmp["value"] = obj[key].replace(/USD/g, '');
+            tmp["value"] = obj[key].replace(/SAR/g, '');
             if (parseInt(obj[key]) == 0) {
                 this.selectedPrice = tmp.name; //  0 price
                 needSubmit = true; //  not select tarrif plan
