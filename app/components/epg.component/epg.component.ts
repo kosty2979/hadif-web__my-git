@@ -59,17 +59,19 @@ export class EpgComponent {
 		let contextItemId:Object={};
 		let recordedItems:Object={};
     let counter: number = 0;
+    let groupCounter: number = 0;
     let currentTimeZone = moment.tz.guess();
 
 		Items.forEach( function (val:{ itemid:string, events:Array<Object>, channelThumbnail:string,recordedItems:Array<Object>, epgTZ:string }, i:number ) {
 // Add channels to data set
 		      groups.add({
 		        id: val.itemid,
-		        content: '<img src="' + val.channelThumbnail + '" />'
+		        count:groupCounter++,
+		    		content: '<img src="' + val.channelThumbnail + '" />' 
 		      });
 
 		      let timeZone = val.epgTZ;
-
+   
 		      recordedItems[val.itemid]=val.recordedItems;
 // Add events to channels and context menu
 				 val.events.forEach( function( event:{startdate:string, starttime:string, endtime:string, title:string, synopsis:string, duration:string, titleOL:string, synopsisOL:string, recordedItemId:string }, j:number) {
@@ -118,6 +120,9 @@ export class EpgComponent {
 			stack: false,
 			min: min,
 			max: maxVisible,
+			groupOrder: function (a, b) {
+	      return a.count - b.count;
+	    },
 			editable: false,
 			start: ((new Date()).getTime() - 1000 * 60 * 60*3), 
 			end:   ((new Date()).getTime() + 1000 * 60 * 60*3), 

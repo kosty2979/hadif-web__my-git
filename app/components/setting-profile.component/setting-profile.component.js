@@ -121,7 +121,8 @@ var SettingProfileComponent = (function () {
             _this.subscriptionInfo.autoRenew = code;
         })
             .catch(function () {
-            _this.subscript = !_this.subscript;
+            autoRenew.srcElement.checked = _this.subscriptionInfo.autoRenew == 1 ? true : false;
+            //this.subscript = !this.subscript
         });
     };
     ;

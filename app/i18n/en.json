@@ -349,7 +349,9 @@
 
   "to Pay":"to Pay",
   "text1":"Due to bank procedures, credit card need to be confirmed with 1 SAR deduction and returning it back within 24 hours. After free period (7 days), the monthly subscription price will be charged at",
-  "text2":"SAR at beginning of each month. If you wish to cancel automatic renewal option, turn it off from settings page."
+  "text2":"SAR at beginning of each month. If you wish to cancel automatic renewal option, turn it off from settings page.",
+
+  "skip": "Skip"
 
 
 }

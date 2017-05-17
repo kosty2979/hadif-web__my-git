@@ -125,7 +125,8 @@ export class SettingProfileComponent implements OnInit, OnDestroy {
 				}
 			)
 		.catch(()=>{
-			this.subscript = !this.subscript
+			autoRenew.srcElement.checked = this.subscriptionInfo.autoRenew==1? true:false
+			//this.subscript = !this.subscript
 		})
 	};
 

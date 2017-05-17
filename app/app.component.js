@@ -20,12 +20,14 @@ var AppComponent = (function () {
         this.router = router;
         this.authService = authService;
         translate.addLangs(["en", "ar"]);
-        translate.setDefaultLang('en');
+        translate.setDefaultLang('ar');
+        localStorage.setItem('lang', 'ar');
         var lang = localStorage.getItem('lang');
         if (!lang)
             lang = 'en';
-        var browserLang = translate.getBrowserLang();
-        this.langChange(browserLang.match(/en|ar/) ? browserLang : lang);
+        // let browserLang = translate.getBrowserLang();
+        // this.langChange(browserLang.match(/en|ar/) ? browserLang : lang);
+        this.langChange(lang);
         this.lang = renderer.listenGlobal('document', 'click', function (event) {
             if (event.target.name == 'lang' && ['en', 'ar'].indexOf(event.target.lang) > -1) {
                 _this.langChange(event.target.lang);

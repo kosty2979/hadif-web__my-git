@@ -20,11 +20,13 @@ export class AppComponent {
     private router: Router,
     private authService: AuthService) {
         translate.addLangs(["en", "ar"]);
-        translate.setDefaultLang('en');
+        translate.setDefaultLang('ar');
+        localStorage.setItem('lang', 'ar')
         let lang = localStorage.getItem('lang');
         if (!lang) lang = 'en';
-        let browserLang = translate.getBrowserLang();
-        this.langChange(browserLang.match(/en|ar/) ? browserLang : lang);
+        // let browserLang = translate.getBrowserLang();
+        // this.langChange(browserLang.match(/en|ar/) ? browserLang : lang);
+        this.langChange(lang);
         this.lang = renderer.listenGlobal('document', 'click', (event:any) => {
           if(event.target.name=='lang' && ['en','ar'].indexOf(event.target.lang)>-1){
             this.langChange(event.target.lang);

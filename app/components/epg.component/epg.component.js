@@ -52,11 +52,13 @@ var EpgComponent = (function () {
         var contextItemId = {};
         var recordedItems = {};
         var counter = 0;
+        var groupCounter = 0;
         var currentTimeZone = moment.tz.guess();
         Items.forEach(function (val, i) {
             // Add channels to data set
             groups.add({
                 id: val.itemid,
+                count: groupCounter++,
                 content: '<img src="' + val.channelThumbnail + '" />'
             });
             var timeZone = val.epgTZ;
@@ -102,6 +104,9 @@ var EpgComponent = (function () {
             stack: false,
             min: min,
             max: maxVisible,
+            groupOrder: function (a, b) {
+                return a.count - b.count;
+            },
             editable: false,
             start: ((new Date()).getTime() - 1000 * 60 * 60 * 3),
             end: ((new Date()).getTime() + 1000 * 60 * 60 * 3),
