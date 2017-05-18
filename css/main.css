@@ -2071,8 +2071,11 @@ footer {
   margin-bottom: 25px;
   margin-bottom: 125px;
 }
-.hadif-thumb{
-  float:right !important;
+
+@media (min-width: 992px){
+  .hadif-thumb{
+    float:right !important;
+  }
 }
 /* context menu style */
 .angular2-contextmenu .dropdown-menu{

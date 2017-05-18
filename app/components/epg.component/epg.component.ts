@@ -120,7 +120,7 @@ export class EpgComponent {
 			stack: false,
 			min: min,
 			max: maxVisible,
-			groupOrder: function (a, b) {
+			groupOrder: function (a:any, b:any) {
 	      return a.count - b.count;
 	    },
 			editable: false,
