@@ -40,9 +40,9 @@ export class ChannelEpgComponent extends OnChanges  {
   ngDoCheck() {
   	if( ( this.lang != this.isEnglish()) && this.load ){
   		this.timeline.destroy();
-		this.setData( this.data ); //we need to reload the data in vis.js when a language is changed
+			this.setData( this.data ); //we need to reload the data in vis.js when a language is changed
   		this.setOptions();
-		this.renderTimline();
+			this.renderTimline();
   	}
 
   };
@@ -97,6 +97,7 @@ export class ChannelEpgComponent extends OnChanges  {
 	};
 
 	private setOptions(){
+
 		let min = moment().startOf('day').subtract(7, 'days').format()
     	let max = moment().startOf('day').add(7, 'days').format()
     	let maxVisible = moment().startOf('day').add(8, 'days').format()
@@ -107,10 +108,10 @@ export class ChannelEpgComponent extends OnChanges  {
 		    max: maxVisible,
 		    editable: false,
 		    start: ((new Date()).getTime() - 1000 * 60 * 60*3), 
-        	end:   ((new Date()).getTime() + 1000 * 60 * 60*3), 
-			zoomKey: 'ctrlKey',                  
-			horizontalScroll: true,              
-			orientation: 'top',                  
+        end:   ((new Date()).getTime() + 1000 * 60 * 60*3), 
+				zoomKey: 'ctrlKey',                  
+				horizontalScroll: true,              
+				orientation: 'top',                  
 		    margin: {
 		      item: 20, // minimal margin between items
 		      // axis: 5   // minimal margin between items and the axis
@@ -140,7 +141,8 @@ export class ChannelEpgComponent extends OnChanges  {
 	  	})
 	};
 
-	private renderTimline(){ 	
+	private renderTimline(){ 
+		this.wrapper.nativeElement.style='';
 		this.timeline = new vis.Timeline( this.wrapper.nativeElement, null, this.options);
 		this.timeline.setItems(this.items);
 		this.timeline.on('click', this.openContextMenu.bind(this))

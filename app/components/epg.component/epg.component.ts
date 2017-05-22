@@ -156,7 +156,8 @@ export class EpgComponent {
 	  	})
 	};
 
- private renderTimline(){ 	
+ private renderTimline(){ 
+ 	this.wrapper.nativeElement.style='';	
   this.timeline = new vis.Timeline( this.wrapper.nativeElement, null, this.options);
   this.timeline.setGroups(this.groups);
   this.timeline.setItems(this.items);
