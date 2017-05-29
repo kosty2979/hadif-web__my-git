@@ -10,7 +10,7 @@ import 'rxjs/add/observable/of';
 
 import { ConfigService }          from './config.service';
 import { AuthService } from './auth.service';
-import {ToasterModule, ToasterService} from 'angular2-toaster';
+import { ToasterModule, ToasterService } from 'angular2-toaster';
 import { TranslateService } from '@ngx-translate/core';
 let toster:ToasterService;
 
@@ -107,7 +107,6 @@ export class PaymentService {
          if (res.json().errorcode !== "0"){
            return reject(res.json().errorcode);
          }
-
          resolve(res.json().hpayPrepareCheckout);
        })
    })
@@ -115,7 +114,7 @@ export class PaymentService {
  };
 
  public hpayMakePayment(cId: string): Promise<any> {
-  let url:string = 'hpayMakePayment';
+   let url:string = 'hpayMakePayment';
    let config:any;
    let extsessionid = this.authService.authDate.session;
    let options = new RequestOptions({ headers: this.headers});
@@ -142,6 +141,40 @@ export class PaymentService {
          }
          resolve(res.json());
        });
+   })
+   .catch(e => this.handleError(e));
+ };
+
+ public verifyTransaction(): Promise<any>{
+  let hpay = JSON.parse(sessionStorage.getItem('hpayDetails'));
+  let url:string = 'hpayVerifyTransaction';
+  let config:any;
+  let extsessionid = this.authService.authDate.session;
+  let options = new RequestOptions({ headers: this.headers});
+
+  return new Promise((resolve, reject) => {
+     if (!extsessionid)
+         return reject(105);
+     this.getConfig()
+       .then(c=>{
+         config = c;
+         return this.config.getUrl( url, hpay.transId )
+       })
+       .then((url)=>{
+         let data:any = {
+          extsessionid: extsessionid,
+          transId: hpay.transId, 
+          channelId: config.channelId,
+          cId: hpay.cId
+         };
+         return this.http.post(url, this.config.toQuery(data), options).toPromise();
+       })
+       .then(res=>{
+         if (res.json().errorcode !== "0"){
+           return reject(res.json().errorcode);
+         }
+         resolve(res.json());
+       })
    })
    .catch(e => this.handleError(e));
  };

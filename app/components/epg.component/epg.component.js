@@ -141,7 +141,7 @@ var EpgComponent = (function () {
     };
     ;
     EpgComponent.prototype.renderTimline = function () {
-        this.wrapper.nativeElement.style = '';
+        this.wrapper.nativeElement.style.direction = '';
         this.timeline = new vis.Timeline(this.wrapper.nativeElement, null, this.options);
         this.timeline.setGroups(this.groups);
         this.timeline.setItems(this.items);

@@ -49,11 +49,12 @@ export class PriceComponent {
 	freePeriod:{ active:string, days:string } ;
 	tarifForFree:Array<string>= ["r1m", "r3m", "r6m", "r1y", "r2y"];
 
-	constructor( private authService: AuthService,
-							private router: Router,
-              private paymentService: PaymentService,
-              private transmiteService:TransmiteService,
-              private userDataService: UserDataService,
+	constructor( 
+		private authService: AuthService,
+		private router: Router,
+    private paymentService: PaymentService,
+    private transmiteService:TransmiteService,
+    private userDataService: UserDataService,
 	){};
 
 	ngOnInit(){

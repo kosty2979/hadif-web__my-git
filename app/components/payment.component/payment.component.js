@@ -12,11 +12,13 @@ var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var auth_service_1 = require("../../services/auth.service");
 var config_service_1 = require("../../services/config.service");
+var payment_service_1 = require("../../services/payment.service");
 var PaymentComponent = (function () {
-    function PaymentComponent(authService, router, config) {
+    function PaymentComponent(authService, router, config, paymentService) {
         this.authService = authService;
         this.router = router;
         this.config = config;
+        this.paymentService = paymentService;
         this.lang = true;
         this.start = false;
     }
@@ -83,6 +85,28 @@ var PaymentComponent = (function () {
         return (lang == 'en');
     };
     ;
+    PaymentComponent.prototype.setTimerCheckPayment = function () {
+        var _this = this;
+        this.timerId = setTimeout(function () { return _this.checkPayment(); }, 20000);
+    };
+    ;
+    PaymentComponent.prototype.checkPayment = function () {
+        var _this = this;
+        this.paymentService.verifyTransaction()
+            .then(function () {
+            _this.router.navigate(['/comfirm-payment']);
+        })
+            .catch(function (e) {
+            setTimeout(function () {
+                _this.router.navigate(['/price']);
+            }, 3000);
+        });
+    };
+    ;
+    PaymentComponent.prototype.ngOnDestroy = function () {
+        clearTimeout(this.timerId);
+    };
+    ;
     return PaymentComponent;
 }());
 __decorate([
@@ -97,7 +121,8 @@ PaymentComponent = __decorate([
     }),
     __metadata("design:paramtypes", [auth_service_1.AuthService,
         router_1.Router,
-        config_service_1.ConfigService])
+        config_service_1.ConfigService,
+        payment_service_1.PaymentService])
 ], PaymentComponent);
 exports.PaymentComponent = PaymentComponent;
 ;

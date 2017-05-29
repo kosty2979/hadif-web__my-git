@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import { AuthService } from '../../services/auth.service';
 import { ConfigService } from '../../services/config.service';
+import { PaymentService } from '../../services/payment.service';
 
 @Component({
 	moduleId: module.id,
@@ -16,45 +17,46 @@ export class PaymentComponent {
     price:string;
     freeDays:string;
     lang: boolean= true;
-    start = false
-
-
+    start = false;
+    timerId:any;
 
     constructor(
-		private authService: AuthService,
-		private router: Router,
-        private config: ConfigService
-	){};
+  		private authService: AuthService,
+  		private router: Router,
+      private config: ConfigService,
+      private paymentService: PaymentService
+  	){};
 
-    @ViewChild('wrapForPayment') forScript:ElementRef;
 
-	ngOnInit(){
+
+  @ViewChild('wrapForPayment') forScript:ElementRef;
+
+      ngOnInit(){
         if (!this.authService.isAuthorized()) {
-            this.router.navigate(['/register']);
-            return;
+          this.router.navigate(['/register']);
+          return;
         };
         if (!sessionStorage.getItem('hpayDetails')) {
-            this.router.navigate(['/price']);
-            return;
+          this.router.navigate(['/price']);
+          return;
         };
         this.isEnglish()
         this.price = sessionStorage.getItem("price");
-    	this.freeDays = sessionStorage.getItem("freeDays");
-    	let site = new URL(window.location.href);
-        this.url = site.origin + '/comfirm-payment';
-        
+        this.freeDays = sessionStorage.getItem("freeDays");
+        let site = new URL(window.location.href);
+        this.url = site.origin + '/comfirm-payment';   
         this.preLoad()
 
-	};
-
-    ngDoCheck() {
-      if( (this.lang != this.isEnglish())  ){
-           this.start = false;
-           this.preLoad()
-          }
       };
 
-     public preLoad(){
+      ngDoCheck() {
+        if( (this.lang != this.isEnglish())  ){
+             this.start = false;
+             this.preLoad()
+            }
+       };
+
+      public preLoad(){
          this.config.getConfig()
             .then(config=>{
                 if ( !this.authService.isAuthorized() ){
@@ -66,7 +68,7 @@ export class PaymentComponent {
                   this.loadScript( config.hpay +'/v1/paymentWidgets.js?checkoutId=' + this.hpay.checkoutId);
                 },0);
             })
-        };
+       };
 
       public loadScript(url:string) {
 
@@ -85,9 +87,32 @@ export class PaymentComponent {
         this.forScript.nativeElement.appendChild(node);
       };
          
-         private isEnglish():boolean{
-            let lang = localStorage.getItem('lang');
-            this.lang = lang == 'en';
-             return ( lang == 'en' ) ;
-        };
+      private isEnglish():boolean{
+        let lang = localStorage.getItem('lang');
+        this.lang = lang == 'en';
+         return ( lang == 'en' ) ;
+      };
+
+      private setTimerCheckPayment(){
+        this.timerId = setTimeout(()=>this.checkPayment(), 20000);
+      };
+
+      private checkPayment(){
+        this.paymentService.verifyTransaction()
+        .then(()=>{
+          this.router.navigate(['/comfirm-payment']);
+        })
+        .catch(e=>{
+          setTimeout(()=>{
+            this.router.navigate(['/price']);
+          }, 3000)
+        })
+      };
+
+
+
+      ngOnDestroy(){
+        clearTimeout(this.timerId);
+      };
 };
+

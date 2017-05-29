@@ -147,6 +147,40 @@ var PaymentService = (function () {
             .catch(function (e) { return _this.handleError(e); });
     };
     ;
+    PaymentService.prototype.verifyTransaction = function () {
+        var _this = this;
+        var hpay = JSON.parse(sessionStorage.getItem('hpayDetails'));
+        var url = 'hpayVerifyTransaction';
+        var config;
+        var extsessionid = this.authService.authDate.session;
+        var options = new http_2.RequestOptions({ headers: this.headers });
+        return new Promise(function (resolve, reject) {
+            if (!extsessionid)
+                return reject(105);
+            _this.getConfig()
+                .then(function (c) {
+                config = c;
+                return _this.config.getUrl(url, hpay.transId);
+            })
+                .then(function (url) {
+                var data = {
+                    extsessionid: extsessionid,
+                    transId: hpay.transId,
+                    channelId: config.channelId,
+                    cId: hpay.cId
+                };
+                return _this.http.post(url, _this.config.toQuery(data), options).toPromise();
+            })
+                .then(function (res) {
+                if (res.json().errorcode !== "0") {
+                    return reject(res.json().errorcode);
+                }
+                resolve(res.json());
+            });
+        })
+            .catch(function (e) { return _this.handleError(e); });
+    };
+    ;
     PaymentService.prototype.getConfig = function () {
         return this.config.getConfig();
     };

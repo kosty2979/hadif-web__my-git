@@ -134,7 +134,7 @@ var ChannelEpgComponent = (function (_super) {
     };
     ;
     ChannelEpgComponent.prototype.renderTimline = function () {
-        this.wrapper.nativeElement.style = '';
+        this.wrapper.nativeElement.style.direction = '';
         this.timeline = new vis.Timeline(this.wrapper.nativeElement, null, this.options);
         this.timeline.setItems(this.items);
         this.timeline.on('click', this.openContextMenu.bind(this));

@@ -56,12 +56,30 @@ var AppComponent = (function () {
         localStorage.setItem('lang', lang);
         if (lang == 'en') {
             window['$']('#dinamic-css')[0].href = '/css/english-main.css';
-            window['wpwlOptions'] = { locale: "", paymentTarget: "_top" };
+            window['wpwlOptions'] = {
+                locale: "",
+                paymentTarget: "_top",
+                onBeforeSubmitCard: function () {
+                    var el = document.getElementById("paymentWrapper");
+                    var event = new Event("submitForm");
+                    el.dispatchEvent(event);
+                    return true; // Comment here to stop sending the payment form !!!
+                }
+            };
             console.log("set EN locale");
         }
         else {
             window['$']('#dinamic-css')[0].href = '/css/main.css';
-            window['wpwlOptions'] = { locale: "ar", paymentTarget: "_top" };
+            window['wpwlOptions'] = {
+                locale: "ar",
+                paymentTarget: "_top",
+                onBeforeSubmitCard: function () {
+                    var el = document.getElementById("paymentWrapper");
+                    var event = new Event("submitForm");
+                    el.dispatchEvent(event);
+                    return true; // Comment here to stop sending the payment form !!!
+                }
+            };
             console.log("set AR locale");
         }
     };

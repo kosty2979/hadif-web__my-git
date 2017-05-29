@@ -21,7 +21,7 @@
     <div  #wrapForPayment class="row" *ngIf="start">
 
 
-      <div  class="col-md-12 paymentWrapper" *ngIf="hpay">
+      <div id="paymentWrapper" (submitForm)="setTimerCheckPayment()" class="col-md-12 paymentWrapper" *ngIf="hpay">
         <form action="{{url}}" class="paymentWidgets">VISA MASTER</form>
       </div>
 
