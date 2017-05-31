@@ -138,6 +138,7 @@
   "314": "Voucher claimed by  someone else",
   "315": "Voucher used  by  more  than  once",
   "316": "More  than  one voucher exist.",
+  "320": "Hyperpay  payment error.",
   "330": "Autorenew not available on this transaction type",
   "999": "No Search Results",
 

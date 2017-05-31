@@ -87,6 +87,7 @@ var PaymentComponent = (function () {
     ;
     PaymentComponent.prototype.setTimerCheckPayment = function () {
         var _this = this;
+        this.viewLoader = true;
         this.timerId = setTimeout(function () { return _this.checkPayment(); }, 20000);
     };
     ;
@@ -97,6 +98,7 @@ var PaymentComponent = (function () {
             _this.router.navigate(['/comfirm-payment']);
         })
             .catch(function (e) {
+            _this.viewLoader = false;
             setTimeout(function () {
                 _this.router.navigate(['/price']);
             }, 3000);

@@ -1,5 +1,6 @@
 <div class="steps">
   <div class="blurred-bg"></div>
+
     <div class="container log-container">
       <div class="row">
         <div class="col-sm-12 text-center">
@@ -22,6 +23,11 @@
 
 
       <div id="paymentWrapper" (submitForm)="setTimerCheckPayment()" class="col-md-12 paymentWrapper" *ngIf="hpay">
+
+        <div *ngIf="viewLoader" class="loadSpinner">
+           <img src="../../../img/load-payment.gif" alt="">
+        </div>
+
         <form action="{{url}}" class="paymentWidgets">VISA MASTER</form>
       </div>
 

@@ -19,6 +19,7 @@ export class PaymentComponent {
     lang: boolean= true;
     start = false;
     timerId:any;
+    viewLoader: boolean: false
 
     constructor(
   		private authService: AuthService,
@@ -94,6 +95,7 @@ export class PaymentComponent {
       };
 
       private setTimerCheckPayment(){
+        this.viewLoader = true;
         this.timerId = setTimeout(()=>this.checkPayment(), 20000);
       };
 
@@ -103,6 +105,7 @@ export class PaymentComponent {
           this.router.navigate(['/comfirm-payment']);
         })
         .catch(e=>{
+          this.viewLoader = false;
           setTimeout(()=>{
             this.router.navigate(['/price']);
           }, 3000)

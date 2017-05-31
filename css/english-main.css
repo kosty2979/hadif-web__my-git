@@ -2180,3 +2180,19 @@ margin-top: 56px;
   border-radius: 5px;
 
 }
+/* style for loader in the payment form */
+.loadSpinner{
+  position: absolute;
+  left: 0;
+  top:0;
+  width: 100%;
+  height: 100%;
+}
+.loadSpinner img{
+   position: absolute;
+   z-index: 12;
+   width: 3em;
+   left: calc(50% - 1.5em);
+   top: calc(50% - 1.5em);
+}
+/* end style for loader in the payment form */
