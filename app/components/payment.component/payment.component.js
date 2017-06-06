@@ -21,6 +21,7 @@ var PaymentComponent = (function () {
         this.paymentService = paymentService;
         this.lang = true;
         this.start = false;
+        this.viewLoader = false;
     }
     ;
     PaymentComponent.prototype.ngOnInit = function () {

@@ -2196,3 +2196,6 @@ margin-top: 56px;
    top: calc(50% - 1.5em);
 }
 /* end style for loader in the payment form */
+.followWrapper{
+  float:right;
+}
