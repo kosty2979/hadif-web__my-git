@@ -19,7 +19,7 @@ export class PaymentComponent {
     lang: boolean= true;
     start = false;
     timerId:any;
-    viewLoader: boolean: false
+    viewLoader: boolean= false;
 
     constructor(
   		private authService: AuthService,
