@@ -1,0 +1,73 @@
+<div class="steps">
+  <div class="blurred-bg"></div>
+  <div class="container log-container">
+    <div class="row">
+      <div class="col-sm-12 text-center">
+        <h2 *ngIf="!firstStep"> {{ 'tariff plan' | translate }}
+        </h2>
+        <h2 *ngIf="firstStep"> {{ 'Terms and Conditions' | translate }}
+        </h2>
+        <a routerLink="/voucher" routerLinkActive="active"  class="move-next backto-login"></a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 text-center">
+        <h3 *ngIf="!firstStep"> {{ 'select plan' | translate }}</h3>
+        <h3 *ngIf="firstStep"> {{ 'User Agreement' | translate }}</h3>
+        <div class="col-sm-6 col-sm-offset-3 text-center">
+          <div *ngIf="voucherCode && !firstStep" class="alert alert-success">
+                <p> {{ 'you have vouher' | translate  }} </p>
+                <p> {{ voucherCode  }} </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div  class="row">
+     <form  (ngSubmit) = "onSubmit();"  #tarrifForm="ngForm" >
+      <div *ngIf="!firstStep" >
+        <div class="col-sm-6 col-sm-offset-3 text-center priceWrapper">
+        <div *ngIf="error" class="alert alert-danger">
+               {{ errortext | translate }}
+        </div>
+         <div class="radio text-left" *ngFor="let price of prices; let i = index" >
+           <label *ngIf = "showItem(price)">
+           <input type="radio"  
+           name="price" 
+           [(ngModel)]="selectedPrice" 
+           value="{{price.name}}"
+           >
+               {{ 
+               getActiveDay(price)? 
+               (getActiveDay(price) + ('days free trial' | translate)):
+               ( (price.name | translate)+'&mdash;' + price.value + ('currency' | translate))  
+               }}
+            </label>
+         </div>
+
+        </div>
+        <div class="col-sm-offset-4 col-sm-4 text-center">
+           <button (click)="firstStep =!firstStep"  [disabled] = "!selectedPrice" class="btn btn-login">{{ 'next' | translate }}</button>
+        </div>
+      </div>
+      <div *ngIf="firstStep" >
+        <div class="col-sm-10 col-sm-offset-1 termsWrap">
+          <div [innerHTML]="getTermsText()"></div>
+        </div>
+        <div class="col-sm-offset-4 col-sm-4 text-center">
+          <div class="text-center">
+            <label >
+             <input type="checkbox" name="checkTs"  [(ngModel)]="checkTs" >
+             {{ 'I agree' | translate }} 
+            </label>
+          </div>
+             <button type="submit"  [disabled] = "!checkTs" class="btn btn-login">{{ 'next' | translate }}</button>
+        </div>
+      </div>
+      </form>
+
+
+
+    </div>
+
+  </div>
+</div>

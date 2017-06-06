@@ -1,0 +1,312 @@
+<div *ngIf="getStatus()" class="main-left-panels">
+    <div class="row">
+    <div class="col-md-12">
+      <h2 class="text-center hadif-purple">{{'Personal Profile ' | translate}}</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 panel-left-content">
+      <div class="pr3 mb2">
+        <h4 class="pers-info hadif-purple">{{'Personal Information' | translate}}</h4>
+        <span><a (click)="edit =!edit" class="personal-edit mobile-response" >{{'Edit personal information' | translate}}</a></span>
+      </div>
+      <div class="pr3 mb2">
+        <h4 class="bill-info hadif-purple">{{'Invoices & Payments' | translate}}</h4>
+        <span><a (click)="subscript = !subscript">{{'Subscription Info' | translate}}</a></span>
+        <span><a (click)="billing = !billing">{{'Invoices' | translate}}</a></span>
+        <span><a (click)="card = !card" >{{'Credit card' | translate}}</a></span>
+      </div>
+      <div class="pr3 mb2">
+        <h4 class="password-info hadif-purple">{{'Password' | translate}}</h4>
+        <span><a (click)="password =!password" class="open-password mobile-response">{{'Change password' | translate}}</a></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--  EDIT PROFILE -->
+    <div *ngIf="edit && !imageEdit" class="main-left-panels">
+      <div class="row">
+      <div class="col-md-12">
+        <h2 class="text-center hadif-purple">{{'Edit Profile Information' | translate }}
+          
+        </h2>
+        <a (click)="edit =!edit" class="move-next backto-profile mobile-response"></a>
+      </div>
+      <div class="col-md-12 img-title text-center">
+        <a class="mobile-response" (click)="imageEdit = !imageEdit" >
+        <img class="img-responsive img-responsive__avatar"  src="{{ getImageUrl() }}" alt="">
+        {{'Change your picture' | translate }}
+
+        </a>
+      </div>
+    </div>
+    <div class="row">
+      <form  (ngSubmit) = "onSubmitUserInfo()"  #editUserForm="ngForm" >
+        <div class="col-md-12 panel-left-content">
+          <div class="mb2">
+            <label >{{'Your Name' | translate }}</label>
+            <input type="text" 
+                name="name" 
+                [(ngModel)]="user.username"  
+                disabled>
+          </div>
+          <div class="mb2">
+            <label> {{'Mobile Number' | translate }}</label>
+            <input type="tel"  
+                name="phone" 
+                [(ngModel)]="user.phone"
+                placeholder="{{ 'Enter your Phone'| translate }}"
+                #phone="ngModel"
+                pattern="[0-9]{10,12}"/>
+            <div [hidden]="phone.valid || phone.untouched" class="alert alert-danger ">
+            {{'phone not valid' | translate }}
+            </div>
+          </div>
+          <div class="mb2">
+            <label>{{'Email' | translate }}</label>
+            <input type="email"
+                name="email" 
+                [(ngModel)]="user.email" 
+                placeholder="email@example.com"  
+                pattern="[a-zA-Z0-9_.]+@[a-zA-Z0-9_.]+?\.[a-zA-Z]{2,3}" 
+                #email="ngModel" 
+                required />
+            <div [hidden]="email.valid || email.untouched" class="alert alert-danger ">
+            {{'email not valid' | translate}}
+            </div>
+          </div>
+          <div class="mb2">
+            <label> {{'First Name' | translate }}</label>
+            <input type="text" 
+                name="firstName" 
+                [(ngModel)]="user.firstName" 
+                placeholder="{{'Enter your first Name'| translate}}" 
+                #firstName="ngModel"/>
+          </div>
+          <div class="mb2">
+            <label> {{'Last Name' | translate }}</label>
+            <input type="text"  
+                name="lastName" 
+                [(ngModel)]="user.lastName" 
+                placeholder="{{'Enter your last Name'| translate}}" 
+                #lastName="ngModel"  />
+          </div>
+        </div>
+        <div class="col-md-offset-4 col-md-4 col-xs-12 text-center">
+          <button  type="submit"  [disabled] = "editUserForm.form.invalid" class="btn btn-login">{{'Update your information' | translate }}</button>
+        </div>
+      </form>
+    </div>
+    </div>
+
+<!-- EDIT PICTURE -->   
+    <div *ngIf="edit && imageEdit" class="holders-flying">
+      <div class="row">
+      <div class="col-md-12">
+        <h2 class="text-center hadif-purple">{{'Choose Picture' | translate }}
+          <a (click)="imageEdit =!imageEdit" class="move-next backto-edit mobile-response"></a>
+        </h2>
+      </div>
+      <div class="col-md-12 avatars-content text-center">
+        <ul>
+          <li *ngFor="let item of avatar.pics" >
+            <input  type="radio" 
+              name="avatar-pic" 
+              [(ngModel)]="user.avatar" 
+              id="{{item.id}}" value="{{item.val}}" 
+              [checked] = "item.val == user.avatar ? true : false">
+            <label for="{{item.id}}">
+              <img class="img-responsive" src="/assets/img/profile/{{item.name}}" alt="{{item.id}}">
+            </label>
+          </li>
+        </ul>
+      </div>
+    </div>
+    </div>
+<!--END EDIT PICTURE -->
+<!--   SUBSCRIPTION -->
+   <div *ngIf="subscript" class="holders-flying">
+      <div class="row">
+      <div class="col-md-12">
+        <h2 class="text-center hadif-purple">{{'Subscription Info' | translate }}
+          <a (click)="subscript = !subscript" class="move-next backto-profile mobile-response"></a>
+        </h2>
+      </div>
+    </div>
+    
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover tableSubscript">
+          <tr   data-toggle="tooltip" title="without  auto-renewal  selected  your  subscription  will  end on {{ subscriptionInfo.subscriptionEndDate || '...' }} ">
+            <td>{{'AutoRenew'| translate }}</td>
+            <td> 
+            <input type="checkbox" 
+            [checked]="subscriptionInfo.autoRenew==1? true:false" 
+            (change)="autoRenewUpdate($event)">
+            </td>
+          </tr>
+          <tr>
+            <td>{{'Subscription Start Date'| translate }}</td>
+            <td>{{subscriptionInfo.subscriptionStartDate}}</td>
+          </tr>
+          <tr>
+            <td>{{'Subscription End Date'| translate }}</td>
+            <td>{{subscriptionInfo.subscriptionEndDate}}</td>
+          </tr>
+          <tr>
+            <td>{{'Period'| translate }}</td>
+            <td>{{subscriptionInfo.period}}</td>
+          </tr>
+          <tr>
+            <td>{{'Price'| translate }}</td>
+            <td>{{subscriptionInfo.price}}</td>
+          </tr>
+          <tr>
+            <td>{{'Type'| translate }}</td>
+            <td>{{ getType( subscriptionInfo.type ) | translate }}</td>
+          </tr>
+          <tr>
+            <td>{{'Free Period Start Date'| translate }}</td>
+            <td>{{subscriptionInfo.freePeriodStartDate ||'-'}}</td>
+          </tr>
+          <tr>
+            <td>{{'Free Period End Date'| translate }}</td>
+            <td>{{subscriptionInfo.freePeriodEndDate ||'-'}}</td>
+          </tr>
+      </table>
+      </div>
+      <div *ngIf="getFreePeriod()" class="col-md-offset-4 col-md-4 col-xs-12 text-center">
+      <div *ngIf = overlay class="overlay"></div>
+        <button  class="btn btn-login "
+          mwlConfirmationPopover
+          [title]="'popUp_subscript_text'| translate"
+          cancelText="{{'popUp_subscript_no'| translate}}"
+          confirmText = "{{'popUp_subscript_yes'| translate}}"
+          placement="bottom"
+          cancelButtonType ="info"
+          (confirm)="discardFreePeriod()"
+          (cancel)="cancelClicked = true"
+          [(isOpen)]="overlay"
+        >
+        {{'cancel subscription' | translate }}</button>
+      </div>
+
+  </div>
+<!-- END  SUBSCRIPTION -->
+<!--   CREDIT CARD -->
+   <div *ngIf="card" class="holders-flying">
+      <div class="row">
+      <div class="col-md-12">
+        <h2 class="text-center hadif-purple">{{'Credit card' | translate }}
+          <a (click)="card = !card" class="move-next backto-profile mobile-response"></a>
+        </h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 panel-left-content">
+        <div class="mb2">
+          <p class="each-reminder"><span >{{'Card Number' | translate }}</span></p>
+          <span>{{subscriptionInfo.last4Digit ? '**** **** **** '+subscriptionInfo.last4Digit : '-'}}</span>
+        </div>
+        <div class="mb2">
+          <p class="each-reminder"><span>{{'Expiry Date' | translate }}</span> </p>
+          <span>{{subscriptionInfo.expiryDate || '-'}}</span>
+
+        </div>
+      </div>
+      <div *ngIf="subscriptionInfo.last4Digit" class="col-md-offset-4 col-md-4 col-xs-12 text-center">
+        <button (click)='updateCard()' class="btn btn-login">{{'Update Your Card' | translate }}</button>
+      </div>
+    </div>
+    </div>
+<!-- END  CREDIT CARD -->
+<!-- PASSWORD -->
+  <div *ngIf="password" class="holders-flying">
+      <div class="row">
+      <div class="col-md-12">
+        <h2 class="text-center hadif-purple">{{'Change Password' | translate }}
+          <a (click)="password =!password" class="move-next backto-profile mobile-response"></a>
+        </h2>
+      </div>
+    </div>
+    <div class="row">
+      <form  (ngSubmit) = "changePass( newPassForm )"  #newPassForm="ngForm" >
+      <div class="col-md-12 panel-left-content">
+
+        <div *ngIf="passwordObj.error" class="row">
+          <div class="col-sm-8 col-sm-offset-2 text-center">
+            <div  class="alert alert-warning">
+                {{ passwordObj.errortext | translate }}
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="passwordObj.complite" class="row">
+          <div class="col-sm-8 col-sm-offset-2 text-center">
+            <div  class="alert alert-success">
+                {{'Password successfully changed' | translate }}
+            </div>
+          </div>
+        </div>
+
+        <div class="mb2">
+          <label >{{'Current Password' | translate }}</label>
+          <input class="enter-pass"   type="password"  placeholder="******" name="oldPass" [(ngModel)]="passwordObj.oldPassword" #oldPass="ngModel" required pattern=".{6,}">
+          <div [hidden]="oldPass.valid || oldPass.untouched" class="alert alert-danger">
+                {{'password not valid' | translate }}
+          </div>
+        </div>
+
+        <div class="mb2">
+          <label>{{'New Password' | translate }}</label>
+          <input class="enter-pass"   type="password"  placeholder="******" name="newPass" [(ngModel)]="passwordObj.newPassword" #newPass="ngModel" required pattern=".{6,}">
+          <div [hidden]="newPass.valid || newPass.untouched" class="alert alert-danger">
+                {{'password not valid' | translate }}
+          </div>
+        </div>
+
+        <div class="mb2">
+          <label>{{'Confirm Password' | translate }}</label>
+          <input type="password"  name="password2" placeholder="******" name="confNewPass" [(ngModel)]="passwordObj.confirmPass" #passConf="ngModel" required >
+          <div [hidden]="passConf.value === newPass.value" class="alert alert-danger">
+              {{'conf password not valid' | translate }}
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col-md-offset-4 col-md-4 col-xs-12 text-center">
+        <button type="submit" [disabled] = "newPassForm.form.invalid || !(passConf.value === newPass.value)" class="btn btn-login"  class="btn btn-login">  {{'Update' | translate }}
+        </button>
+      </div>
+
+      </form>
+    </div>
+    </div>
+<!--END PASSWORD -->
+<!-- BILLING -->
+    <div  *ngIf="billing" class="holders-flying">
+      <div class="row">
+      <div class="col-md-12">
+        <h2 class="text-center hadif-purple">{{'Invoices' | translate }}
+          <a (click)="billing = !billing" class="move-next backto-profile mobile-response"></a>
+        </h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 panel-left-content invoices">
+        <div *ngFor="let item of transactionInfo"class="row">
+          <div class="col-md-6 invo-left">
+            <div class="amount">{{item.price}}</div>
+          </div>
+          <div class="col-md-6 invo-right">
+            <h4 class="hadif-purple">{{'Monthly Subscription' | translate }}</h4>
+            <p><span>{{'Payment date' | translate }}:</span> {{ item.transactionDate }}</p>
+            <p><span>{{'Type'| translate }}:</span> {{ getType( item.type ) | translate }}</p>
+            <!-- <p>{{'Subscription Duration' | translate }}: 17.12.2016</p> -->
+          </div>
+        </div>
+       
+      </div>
+    </div> 
+<!--END BILLING -->
