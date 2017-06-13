@@ -20,9 +20,9 @@ export class AppComponent {
     private authService: AuthService) {
         translate.addLangs(["en", "ar"]);
         translate.setDefaultLang('ar');
-        localStorage.setItem('lang', 'ar')
+        //localStorage.setItem('lang', 'ar')
         let lang = localStorage.getItem('lang');
-        if (!lang) lang = 'en';
+        if (!lang) lang = 'ar';
         // let browserLang = translate.getBrowserLang();
         // this.langChange(browserLang.match(/en|ar/) ? browserLang : lang);
         this.langChange(lang);

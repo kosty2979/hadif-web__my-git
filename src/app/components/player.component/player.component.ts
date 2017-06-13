@@ -1,4 +1,4 @@
-import {Component, OnChanges, Input, Output, EventEmitter, SimpleChange, ElementRef} from '@angular/core';
+import {Component, OnChanges, Input, Output, EventEmitter, SimpleChange, ElementRef, HostListener, OnDestroy} from '@angular/core';
 
 let videojs:any= window['videojs'];
 
@@ -26,8 +26,28 @@ export class VideoPlayer implements OnChanges {
     @Input() download: string;
     @Input() live: string;
     @Input() catch: string;
+    @Input() timeout: string;
 
     @Output() endVideo =new EventEmitter();
+
+    timer:any=null;
+    IDLE_TIMEOUT:number =  60 ; //default minut from paused
+    minuteCounter:number = 0;
+
+
+    @HostListener('window:mousemove', ['$event']) onMouseMove(){
+    this.clearCounter();
+    };
+    @HostListener('window:mousedown', ['$event']) onMouseDown(){
+    this.clearCounter();
+    };
+    @HostListener('window:keypress', ['$event']) onKeyPres(){
+    this.clearCounter();
+    };
+
+    private clearCounter() {
+    this.minuteCounter = 0
+    };
 
 
     remove: boolean = false;
@@ -62,12 +82,14 @@ export class VideoPlayer implements OnChanges {
     }
 
     initPlayer(src:string, srcPre?:string){
+      
       if(this.player){
         this.player.dispose();
         this.player = null;
       }
       this.remove = true;
-      //srcPre ="http://almajd.api.visionip.tv/vod/ASHTTP/almajd/almajd/Hothiyon5_mpg_vod-25f-16x9-MB/playlist.m3u8?extsessionid=58b43118be1dc-a5f0a70928929e33938c792789e04ebe"
+      /*link for test preroll*/
+      //srcPre ="https://almajd.ashttp21.visionip.tv/vod/_definst_/almajd/almajd/Adverts/1253-1-7-10-2013_avi_vod-25f-16x9-SD.mp4/playlist.m3u8?extsessionid=593a9e1da6c60-f28d089f804a60ff012d3154b92776ef"
       setTimeout(()=>{this.remove = false}, 0);
       setTimeout(()=>{
 
@@ -116,8 +138,25 @@ export class VideoPlayer implements OnChanges {
           this.player.bigPlayButton.show();
         }
       },10)
+      // start timer for live video(autopause)
+      if(this.live){
+        clearInterval(this.timer);
+        if( this.timeout ) {
+          this.IDLE_TIMEOUT = +this.timeout;
+        };
+        this.timer = setInterval(()=>{
+          this.checkTime()
+         }, 60000)
+      };
     };
-
+    public checkTime(){
+        this.minuteCounter++
+        if(this.IDLE_TIMEOUT <= this.minuteCounter){
+          this.clearCounter();
+          this.player.pause();
+        }  
+        return
+    };
 
     ngOnChanges(changes: {[propKey: string]: SimpleChange}) {
          setTimeout(()=>{
@@ -125,11 +164,13 @@ export class VideoPlayer implements OnChanges {
              this.initPlayer(changes['url'].currentValue, this.preRoll);
            }
          },100);
-    }
+    };
+
     ngOnDestroy() {
       if(this.player){
        this.player.dispose();
        this.player = null;
+       clearInterval(this.timer)
      }
-    }
+    };
 }

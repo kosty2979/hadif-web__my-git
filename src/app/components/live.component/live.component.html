@@ -14,7 +14,14 @@
  <section class="col-xs-12 col-md-9 forVideo">
   <section id="player-holder">
     <div class="alert-warning" *ngIf="urlError">{{urlError | translate}}</div>
-    <video-player *ngIf="!searchMode && video.url " url="{{video.url}}" preRoll="{{video.preRoll}}"  [live]="true" [catch]="catchUp"></video-player>
+    <video-player 
+        *ngIf="!searchMode && video.url" 
+        url="{{video.url}}" 
+        preRoll="{{video.preRoll}}" 
+        timeout="{{video.timeout}}" 
+        [live]="true" 
+        [catch]="catchUp">
+    </video-player>
     <div class="feelings-holder">
       <ul>
         <li><img src="assets/img/likes/ic_feeling__joy.png" alt=""></li>
@@ -64,7 +71,11 @@
   </ul>
   
   </section>
-  <channel-epg *ngIf="!searchItem" id="{{ itemId }}" (contextVideo)="loadCatchVideo($event)" ></channel-epg>
+  <channel-epg 
+    *ngIf="!searchItem" 
+    id="{{ itemId }}" 
+    (contextVideo)="loadCatchVideo($event)" >
+  </channel-epg>
 
  </section>
  <section class="hadif-sidebar col-md-3" data-simplebar-direction="vertical">
@@ -115,7 +126,15 @@
  </div>
 
  <section *ngIf="searchItem" class="col-md-9 forVideo">
-  <video-player *ngIf="searchVideo.url" url="{{searchVideo.url}}" preRoll="{{searchVideo.preRoll}}"   [live]="true" [catch]="catchUp" ></video-player>
+
+  <video-player 
+    *ngIf="searchVideo.url" 
+    url="{{searchVideo.url}}" 
+    preRoll="{{searchVideo.preRoll}}"
+    timeout="{{video.timeout}}" 
+    [live]="true" 
+    [catch]="catchUp" >
+  </video-player>
 
   <section class="bottom-player-menu">
    <a href="#"><img src="assets/img/ic_feeling_heart_eyes.png"></a>
@@ -127,9 +146,11 @@
    <p *ngIf="catchUp">{{getField('title', contextObj)}} <button class="btn btn-context pull-right" (click)="backToSearchVideo()">{{'back to life' | translate}}</button></p>
   </section>
 
-
-
-  <channel-epg *ngIf="searchItem" id="{{searchItem.itemid}}"  (contextVideo)="loadSearchCatchVideo($event)" ></channel-epg> 
+  <channel-epg 
+    *ngIf="searchItem" 
+    id="{{searchItem.itemid}}"  
+    (contextVideo)="loadSearchCatchVideo($event)" >
+  </channel-epg> 
 
  </section>
  <section *ngIf="searchItem" class="hadif-sidebar col-md-3" data-simplebar-direction="vertical">

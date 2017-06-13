@@ -1417,31 +1417,32 @@ a:hover .play-overlay {
   overflow: auto;
 }
 .hadif-episodes.hadif-lists .tab-pane {
-  height: 730px;
+  height: 900px;
 }
-.nav-tabs {
+.hadif-sidebar .nav-tabs {
   margin-bottom: 15px;
 }
 .nav-tabs li {
   width: 50%;
   text-align: center;
 }
-.nav-tabs li a {
+.hadif-sidebar  .nav-tabs li a {
   border: 1px solid #fff;
   color: #8a8a8a;
 }
-.nav-tabs li.active a {
+.hadif-sidebar .nav-tabs li.active a {
   border: 1px solid transparent;
   border-bottom-color: #ea1976;
   color: #262261;
 }
-.nav-tabs li.active a:hover,
-.nav-tabs li.active a:focus {
+.hadif-sidebar .nav-tabs li.active a:hover,
+.hadif-sidebar .nav-tabs li.active a:focus {
   border: 1px solid transparent;
   border-bottom: 1px solid #ea1976;
 }
-.nav-tabs li a:hover,
-.nav-tabs li a:focus {
+.hadif-sidebar .nav-tabs li a:hover,
+.hadif-sidebar .nav-tabs li a:focus {
+  background-color: transparent;
   border-bottom: 1px solid #ea1976;
   border: 1px solid #fff;
 }

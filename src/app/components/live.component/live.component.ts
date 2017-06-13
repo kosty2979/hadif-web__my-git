@@ -36,6 +36,8 @@ export class LiveComponent implements OnInit {
   contextObj:any={};
 
 
+
+
   constructor(
     private route: ActivatedRoute,
     private videoItemsService: VideoItemsService,
@@ -48,6 +50,7 @@ export class LiveComponent implements OnInit {
     {
       this.initEmiter();
     }
+
 
     initEmiter(){
       this.searchEmitter = new Subject<any>();
@@ -109,7 +112,9 @@ export class LiveComponent implements OnInit {
 
          
        })
-    }
+
+    };
+
     private getSearch(){
       if (this.searchEmitter.isStopped) this.initEmiter();
       if(this.searchInput) this.searchEmitter.next(this.searchInput.toString());
@@ -167,7 +172,9 @@ export class LiveComponent implements OnInit {
       this.itemId = this.videoItems[this.selectChanel].itemid;
       history.pushState({}, '', 'live/'+ this.itemId);
       this.videoItemsService.getUrl(this.itemId)
-      .then(item=>this.video=item)
+      .then(item=>{
+        this.video=item
+      })
       .catch(e=>{this.urlError=e;
         this.video={};
       });
@@ -175,7 +182,6 @@ export class LiveComponent implements OnInit {
   	};
 
     private loadCatchVideo(contextObj:any){
-
       this.catchUp = true;
       let id= contextObj.itemId;
       if( !this.videoItems ){
@@ -188,7 +194,9 @@ export class LiveComponent implements OnInit {
           });
       };
       this.videoItemsService.getUrl(id)
-      .then(item=>this.video=item)
+      .then(item=>{
+        this.video=item;
+      })
       .catch(e=>{this.urlError=e;
         this.video={};
       });
@@ -232,5 +240,6 @@ export class LiveComponent implements OnInit {
     private getImageUrl(item:any){
         return ( item.thumbSDh || item.thumbSDq || item.thumbnail )
     };
+
 };
 
